@@ -143,7 +143,7 @@ Track: ${trackingUrl}
             WhatsApp
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setShowEmailDialog(true)}>
-            <Mail className="w-4 h-4 mr-2 text-blue-500" />
+            <Mail className="w-4 h-4 mr-2 text-primary" />
             Email
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleCopyLink}>
@@ -181,7 +181,7 @@ Track: ${trackingUrl}
           variant="outline"
           size="sm"
           onClick={() => setShowEmailDialog(true)}
-          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+          className="text-primary hover:text-primary hover:bg-primary/5"
         >
           <Mail className="w-4 h-4 mr-2" />
           Email

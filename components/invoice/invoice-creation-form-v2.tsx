@@ -575,8 +575,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-blue-500/10">
-                  <User className="w-4 h-4 text-blue-500" />
+                <div className="p-1.5 rounded-md bg-primary/10">
+                  <User className="w-4 h-4 text-primary" />
                 </div>
                 Consignor (Sender)
                 <Button variant="ghost" size="sm" className="ml-auto h-7 text-xs">
@@ -636,8 +636,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-emerald-500/10">
-                  <Truck className="w-4 h-4 text-emerald-500" />
+                <div className="p-1.5 rounded-md bg-success/10">
+                  <Truck className="w-4 h-4 text-success" />
                 </div>
                 Consignee (Receiver)
               </CardTitle>
@@ -869,8 +869,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
             <Card className="border-border/60">
               <CardHeader className="pb-4">
                 <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <div className="p-1.5 rounded-md bg-purple-500/10">
-                    <CreditCard className="w-4 h-4 text-purple-500" />
+                  <div className="p-1.5 rounded-md bg-primary/10">
+                    <CreditCard className="w-4 h-4 text-primary" />
                   </div>
                   Charges & Fees
                 </CardTitle>
@@ -947,7 +947,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                       value={formData.charges.advancePaid || ""}
                       onChange={(e) => updateNestedField("charges", "advancePaid", parseFloat(e.target.value) || 0)}
                       placeholder="0"
-                      className="border-emerald-500/30 bg-emerald-500/5"
+                      className="border-success/30 bg-success/5"
                     />
                   </FormField>
                 </div>
@@ -1041,7 +1041,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                     </div>
 
                     {calculation.advancePaid > 0 && (
-                      <div className="flex justify-between text-emerald-600 font-medium pt-2">
+                      <div className="flex justify-between text-success font-medium pt-2">
                         <span>Advance Paid</span>
                         <span>- {formatCurrency(calculation.advancePaid)}</span>
                       </div>

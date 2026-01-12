@@ -106,10 +106,10 @@ interface InvoicePreviewProps {
 
 const statusConfig = {
   draft: { label: "Draft", color: "bg-muted text-muted-foreground" },
-  pending: { label: "Pending", color: "bg-amber-100 text-amber-700" },
-  paid: { label: "Paid", color: "bg-emerald-100 text-emerald-700" },
-  partial: { label: "Partial", color: "bg-blue-100 text-blue-700" },
-  overdue: { label: "Overdue", color: "bg-red-100 text-red-700" },
+  pending: { label: "Pending", color: "bg-warning/10 text-warning" },
+  paid: { label: "Paid", color: "bg-success/10 text-success" },
+  partial: { label: "Partial", color: "bg-primary/10 text-primary" },
+  overdue: { label: "Overdue", color: "bg-destructive/10 text-destructive" },
   cancelled: { label: "Cancelled", color: "bg-muted text-muted-foreground" },
 };
 
@@ -266,7 +266,7 @@ export function InvoicePreview({
                 className="p-1 hover:bg-muted rounded transition-colors"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+                  <Check className="w-4 h-4 text-success" />
                 ) : (
                   <Copy className="w-4 h-4 text-muted-foreground" />
                 )}
