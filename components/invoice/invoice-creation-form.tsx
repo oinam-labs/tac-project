@@ -457,7 +457,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             <div className="space-y-1.5 border-r border-border/40">
                                 <span className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em]">Tracking Bridge</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-lg font-black font-mono text-slate-500">{formData.awbNo || "..."}</span>
+                                    <span className="text-lg font-black font-mono text-muted-foreground">{formData.awbNo || "..."}</span>
                                     <Button variant="ghost" size="icon" className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity" onClick={() => copyToClipboard(formData.awbNo, "AWB")}>
                                         <Copy className="w-3 h-3" />
                                     </Button>
@@ -466,7 +466,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             <div className="space-y-1.5 border-r border-border/40">
                                 <span className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em]">Chronology</span>
                                 <div className="flex items-center gap-2">
-                                    <span className="text-lg font-black text-slate-800">{format(formData.invoiceDate, "dd MMM yyyy")}</span>
+                                    <span className="text-lg font-black text-foreground">{format(formData.invoiceDate, "dd MMM yyyy")}</span>
                                 </div>
                             </div>
                             <div className="flex items-center justify-between pl-4">
@@ -497,34 +497,34 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             </div>
                             <Button variant="outline" size="sm" className="h-7 rounded-lg text-[9px] font-black uppercase tracking-widest bg-primary/5 hover:bg-primary/10 border-primary/10 text-primary">Bridge CRM</Button>
                         </div>
-                        <Card className="bg-white border-2 border-slate-100 rounded-[2.5rem] shadow-xl shadow-slate-200/50 overflow-hidden transition-all hover:border-blue-500/20">
+                        <Card className="bg-white border-2 border-muted rounded-[2.5rem] shadow-xl shadow-muted/50 overflow-hidden transition-all hover:border-primary/20">
                             <CardContent className="p-8 space-y-6">
                                 <div className="space-y-2">
-                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Entity Identity</Label>
+                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Entity Identity</Label>
                                     <Input
                                         value={formData.consignor.name}
                                         onChange={(e) => updateNestedField("consignor", "name", e.target.value)}
                                         placeholder="Full Name / Legal Name"
-                                        className={cn("h-12 rounded-2xl bg-slate-50 border-slate-100 font-black text-slate-700 focus:bg-white focus:border-blue-500 transition-all", errors.consignorName && "border-destructive")}
+                                        className={cn("h-12 rounded-2xl bg-muted border-muted font-black text-foreground focus:bg-white focus:border-primary transition-all", errors.consignorName && "border-destructive")}
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Secure Contact</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Secure Contact</Label>
                                         <Input
                                             value={formData.consignor.phone}
                                             onChange={(e) => updateNestedField("consignor", "phone", e.target.value)}
                                             placeholder="+91"
-                                            className={cn("h-12 rounded-2xl bg-slate-50 border-slate-100 font-bold", errors.consignorPhone && "border-destructive")}
+                                            className={cn("h-12 rounded-2xl bg-muted border-muted font-bold", errors.consignorPhone && "border-destructive")}
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Tax Fingerprint (GST)</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Tax Fingerprint (GST)</Label>
                                         <Input
                                             value={formData.consignor.gstin}
                                             onChange={(e) => updateNestedField("consignor", "gstin", e.target.value)}
                                             placeholder="Optional"
-                                            className="h-12 rounded-2xl bg-slate-50 border-slate-100 font-bold uppercase"
+                                            className="h-12 rounded-2xl bg-muted border-muted font-bold uppercase"
                                         />
                                     </div>
                                 </div>
@@ -550,34 +550,34 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                 <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Consignee Details</p>
                             </div>
                         </div>
-                        <Card className="bg-white border-2 border-slate-100 rounded-[2.5rem] shadow-xl shadow-slate-200/50 overflow-hidden transition-all hover:border-blue-500/20">
+                        <Card className="bg-white border-2 border-muted rounded-[2.5rem] shadow-xl shadow-muted/50 overflow-hidden transition-all hover:border-primary/20">
                             <CardContent className="p-8 space-y-6">
                                 <div className="space-y-2">
-                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Entity Identity</Label>
+                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Entity Identity</Label>
                                     <Input
                                         value={formData.consignee.name}
                                         onChange={(e) => updateNestedField("consignee", "name", e.target.value)}
                                         placeholder="Receiver Name"
-                                        className={cn("h-12 rounded-2xl bg-slate-50 border-slate-100 font-black text-slate-700 focus:bg-white focus:border-blue-500 transition-all", errors.consigneeName && "border-destructive")}
+                                        className={cn("h-12 rounded-2xl bg-muted border-muted font-black text-foreground focus:bg-white focus:border-primary transition-all", errors.consigneeName && "border-destructive")}
                                     />
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Secure Contact</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Secure Contact</Label>
                                         <Input
                                             value={formData.consignee.phone}
                                             onChange={(e) => updateNestedField("consignee", "phone", e.target.value)}
                                             placeholder="+91"
-                                            className={cn("h-12 rounded-2xl bg-slate-50 border-slate-100 font-bold", errors.consigneePhone && "border-destructive")}
+                                            className={cn("h-12 rounded-2xl bg-muted border-muted font-bold", errors.consigneePhone && "border-destructive")}
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Digital Notification (Email)</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Digital Notification (Email)</Label>
                                         <Input
                                             value={formData.consignee.email}
                                             onChange={(e) => updateNestedField("consignee", "email", e.target.value)}
                                             placeholder="Optional"
-                                            className="h-12 rounded-2xl bg-slate-50 border-slate-100 font-bold"
+                                            className="h-12 rounded-2xl bg-muted border-muted font-bold"
                                         />
                                     </div>
                                 </div>
@@ -623,12 +623,12 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
 
                             <div className="space-y-3">
                                 {formData.packages.map((pkg, index) => (
-                                    <Card key={pkg.id} className="relative group overflow-hidden border-2 border-slate-100 rounded-[2rem] shadow-lg shadow-slate-200/30 transition-all hover:border-blue-500/10">
+                                    <Card key={pkg.id} className="relative group overflow-hidden border-2 border-muted rounded-[2rem] shadow-lg shadow-muted/30 transition-all hover:border-primary/10">
                                         <CardContent className="p-6">
                                             <div className="grid grid-cols-12 gap-6">
                                                 {/* Header Row */}
                                                 <div className="col-span-12 flex items-center justify-between mb-2">
-                                                    <Badge variant="ghost" className="px-0 text-[10px] font-black uppercase tracking-widest text-slate-400">Unit #{index + 1} System ID: {pkg.id.split('-')[0]}</Badge>
+                                                    <Badge variant="ghost" className="px-0 text-[10px] font-black uppercase tracking-widest text-muted-foreground">Unit #{index + 1} System ID: {pkg.id.split('-')[0]}</Badge>
                                                     <div className="flex items-center gap-1">
                                                         <Button
                                                             variant="ghost"
@@ -654,21 +654,21 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
 
                                                 {/* Row 1: Description & Category */}
                                                 <div className="col-span-8 space-y-2">
-                                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Manifest Description</Label>
+                                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Manifest Description</Label>
                                                     <Input
                                                         value={pkg.description}
                                                         onChange={(e) => updatePackage(pkg.id, "description", e.target.value)}
                                                         placeholder="Item contents for manifest..."
-                                                        className={cn("h-11 rounded-xl bg-slate-50/50 border-slate-100 font-bold focus:bg-white", errors[`pkg${index}Desc`] && "border-destructive")}
+                                                        className={cn("h-11 rounded-xl bg-muted/50 border-muted font-bold focus:bg-white", errors[`pkg${index}Desc`] && "border-destructive")}
                                                     />
                                                 </div>
                                                 <div className="col-span-4 space-y-2">
-                                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Classification</Label>
+                                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Classification</Label>
                                                     <Select
                                                         value={pkg.category}
                                                         onValueChange={(v) => updatePackage(pkg.id, "category", v)}
                                                     >
-                                                        <SelectTrigger className="h-11 rounded-xl bg-slate-50/50 border-slate-100 font-bold focus:bg-white">
+                                                        <SelectTrigger className="h-11 rounded-xl bg-muted/50 border-muted font-bold focus:bg-white">
                                                             <SelectValue />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -682,42 +682,42 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
 
                                                 {/* Row 2: Dims & Weight */}
                                                 <div className="col-span-3 space-y-2">
-                                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Quantity (Pcs)</Label>
+                                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Quantity (Pcs)</Label>
                                                     <Input
                                                         type="number"
                                                         min={1}
                                                         value={pkg.quantity}
                                                         onChange={(e) => updatePackage(pkg.id, "quantity", parseInt(e.target.value) || 1)}
-                                                        className="h-11 rounded-xl bg-slate-50/50 border-slate-100 font-black text-center"
+                                                        className="h-11 rounded-xl bg-muted/50 border-muted font-black text-center"
                                                     />
                                                 </div>
                                                 <div className="col-span-6 space-y-2">
-                                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Dimensions (L × W × H cm)</Label>
+                                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Dimensions (L × W × H cm)</Label>
                                                     <div className="flex items-center gap-2">
                                                         <Input
                                                             placeholder="L"
-                                                            className="h-11 rounded-xl bg-slate-50/50 border-slate-100 font-black text-center px-1"
+                                                            className="h-11 rounded-xl bg-muted/50 border-muted font-black text-center px-1"
                                                             value={pkg.length || ""}
                                                             onChange={(e) => updatePackage(pkg.id, "length", parseFloat(e.target.value) || 0)}
                                                         />
-                                                        <span className="text-slate-300 font-black">×</span>
+                                                        <span className="text-muted font-black">×</span>
                                                         <Input
                                                             placeholder="W"
-                                                            className="h-11 rounded-xl bg-slate-50/50 border-slate-100 font-black text-center px-1"
+                                                            className="h-11 rounded-xl bg-muted/50 border-muted font-black text-center px-1"
                                                             value={pkg.width || ""}
                                                             onChange={(e) => updatePackage(pkg.id, "width", parseFloat(e.target.value) || 0)}
                                                         />
-                                                        <span className="text-slate-300 font-black">×</span>
+                                                        <span className="text-muted font-black">×</span>
                                                         <Input
                                                             placeholder="H"
-                                                            className="h-11 rounded-xl bg-slate-50/50 border-slate-100 font-black text-center px-1"
+                                                            className="h-11 rounded-xl bg-muted/50 border-muted font-black text-center px-1"
                                                             value={pkg.height || ""}
                                                             onChange={(e) => updatePackage(pkg.id, "height", parseFloat(e.target.value) || 0)}
                                                         />
                                                     </div>
                                                 </div>
                                                 <div className="col-span-3 space-y-2">
-                                                    <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Actual Net Wt (kg)</Label>
+                                                    <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Actual Net Wt (kg)</Label>
                                                     <Input
                                                         type="number"
                                                         step="0.1"
@@ -749,7 +749,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             <div className="grid grid-cols-2 gap-8">
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Base Rate (₹/Kg)</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Base Rate (₹/Kg)</Label>
                                         <Input
                                             type="number"
                                             value={formData.charges.ratePerKg}
@@ -758,41 +758,41 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Pickup Surcharge</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Pickup Surcharge</Label>
                                         <Input
                                             type="number"
                                             value={formData.charges.pickupCharge}
                                             onChange={(e) => updateNestedField("charges", "pickupCharge", parseFloat(e.target.value) || 0)}
-                                            className="h-11 rounded-xl bg-slate-50 border-slate-100 font-bold"
+                                            className="h-11 rounded-xl bg-muted border-muted font-bold"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Delivery Surcharge</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Delivery Surcharge</Label>
                                         <Input
                                             type="number"
                                             value={formData.charges.deliveryCharge}
                                             onChange={(e) => updateNestedField("charges", "deliveryCharge", parseFloat(e.target.value) || 0)}
-                                            className="h-11 rounded-xl bg-slate-50 border-slate-100 font-bold"
+                                            className="h-11 rounded-xl bg-muted border-muted font-bold"
                                         />
                                     </div>
                                 </div>
                                 <div className="space-y-4">
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Packing Solution Charge</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Packing Solution Charge</Label>
                                         <Input
                                             type="number"
                                             value={formData.charges.packingCharge}
                                             onChange={(e) => updateNestedField("charges", "packingCharge", parseFloat(e.target.value) || 0)}
-                                            className="h-11 rounded-xl bg-slate-50 border-slate-100 font-bold"
+                                            className="h-11 rounded-xl bg-muted border-muted font-bold"
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Operational / Handling</Label>
+                                        <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Operational / Handling</Label>
                                         <Input
                                             type="number"
                                             value={formData.charges.handlingCharge}
                                             onChange={(e) => updateNestedField("charges", "handlingCharge", parseFloat(e.target.value) || 0)}
-                                            className="h-11 rounded-xl bg-slate-50 border-slate-100 font-bold"
+                                            className="h-11 rounded-xl bg-muted border-muted font-bold"
                                         />
                                     </div>
                                     <div className="space-y-2">
@@ -808,10 +808,10 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             </div>
 
                             <div className="pt-4">
-                                <Label className="text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Internal Log / Remarks</Label>
+                                <Label className="text-[9px] font-black text-muted-foreground uppercase tracking-[0.2em] ml-1">Internal Log / Remarks</Label>
                                 <Textarea
                                     placeholder="Add operational notes or discrepancies..."
-                                    className="mt-2 rounded-[1.5rem] bg-slate-50 border-slate-100 font-medium min-h-[100px]"
+                                    className="mt-2 rounded-[1.5rem] bg-muted border-muted font-medium min-h-[100px]"
                                     value={formData.remarks}
                                     onChange={(e) => updateField("remarks", e.target.value)}
                                 />
@@ -821,7 +821,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
 
                     {/* Right Column: Sticky Summary */}
                     <div className="md:col-span-5 sticky top-6">
-                        <Card className="bg-slate-900 border-0 rounded-[2.5rem] shadow-2xl overflow-hidden text-white backdrop-blur-xl">
+                        <Card className="bg-card border-0 rounded-[2.5rem] shadow-2xl overflow-hidden text-white backdrop-blur-xl">
                             <CardHeader className="pb-6 border-b border-white/10 p-8">
                                 <div className="flex items-center justify-between">
                                     <CardTitle className="text-[11px] font-black uppercase tracking-[0.3em] text-blue-400">Ledger Summary</CardTitle>
@@ -833,11 +833,11 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                             <CardContent className="p-0">
                                 {/* Weight Logic Display */}
                                 <div className="p-8 bg-white/5 space-y-4 border-b border-white/5">
-                                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                         <span>Actual Mass</span>
                                         <span className="text-white">{calculation.actualWeight.toFixed(1)} KG</span>
                                     </div>
-                                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-slate-400">
+                                    <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                         <span>Volumetric Volume</span>
                                         <span className="text-white">{calculation.volumetricWeight.toFixed(1)} KG</span>
                                     </div>
@@ -850,11 +850,11 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                 {/* Cost Breakdown */}
                                 <div className="p-8 space-y-5">
                                     <div className="flex justify-between items-center">
-                                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Strategic Freight</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Strategic Freight</span>
                                         <span className="font-mono text-sm">{formatCurrency(calculation.charges.freightCharge)}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
-                                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Logistics Surcharges</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Logistics Surcharges</span>
                                         <span className="font-mono text-sm">{formatCurrency(calculation.charges.pickupCharge + calculation.charges.deliveryCharge + calculation.charges.packingCharge + calculation.charges.handlingCharge)}</span>
                                     </div>
 
@@ -863,12 +863,12 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                     </div>
 
                                     <div className="flex justify-between items-center">
-                                        <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Taxable Component</span>
+                                        <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Taxable Component</span>
                                         <span className="font-mono text-sm">{formatCurrency(calculation.tax.subtotal)}</span>
                                     </div>
                                     <div className="flex justify-between items-center">
                                         <div className="space-y-0.5">
-                                            <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">Government Levy</span>
+                                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Government Levy</span>
                                             <p className="text-[8px] font-black text-blue-400/60 uppercase">GST Applied @ {calculation.tax.isInterState ? 18 : 18}%</p>
                                         </div>
                                         <span className="font-mono text-sm text-blue-400">+{formatCurrency(calculation.tax.totalTax)}</span>
@@ -878,7 +878,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                         <div className="flex justify-between items-end">
                                             <div className="space-y-1">
                                                 <span className="text-[10px] font-black uppercase tracking-[0.3em] text-blue-400">Grand Protocol Total</span>
-                                                <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Inclusive of all surcharges</p>
+                                                <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Inclusive of all surcharges</p>
                                             </div>
                                             <span className="text-4xl font-black tracking-tighter text-white leading-none">{formatCurrency(calculation.tax.grandTotal)}</span>
                                         </div>
@@ -887,7 +887,7 @@ export function InvoiceCreationForm({ onSuccess, onCancel }: InvoiceCreationForm
                                     <div className="bg-blue-500/10 p-4 rounded-2xl border border-blue-500/20 flex justify-between items-center mt-6">
                                         <div className="space-y-0.5">
                                             <span className="text-[9px] font-black uppercase tracking-widest text-blue-400">Outstanding Commitment</span>
-                                            <p className="text-[10px] font-bold text-slate-300">After Advance Commitment</p>
+                                            <p className="text-[10px] font-bold text-muted">After Advance Commitment</p>
                                         </div>
                                         <span className="text-xl font-black text-white">{formatCurrency(calculation.balanceDue)}</span>
                                     </div>

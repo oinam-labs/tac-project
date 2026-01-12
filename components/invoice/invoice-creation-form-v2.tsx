@@ -575,8 +575,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-blue-500/10">
-                  <User className="w-4 h-4 text-blue-500" />
+                <div className="p-1.5 rounded-md bg-primary/10">
+                  <User className="w-4 h-4 text-primary" />
                 </div>
                 Consignor (Sender)
                 <Button variant="ghost" size="sm" className="ml-auto h-7 text-xs">
@@ -636,8 +636,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-emerald-500/10">
-                  <Truck className="w-4 h-4 text-emerald-500" />
+                <div className="p-1.5 rounded-md bg-success/10">
+                  <Truck className="w-4 h-4 text-success" />
                 </div>
                 Consignee (Receiver)
               </CardTitle>
@@ -704,8 +704,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    <div className="p-1.5 rounded-md bg-orange-500/10">
-                      <Package className="w-4 h-4 text-orange-500" />
+                    <div className="p-1.5 rounded-md bg-warning/10">
+                      <Package className="w-4 h-4 text-warning" />
                     </div>
                     Shipment Details
                   </CardTitle>
@@ -947,7 +947,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                       value={formData.charges.advancePaid || ""}
                       onChange={(e) => updateNestedField("charges", "advancePaid", parseFloat(e.target.value) || 0)}
                       placeholder="0"
-                      className="border-emerald-500/30 bg-emerald-500/5"
+                      className="border-success/30 bg-success/5"
                     />
                   </FormField>
                 </div>
@@ -1041,14 +1041,14 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                     </div>
 
                     {calculation.advancePaid > 0 && (
-                      <div className="flex justify-between text-emerald-600 font-medium pt-2">
+                      <div className="flex justify-between text-success font-medium pt-2">
                         <span>Advance Paid</span>
                         <span>- {formatCurrency(calculation.advancePaid)}</span>
                       </div>
                     )}
 
                     {calculation.balanceDue > 0 && calculation.balanceDue !== calculation.tax.grandTotal && (
-                      <div className="flex justify-between text-orange-600 font-bold pt-1 text-base">
+                      <div className="flex justify-between text-warning font-bold pt-1 text-base">
                         <span>Balance Due</span>
                         <span>{formatCurrency(calculation.balanceDue)}</span>
                       </div>

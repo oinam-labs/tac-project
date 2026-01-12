@@ -15,106 +15,106 @@ interface PricingWidgetProps {
 
 export function PricingWidget({ data, totals, onUpdate }: PricingWidgetProps) {
     return (
-        <Card className="border-slate-200 shadow-sm h-full">
+        <Card className="border-muted shadow-sm h-full">
             <CardContent className="p-6 space-y-6">
                 <div>
-                    <h3 className="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Pricing Configuration</h3>
+                    <h3 className="text-xs font-black uppercase tracking-widest text-muted-foreground mb-4">Pricing Configuration</h3>
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-1.5">
-                            <Label className="text-[10px] uppercase font-bold text-slate-400">Rate / Kg</Label>
+                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">Rate / Kg</Label>
                             <div className="relative">
-                                <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">₹</span>
+                                <span className="absolute left-3 top-2.5 text-xs font-bold text-muted-foreground">₹</span>
                                 <Input
                                     type="number"
                                     value={data.ratePerKg}
                                     onChange={(e) => onUpdate("ratePerKg", Number(e.target.value))}
-                                    className="pl-7 font-black text-blue-600 border-slate-200 focus-visible:ring-blue-500/20"
+                                    className="pl-7 font-black text-primary border-muted focus-visible:ring-primary/20"
                                 />
                             </div>
                         </div>
                         <div className="space-y-1.5">
-                            <Label className="text-[10px] uppercase font-bold text-slate-400">GST Rate %</Label>
+                            <Label className="text-[10px] uppercase font-bold text-muted-foreground">GST Rate %</Label>
                             <Input
                                 type="number"
                                 value={data.gstRate}
                                 onChange={(e) => onUpdate("gstRate", Number(e.target.value))}
-                                className="font-bold border-slate-200 focus-visible:ring-blue-500/20"
+                                className="font-bold border-muted focus-visible:ring-primary/20"
                             />
                         </div>
                     </div>
                 </div>
 
                 <div className="space-y-3">
-                    <h4 className="text-[9px] font-black uppercase tracking-widest text-slate-300">Ancillary Charges</h4>
+                    <h4 className="text-[9px] font-black uppercase tracking-widest text-muted">Ancillary Charges</h4>
                     <div className="grid grid-cols-2 gap-3">
                         <div className="space-y-1">
-                            <Label className="text-[9px] uppercase font-bold text-slate-400">Pickup</Label>
+                            <Label className="text-[9px] uppercase font-bold text-muted-foreground">Pickup</Label>
                             <Input
                                 type="number"
                                 value={data.pickupCharge}
                                 onChange={(e) => onUpdate("pickupCharge", Number(e.target.value))}
-                                className="h-8 text-xs font-bold border-slate-200"
+                                className="h-8 text-xs font-bold border-muted"
                             />
                         </div>
                         <div className="space-y-1">
-                            <Label className="text-[9px] uppercase font-bold text-slate-400">Packing</Label>
+                            <Label className="text-[9px] uppercase font-bold text-muted-foreground">Packing</Label>
                             <Input
                                 type="number"
                                 value={data.packingCharge}
                                 onChange={(e) => onUpdate("packingCharge", Number(e.target.value))}
-                                className="h-8 text-xs font-bold border-slate-200"
+                                className="h-8 text-xs font-bold border-muted"
                             />
                         </div>
                         <div className="space-y-1">
-                            <Label className="text-[9px] uppercase font-bold text-slate-400">Docket</Label>
+                            <Label className="text-[9px] uppercase font-bold text-muted-foreground">Docket</Label>
                             <Input
                                 type="number"
                                 value={data.docketCharges}
                                 onChange={(e) => onUpdate("docketCharges", Number(e.target.value))}
-                                className="h-8 text-xs font-bold border-slate-200"
+                                className="h-8 text-xs font-bold border-muted"
                             />
                         </div>
                         <div className="space-y-1">
-                            <Label className="text-[9px] uppercase font-bold text-slate-400">Insurance</Label>
+                            <Label className="text-[9px] uppercase font-bold text-muted-foreground">Insurance</Label>
                             <Input
                                 type="number"
                                 value={data.insuranceCharge}
                                 onChange={(e) => onUpdate("insuranceCharge", Number(e.target.value))}
-                                className="h-8 text-xs font-bold border-slate-200"
+                                className="h-8 text-xs font-bold border-muted"
                             />
                         </div>
                     </div>
                 </div>
 
-                <Separator className="bg-slate-100" />
+                <Separator className="bg-muted" />
 
                 <div className="space-y-2">
-                    <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="flex justify-between items-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                         <span>Subtotal</span>
-                        <span className="text-slate-900">₹{totals.taxableAmount.toFixed(2)}</span>
+                        <span className="text-foreground">₹{totals.taxableAmount.toFixed(2)}</span>
                     </div>
-                    <div className="flex justify-between items-center text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    <div className="flex justify-between items-center text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
                         <span>GST ({data.gstRate}%)</span>
-                        <span className="text-slate-900">₹{totals.taxAmount.toFixed(2)}</span>
+                        <span className="text-foreground">₹{totals.taxAmount.toFixed(2)}</span>
                     </div>
                 </div>
 
-                <div className="bg-slate-50 p-4 rounded-xl space-y-3 border border-slate-100">
+                <div className="bg-muted p-4 rounded-xl space-y-3 border border-muted">
                     <div className="space-y-1.5">
-                        <Label className="text-[9px] uppercase font-bold text-green-600">Advance Paid</Label>
+                        <Label className="text-[9px] uppercase font-bold text-success-foreground">Advance Paid</Label>
                         <div className="relative">
-                            <span className="absolute left-3 top-2.5 text-xs font-bold text-green-600">₹</span>
+                            <span className="absolute left-3 top-2.5 text-xs font-bold text-success-foreground">₹</span>
                             <Input
                                 type="number"
                                 value={data.advancePaid}
                                 onChange={(e) => onUpdate("advancePaid", Number(e.target.value))}
-                                className="pl-7 font-black text-green-700 bg-white border-green-100 focus-visible:ring-green-500/20"
+                                className="pl-7 font-black text-success-foreground bg-white border-success focus-visible:ring-success/20"
                             />
                         </div>
                     </div>
                     <div className="flex justify-between items-center pt-2">
-                        <span className="text-[10px] font-black uppercase tracking-widest text-slate-400">Balance Due</span>
-                        <span className="text-xl font-black text-slate-900">₹{totals.balance.toFixed(0)}</span>
+                        <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Balance Due</span>
+                        <span className="text-xl font-black text-foreground">₹{totals.balance.toFixed(0)}</span>
                     </div>
                 </div>
             </CardContent>

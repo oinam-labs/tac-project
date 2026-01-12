@@ -119,7 +119,7 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
           <h1 className="text-2xl font-bold uppercase tracking-wide">
             {data.companyName}
           </h1>
-          <p className="text-xs text-gray-600">(DELHI-IMPHAL-DELHI)</p>
+          <p className="text-xs text-muted-foreground">(DELHI-IMPHAL-DELHI)</p>
           <p className="text-xs mt-1">{data.companyAddress}</p>
           <p className="text-xs">
             GSTIN: {data.companyGSTIN} | Mobile: {data.companyPhone}
@@ -135,22 +135,22 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
 
         {/* Invoice Header Row */}
         <div className="grid grid-cols-4 gap-2 mb-4 text-xs">
-          <div className="border border-gray-400 p-2">
-            <div className="text-gray-600">Consignment No.</div>
+          <div className="border border-muted p-2">
+            <div className="text-muted-foreground">Consignment No.</div>
             <div className="font-bold text-base">{data.consignmentNo}</div>
           </div>
-          <div className="border border-gray-400 p-2">
-            <div className="text-gray-600">Date of Booking</div>
+          <div className="border border-muted p-2">
+            <div className="text-muted-foreground">Date of Booking</div>
             <div className="font-bold">
               {format(data.invoiceDate, "dd MMM yyyy")}
             </div>
           </div>
-          <div className="border border-gray-400 p-2">
-            <div className="text-gray-600">Nature of Quantity</div>
+          <div className="border border-muted p-2">
+            <div className="text-muted-foreground">Nature of Quantity</div>
             <div className="font-bold">{data.natureOfQuantity || "Others"}</div>
           </div>
-          <div className="border border-gray-400 p-2">
-            <div className="text-gray-600">Declared Value</div>
+          <div className="border border-muted p-2">
+            <div className="text-muted-foreground">Declared Value</div>
             <div className="font-bold">
               {data.declaredValue ? formatCurrency(data.declaredValue) : "USED"}
             </div>
@@ -160,8 +160,8 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
         {/* Consignor / Consignee Section */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           {/* Consignor */}
-          <div className="border border-gray-400 p-3">
-            <h3 className="font-bold text-xs uppercase text-gray-600 mb-2 border-b pb-1">
+          <div className="border border-muted p-3">
+            <h3 className="font-bold text-xs uppercase text-muted-foreground mb-2 border-b pb-1">
               CONSIGNOR
             </h3>
             <div className="font-bold">{data.consignorName}</div>
@@ -178,8 +178,8 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
           </div>
 
           {/* Consignee */}
-          <div className="border border-gray-400 p-3">
-            <h3 className="font-bold text-xs uppercase text-gray-600 mb-2 border-b pb-1">
+          <div className="border border-muted p-3">
+            <h3 className="font-bold text-xs uppercase text-muted-foreground mb-2 border-b pb-1">
               CONSIGNEE
             </h3>
             <div className="font-bold">{data.consigneeName}</div>
@@ -196,38 +196,38 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
         {/* Courier Details & Payment Section */}
         <div className="grid grid-cols-2 gap-4 mb-4">
           {/* Courier Details */}
-          <div className="border border-gray-400 p-3">
-            <h3 className="font-bold text-xs uppercase text-gray-600 mb-2 border-b pb-1">
+          <div className="border border-muted p-3">
+            <h3 className="font-bold text-xs uppercase text-muted-foreground mb-2 border-b pb-1">
               Courier Details & Rate
             </h3>
             <table className="w-full text-xs">
               <tbody>
                 <tr>
-                  <td className="py-1 text-gray-600">Origin</td>
+                  <td className="py-1 text-muted-foreground">Origin</td>
                   <td className="py-1 font-medium">{data.origin}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Destination</td>
+                  <td className="py-1 text-muted-foreground">Destination</td>
                   <td className="py-1 font-medium">{data.destination}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">No. of Pieces</td>
+                  <td className="py-1 text-muted-foreground">No. of Pieces</td>
                   <td className="py-1 font-medium">{data.pieces}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Actual Weight</td>
+                  <td className="py-1 text-muted-foreground">Actual Weight</td>
                   <td className="py-1 font-medium">{data.actualWeight} Kg</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Charged Weight</td>
+                  <td className="py-1 text-muted-foreground">Charged Weight</td>
                   <td className="py-1 font-medium">{data.chargeableWeight} Kg</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Rate</td>
+                  <td className="py-1 text-muted-foreground">Rate</td>
                   <td className="py-1 font-medium">Rs. {data.ratePerKg}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Remarks</td>
+                  <td className="py-1 text-muted-foreground">Remarks</td>
                   <td className="py-1 font-medium">{data.remarks || data.paymentMode}</td>
                 </tr>
               </tbody>
@@ -235,46 +235,46 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
           </div>
 
           {/* Payment Details */}
-          <div className="border border-gray-400 p-3">
-            <h3 className="font-bold text-xs uppercase text-gray-600 mb-2 border-b pb-1">
+          <div className="border border-muted p-3">
+            <h3 className="font-bold text-xs uppercase text-muted-foreground mb-2 border-b pb-1">
               Payment Details
             </h3>
             <table className="w-full text-xs">
               <tbody>
                 <tr>
-                  <td className="py-1 text-gray-600">Payment Mode</td>
+                  <td className="py-1 text-muted-foreground">Payment Mode</td>
                   <td className="py-1 text-right font-medium">{data.paymentMode}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Freight</td>
+                  <td className="py-1 text-muted-foreground">Freight</td>
                   <td className="py-1 text-right">Rs. {data.freightCharge.toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Pickup Charge</td>
+                  <td className="py-1 text-muted-foreground">Pickup Charge</td>
                   <td className="py-1 text-right">Rs. {data.pickupCharge.toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Packing</td>
+                  <td className="py-1 text-muted-foreground">Packing</td>
                   <td className="py-1 text-right">Rs. {data.packingCharge.toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Docket Charges</td>
+                  <td className="py-1 text-muted-foreground">Docket Charges</td>
                   <td className="py-1 text-right">Rs. {(data.handlingCharge || 0).toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Insurance Charge</td>
+                  <td className="py-1 text-muted-foreground">Insurance Charge</td>
                   <td className="py-1 text-right">Rs. {data.insuranceCharge.toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">GST ({data.igst > 0 ? "18" : "0"}%)</td>
+                  <td className="py-1 text-muted-foreground">GST ({data.igst > 0 ? "18" : "0"}%)</td>
                   <td className="py-1 text-right">Rs. {data.totalTax.toFixed(2)}</td>
                 </tr>
-                <tr className="border-t border-gray-300">
+                <tr className="border-t border-muted">
                   <td className="py-1 font-bold">Total</td>
                   <td className="py-1 text-right font-bold">Rs. {data.grandTotal.toFixed(2)}</td>
                 </tr>
                 <tr>
-                  <td className="py-1 text-gray-600">Advance Paid Amount</td>
+                  <td className="py-1 text-muted-foreground">Advance Paid Amount</td>
                   <td className="py-1 text-right">Rs. {data.advancePaid.toFixed(2)}</td>
                 </tr>
                 <tr className="border-t-2 border-black">
@@ -313,7 +313,7 @@ export const InvoiceDocument = forwardRef<HTMLDivElement, InvoiceDocumentProps>(
         )}
 
         {/* Footer */}
-        <div className="mt-4 pt-3 border-t border-gray-300 text-center text-xs text-gray-600">
+        <div className="mt-4 pt-3 border-t border-muted text-center text-xs text-muted-foreground">
           <p>Thank you for choosing {data.companyName}!</p>
           <p className="mt-1">For queries, contact: {data.companyPhone}</p>
         </div>
