@@ -43,22 +43,22 @@ export function RevenueSummaryChart({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-3 gap-4 mb-6">
-            <div className="p-4 rounded-lg bg-emerald-500/10 border border-emerald-500/20">
+            <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
               <div className="flex items-center gap-2 mb-2">
-                <TrendingUp className="w-4 h-4 text-emerald-500" />
-                <span className="text-xs text-emerald-600 font-medium">Collected</span>
+                <TrendingUp className="w-4 h-4 text-primary" />
+                <span className="text-xs text-primary font-medium">Collected</span>
               </div>
-              <div className="text-2xl font-bold text-emerald-600">
+              <div className="text-2xl font-bold text-primary">
                 ₹{(totalReceived / 1000).toFixed(1)}K
               </div>
             </div>
             
-            <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
+            <div className="p-4 rounded-lg bg-warning/10 border border-warning/20">
               <div className="flex items-center gap-2 mb-2">
-                <Wallet className="w-4 h-4 text-amber-500" />
-                <span className="text-xs text-amber-600 font-medium">Outstanding</span>
+                <Wallet className="w-4 h-4 text-warning" />
+                <span className="text-xs text-warning font-medium">Outstanding</span>
               </div>
-              <div className="text-2xl font-bold text-amber-600">
+              <div className="text-2xl font-bold text-warning">
                 ₹{(totalOutstanding / 1000).toFixed(1)}K
               </div>
             </div>
