@@ -173,11 +173,11 @@ export function MissionControl({
           </div>
           <StatusPipeline
             stages={[
-              { id: "pending", label: "Pending", count: stats.shipments.pending, icon: Clock, color: "text-slate-500 bg-slate-500/10" },
-              { id: "in_transit", label: "In Transit", count: stats.shipments.inTransit, icon: Truck, color: "text-amber-500 bg-amber-500/10" },
-              { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-purple-500 bg-purple-500/10" },
-              { id: "delivered", label: "Delivered", count: stats.shipments.delivered, icon: CheckCircle, color: "text-emerald-500 bg-emerald-500/10" },
-              { id: "failed", label: "Failed", count: stats.shipments.failed, icon: AlertCircle, color: "text-red-500 bg-red-500/10" },
+              { id: "pending", label: "Pending", count: stats.shipments.pending, icon: Clock, color: "text-muted-foreground bg-muted/50" },
+              { id: "in_transit", label: "In Transit", count: stats.shipments.inTransit, icon: Truck, color: "text-warning bg-warning/10" },
+              { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-primary bg-primary/10" },
+              { id: "delivered", label: "Delivered", count: stats.shipments.delivered, icon: CheckCircle, color: "text-success bg-success/10" },
+              { id: "failed", label: "Failed", count: stats.shipments.failed, icon: AlertCircle, color: "text-destructive bg-destructive/10" },
             ]}
           />
         </GlassPanel>

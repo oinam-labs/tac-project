@@ -154,12 +154,12 @@ interface InvoiceDetailClientProps {
 }
 
 const statusConfig: Record<InvoiceStatus, { label: string; bgColor: string; dotColor: string }> = {
-  draft: { label: "Draft Protocol", bgColor: "bg-slate-100 text-slate-600 border-slate-200", dotColor: "bg-slate-400" },
-  pending: { label: "Awaiting Settlement", bgColor: "bg-amber-50 text-amber-700 border-amber-100", dotColor: "bg-amber-500" },
-  paid: { label: "Settlement Confirmed", bgColor: "bg-emerald-50 text-emerald-700 border-emerald-100", dotColor: "bg-emerald-500" },
-  partial: { label: "Partial Settlement", bgColor: "bg-blue-50 text-blue-700 border-blue-100", dotColor: "bg-blue-500" },
-  overdue: { label: "Overdue Alert", bgColor: "bg-red-50 text-red-700 border-red-100", dotColor: "bg-red-500" },
-  cancelled: { label: "Protocol Aborted", bgColor: "bg-slate-100 text-slate-400 border-slate-200", dotColor: "bg-slate-300" },
+  draft: { label: "Draft Protocol", bgColor: "bg-muted/50 text-muted-foreground border-muted", dotColor: "bg-muted" },
+  pending: { label: "Awaiting Settlement", bgColor: "bg-warning/10 text-warning border-warning/20", dotColor: "bg-warning" },
+  paid: { label: "Settlement Confirmed", bgColor: "bg-success/10 text-success border-success/20", dotColor: "bg-success" },
+  partial: { label: "Partial Settlement", bgColor: "bg-primary/10 text-primary border-primary/20", dotColor: "bg-primary" },
+  overdue: { label: "Overdue Alert", bgColor: "bg-destructive/10 text-destructive border-destructive/20", dotColor: "bg-destructive" },
+  cancelled: { label: "Protocol Aborted", bgColor: "bg-muted/50 text-muted-foreground border-muted", dotColor: "bg-muted" },
 };
 
 export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
@@ -314,23 +314,23 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
 
   return (
     <div className="p-6 space-y-6">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-[2.5rem] border-2 border-slate-100 shadow-sm relative overflow-hidden">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white p-8 rounded-[2.5rem] border-2 border-muted shadow-sm relative overflow-hidden">
         <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -mr-32 -mt-32 blur-3xl opacity-50" />
         <div className="flex items-center gap-6 relative">
-          <Button variant="ghost" size="icon" asChild className="h-12 w-12 rounded-2xl bg-slate-50 hover:bg-slate-100 transition-all border border-slate-100">
+          <Button variant="ghost" size="icon" asChild className="h-12 w-12 rounded-2xl bg-muted/50 hover:bg-muted/50 transition-all border border-muted">
             <Link href="/dashboard/invoices">
               <ArrowLeft className="w-5 h-5" />
             </Link>
           </Button>
           <div className="space-y-1">
             <div className="flex items-center gap-3">
-              <h1 className="text-4xl font-black tracking-tighter text-slate-900 leading-none">{invoice.invoice_no}</h1>
+              <h1 className="text-4xl font-black tracking-tighter text-foreground leading-none">{invoice.invoice_no}</h1>
               <button
                 onClick={handleCopyInvoiceNo}
-                className="p-2 hover:bg-slate-100 rounded-xl transition-all text-slate-400 hover:text-primary border border-transparent hover:border-slate-200"
+                className="p-2 hover:bg-muted/50 rounded-xl transition-all text-muted-foreground hover:text-primary border border-transparent hover:border-muted"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+                  <Check className="w-4 h-4 text-success" />
                 ) : (
                   <Copy className="w-4 h-4" />
                 )}
@@ -341,8 +341,8 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
                 <span className={cn("w-1.5 h-1.5 rounded-full", status.dotColor)} />
                 {status.label}
               </Badge>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
-                AWB PROTOCOL: <span className="text-slate-900">{invoice.awb_no || "N/A"}</span>
+              <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">
+                AWB PROTOCOL: <span className="text-foreground">{invoice.awb_no || "N/A"}</span>
               </span>
             </div>
           </div>
@@ -422,11 +422,11 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
         <TabsContent value="details" className="mt-6 space-y-6">
           {/* Summary Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <SummaryCard label="Total Protocol Value" value={`₹${invoice.total_amount.toLocaleString("en-IN")}`} color="text-slate-900" />
+            <SummaryCard label="Total Protocol Value" value={`₹${invoice.total_amount.toLocaleString("en-IN")}`} color="text-foreground" />
             <SummaryCard
               label="Outstanding Liability"
               value={`₹${invoice.balance_due.toLocaleString("en-IN")}`}
-              color={invoice.balance_due > 0 ? "text-red-500" : "text-emerald-500"}
+              color={invoice.balance_due > 0 ? "text-destructive" : "text-success"}
               subValue={invoice.balance_due > 0 ? "Settlement Req." : "Clear Protocol"}
             />
             <SummaryCard label="Package Count" value={invoice.total_pieces?.toString() || "1"} />
@@ -435,33 +435,33 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
 
           {/* Consignor & Consignee */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card className="rounded-[2.5rem] border-2 border-slate-100 shadow-sm overflow-hidden">
-              <CardHeader className="bg-slate-50 border-b border-slate-100 py-4 px-8">
-                <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">Origin Protocol (Shipper)</CardTitle>
+            <Card className="rounded-[2.5rem] border-2 border-muted shadow-sm overflow-hidden">
+              <CardHeader className="bg-muted/50 border-b border-muted py-4 px-8">
+                <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Origin Protocol (Shipper)</CardTitle>
               </CardHeader>
               <CardContent className="p-8 space-y-4">
                 <div>
-                  <div className="text-xl font-black text-slate-900 leading-tight">{invoice.shipper_name || invoice.customers?.name || "TAC Cargo"}</div>
-                  <div className="text-[11px] font-bold text-slate-400 uppercase tracking-widest mt-1">Authorized Logistics Entity</div>
+                  <div className="text-xl font-black text-foreground leading-tight">{invoice.shipper_name || invoice.customers?.name || "TAC Cargo"}</div>
+                  <div className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest mt-1">Authorized Logistics Entity</div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Secure Location</p>
-                  <p className="text-sm font-bold text-slate-700 leading-relaxed uppercase">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Secure Location</p>
+                  <p className="text-sm font-bold text-foreground leading-relaxed uppercase">
                     {invoice.shipper_address || invoice.customers?.address}
                     <br />
                     {invoice.customers?.city} // {invoice.customers?.state} // {invoice.customers?.pincode}
                   </p>
                 </div>
                 {(invoice.shipper_phone || invoice.customers?.phone) && (
-                  <div className="pt-4 border-t border-slate-50 flex items-center gap-4">
+                  <div className="pt-4 border-t border-muted flex items-center gap-4">
                     <div className="space-y-0.5">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Mobile Link</p>
-                      <p className="text-sm font-black text-slate-900">{invoice.shipper_phone || invoice.customers?.phone}</p>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Mobile Link</p>
+                      <p className="text-sm font-black text-foreground">{invoice.shipper_phone || invoice.customers?.phone}</p>
                     </div>
                     {invoice.customers?.gst_number && (
                       <div className="space-y-0.5 ml-auto text-right">
-                        <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Tax Identity</p>
-                        <p className="text-sm font-black text-blue-500 uppercase">{invoice.customers.gst_number}</p>
+                        <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Tax Identity</p>
+                        <p className="text-sm font-black text-primary uppercase">{invoice.customers.gst_number}</p>
                       </div>
                     )}
                   </div>
@@ -469,28 +469,28 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
               </CardContent>
             </Card>
 
-            <Card className="rounded-[2.5rem] border-2 border-slate-100 shadow-sm overflow-hidden">
-              <CardHeader className="bg-blue-50/50 border-b border-blue-100 py-4 px-8">
-                <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-500">Destination Protocol (Consignee)</CardTitle>
+            <Card className="rounded-[2.5rem] border-2 border-muted shadow-sm overflow-hidden">
+              <CardHeader className="bg-primary/10 border-b border-primary/20 py-4 px-8">
+                <CardTitle className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Destination Protocol (Consignee)</CardTitle>
               </CardHeader>
               <CardContent className="p-8 space-y-4">
                 <div>
-                  <div className="text-xl font-black text-slate-900 leading-tight">{invoice.consignee_name}</div>
-                  <div className="text-[11px] font-bold text-blue-500 uppercase tracking-widest mt-1">Target End-Point</div>
+                  <div className="text-xl font-black text-foreground leading-tight">{invoice.consignee_name}</div>
+                  <div className="text-[11px] font-bold text-primary uppercase tracking-widest mt-1">Target End-Point</div>
                 </div>
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-400">Drop-off Infrastructure</p>
-                  <p className="text-sm font-bold text-slate-700 leading-relaxed uppercase">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Drop-off Infrastructure</p>
+                  <p className="text-sm font-bold text-foreground leading-relaxed uppercase">
                     {invoice.consignee_address}
                     <br />
                     {invoice.consignee_city} // {invoice.consignee_state} // {invoice.consignee_pincode}
                   </p>
                 </div>
                 {invoice.consignee_phone && (
-                  <div className="pt-4 border-t border-slate-50 flex items-center gap-4">
+                  <div className="pt-4 border-t border-muted flex items-center gap-4">
                     <div className="space-y-0.5">
-                      <p className="text-[9px] font-black uppercase tracking-widest text-slate-400">Contact Vector</p>
-                      <p className="text-sm font-black text-slate-900">{invoice.consignee_phone}</p>
+                      <p className="text-[9px] font-black uppercase tracking-widest text-muted-foreground">Contact Vector</p>
+                      <p className="text-sm font-black text-foreground">{invoice.consignee_phone}</p>
                     </div>
                   </div>
                 )}
@@ -499,10 +499,10 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
           </div>
 
           {/* Charges Breakdown */}
-          <Card className="rounded-[2.5rem] border-0 bg-slate-900 text-white shadow-2xl relative overflow-hidden">
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-500/10 rounded-full -mr-48 -mb-48 blur-3xl" />
+          <Card className="rounded-[2.5rem] border-0 bg-card text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary/10 rounded-full -mr-48 -mb-48 blur-3xl" />
             <CardHeader className="border-b border-white/5 py-6 px-10">
-              <CardTitle className="text-[12px] font-black uppercase tracking-[0.4em] text-blue-400">Financial Ledger Analysis</CardTitle>
+              <CardTitle className="text-[12px] font-black uppercase tracking-[0.4em] text-primary">Financial Ledger Analysis</CardTitle>
             </CardHeader>
             <CardContent className="p-10 relative">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -521,15 +521,15 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
                       <span className="text-[10px] font-bold uppercase tracking-[0.3em]">Base Valuation</span>
                       <span className="font-mono text-sm">₹{invoice.subtotal.toLocaleString("en-IN")}</span>
                     </div>
-                    <div className="flex justify-between items-center text-blue-400">
+                    <div className="flex justify-between items-center text-primary">
                       <span className="text-[10px] font-black uppercase tracking-[0.3em]">Total Taxation</span>
                       <span className="font-mono text-sm">₹{invoice.total_tax.toLocaleString("en-IN")}</span>
                     </div>
                   </div>
                   <div className="pt-8 border-t-2 border-white/20 flex justify-between items-end">
                     <div className="space-y-1">
-                      <p className="text-[10px] font-black uppercase tracking-[0.5em] text-blue-400 leading-none">Net Payable</p>
-                      <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Protocol Settlement Total</p>
+                      <p className="text-[10px] font-black uppercase tracking-[0.5em] text-primary leading-none">Net Payable</p>
+                      <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest">Protocol Settlement Total</p>
                     </div>
                     <div className="text-5xl font-black tracking-tighter text-white">₹{invoice.total_amount.toLocaleString("en-IN")}</div>
                   </div>
@@ -592,11 +592,11 @@ export function InvoiceDetailClient({ invoice }: InvoiceDetailClientProps) {
 
 function SummaryCard({ label, value, color, subValue }: { label: string; value: string; color?: string; subValue?: string }) {
   return (
-    <div className="p-6 bg-white border-2 border-slate-100 rounded-[2rem] shadow-sm flex flex-col justify-center gap-1">
-      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{label}</p>
-      <p className={cn("text-3xl font-black tracking-tighter leading-none", color || "text-slate-900")}>{value}</p>
+    <div className="p-6 bg-white border-2 border-muted rounded-[2rem] shadow-sm flex flex-col justify-center gap-1">
+      <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{label}</p>
+      <p className={cn("text-3xl font-black tracking-tighter leading-none", color || "text-foreground")}>{value}</p>
       {subValue && (
-        <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">{subValue}</p>
+        <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest mt-1">{subValue}</p>
       )}
     </div>
   );
@@ -606,7 +606,7 @@ function ChargeItem({ label, amount }: { label: string; amount?: number }) {
   if (!amount) return null;
   return (
     <div className="flex justify-between items-center py-2 border-b border-white/5 last:border-0">
-      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400">{label}</span>
+      <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground">{label}</span>
       <span className="font-mono text-sm font-semibold text-white">₹{amount.toLocaleString("en-IN")}</span>
     </div>
   );

@@ -62,10 +62,10 @@ interface PaymentDetailClientProps {
 }
 
 const statusConfig: Record<PaymentStatus, { label: string; color: string }> = {
-  pending: { label: "Pending", color: "bg-amber-100 text-amber-700" },
-  partial: { label: "Partial", color: "bg-blue-100 text-blue-700" },
-  completed: { label: "Completed", color: "bg-emerald-100 text-emerald-700" },
-  refunded: { label: "Refunded", color: "bg-red-100 text-red-700" },
+  pending: { label: "Pending", color: "bg-warning/10 text-warning" },
+  partial: { label: "Partial", color: "bg-primary/10 text-primary" },
+  completed: { label: "Completed", color: "bg-success/10 text-success" },
+  refunded: { label: "Refunded", color: "bg-destructive/10 text-destructive" },
 };
 
 export function PaymentDetailClient({ payment }: PaymentDetailClientProps) {
@@ -199,8 +199,8 @@ export function PaymentDetailClient({ payment }: PaymentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-100 rounded-lg">
-                <CreditCard className="w-5 h-5 text-emerald-600" />
+              <div className="p-2 bg-success/10 rounded-lg">
+                <CreditCard className="w-5 h-5 text-success" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Amount</div>
@@ -212,8 +212,8 @@ export function PaymentDetailClient({ payment }: PaymentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Receipt className="w-5 h-5 text-blue-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Receipt className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Invoice Total</div>
@@ -227,8 +227,8 @@ export function PaymentDetailClient({ payment }: PaymentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <Receipt className="w-5 h-5 text-amber-600" />
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <Receipt className="w-5 h-5 text-warning" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Balance Due</div>
@@ -257,7 +257,7 @@ export function PaymentDetailClient({ payment }: PaymentDetailClientProps) {
               <div className="font-medium font-mono flex items-center gap-2">
                 {payment.payment_reference}
                 <button onClick={handleCopyReference} className="p-1 hover:bg-muted rounded">
-                  {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                  {copied ? <Check className="w-3 h-3 text-success" /> : <Copy className="w-3 h-3" />}
                 </button>
               </div>
             </div>
