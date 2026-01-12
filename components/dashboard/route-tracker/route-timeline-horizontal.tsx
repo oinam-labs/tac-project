@@ -15,7 +15,7 @@ export function RouteTimelineHorizontal() {
             <RiCheckLine className="size-5" />
           </div>
           <div className="text-center">
-            <h4 className="text-foreground text-xs font-medium dark:text-slate-300">
+            <h4 className="text-foreground text-xs font-medium dark:text-muted-foreground">
               New Delhi
             </h4>
             <span className="text-muted-foreground font-mono text-[10px]">

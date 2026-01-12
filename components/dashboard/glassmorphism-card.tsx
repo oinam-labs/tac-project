@@ -66,28 +66,28 @@ export function GlassmorphismStat({
   const variantStyles = {
     default: {
       card: "from-slate-500/10 to-slate-600/5",
-      icon: "bg-slate-500/20 text-slate-500",
+      icon: "bg-muted/20 text-muted-foreground",
       value: "text-foreground",
     },
     success: {
       card: "from-emerald-500/10 to-emerald-600/5",
-      icon: "bg-emerald-500/20 text-emerald-500",
-      value: "text-emerald-500",
+      icon: "bg-primary/20 text-primary",
+      value: "text-primary",
     },
     warning: {
       card: "from-amber-500/10 to-amber-600/5",
-      icon: "bg-amber-500/20 text-amber-500",
-      value: "text-amber-500",
+      icon: "bg-warning/20 text-warning",
+      value: "text-warning",
     },
     danger: {
       card: "from-red-500/10 to-red-600/5",
-      icon: "bg-red-500/20 text-red-500",
-      value: "text-red-500",
+      icon: "bg-destructive/20 text-destructive",
+      value: "text-destructive",
     },
     info: {
       card: "from-blue-500/10 to-blue-600/5",
-      icon: "bg-blue-500/20 text-blue-500",
-      value: "text-blue-500",
+      icon: "bg-primary/20 text-primary",
+      value: "text-primary",
     },
   };
 
@@ -108,8 +108,8 @@ export function GlassmorphismStat({
           <div className={cn(
             "text-xs font-medium px-2 py-1 rounded-full",
             trend.value >= 0
-              ? "bg-emerald-500/10 text-emerald-500"
-              : "bg-red-500/10 text-red-500"
+              ? "bg-primary/10 text-primary"
+              : "bg-destructive/10 text-destructive"
           )}>
             {trend.value >= 0 ? "+" : ""}{trend.value}%
           </div>
@@ -148,10 +148,10 @@ export function GlassmorphismBadge({
 }: GlassmorphismBadgeProps) {
   const variantClasses = {
     default: "bg-muted/80 text-muted-foreground border-border/50",
-    success: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-    warning: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-    danger: "bg-red-500/10 text-red-500 border-red-500/20",
-    info: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    success: "bg-primary/10 text-primary border-primary/20",
+    warning: "bg-warning/10 text-warning border-warning/20",
+    danger: "bg-destructive/10 text-destructive border-destructive/20",
+    info: "bg-primary/10 text-primary border-primary/20",
   };
 
   const sizeClasses = {
@@ -170,10 +170,10 @@ export function GlassmorphismBadge({
       {pulse && (
         <span className={cn(
           "w-1.5 h-1.5 rounded-full animate-pulse",
-          variant === "success" && "bg-emerald-500",
-          variant === "warning" && "bg-amber-500",
-          variant === "danger" && "bg-red-500",
-          variant === "info" && "bg-blue-500",
+          variant === "success" && "bg-primary",
+          variant === "warning" && "bg-warning",
+          variant === "danger" && "bg-destructive",
+          variant === "info" && "bg-primary",
           variant === "default" && "bg-muted-foreground"
         )} />
       )}

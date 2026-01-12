@@ -34,21 +34,21 @@ const defaultActions: FloatingAction[] = [
     label: "New Manifest",
     icon: Truck,
     href: "/dashboard/manifests?action=create",
-    color: "bg-amber-500 hover:bg-amber-500/90",
+    color: "bg-warning hover:bg-warning/90",
   },
   {
     id: "invoice",
     label: "Generate Invoice",
     icon: FileText,
     href: "/dashboard/invoices?action=create",
-    color: "bg-emerald-500 hover:bg-emerald-500/90",
+    color: "bg-primary hover:bg-primary/90",
   },
   {
     id: "scan",
     label: "Scan Barcode",
     icon: Scan,
     href: "/dashboard/scanning",
-    color: "bg-blue-500 hover:bg-blue-500/90",
+    color: "bg-primary hover:bg-primary/90",
   },
 ];
 
