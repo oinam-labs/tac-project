@@ -76,8 +76,7 @@ export async function GET(
           currentLocation:
             Array.isArray(shipment.scan_events) &&
               shipment.scan_events[0]?.warehouse
-              ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              (shipment.scan_events[0].warehouse as any).city
+              ? (shipment.scan_events[0].warehouse as { city?: string } | null)?.city
               : null,
           eventsCount: shipment.scan_events?.length || 0,
         },

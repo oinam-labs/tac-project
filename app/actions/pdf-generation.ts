@@ -43,7 +43,13 @@ export async function generateInvoicePDF(invoiceId: string): Promise<ActionResul
       .eq("id", user.id)
       .single();
 
-    const org = profile?.organizations as any;
+    const org = profile?.organizations as {
+      name?: string;
+      gstin?: string;
+      address?: string;
+      phone?: string;
+      email?: string;
+    } | null;
 
     // Prepare PDF data
     const pdfData: InvoicePDFData = {
@@ -82,7 +88,7 @@ export async function generateInvoicePDF(invoiceId: string): Promise<ActionResul
       chargeableWeight: invoice.chargeable_weight || 0,
       declaredValue: invoice.declared_value,
       
-      items: (invoice.invoice_items || []).map((item: any) => ({
+      items: (invoice.invoice_items || []).map((item) => ({
         description: item.description || "",
         quantity: item.quantity || 1,
         weight: item.weight || 0,
@@ -182,8 +188,20 @@ export async function generateLabelPDF(invoiceId: string): Promise<ActionResult<
       .eq("id", user.id)
       .single();
 
-    const originWarehouse = invoice.origin_warehouse as any;
-    const destinationWarehouse = invoice.destination_warehouse as any;
+    const originWarehouse = invoice.origin_warehouse as {
+      name?: string;
+      address?: string;
+      city?: string;
+      state?: string;
+      pincode?: string;
+    } | null;
+    const destinationWarehouse = invoice.destination_warehouse as {
+      name?: string;
+      address?: string;
+      city?: string;
+      state?: string;
+      pincode?: string;
+    } | null;
 
     // Prepare label data
     const labelData: ShippingLabelData = {

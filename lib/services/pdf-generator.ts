@@ -4,15 +4,29 @@
  */
 
 import { createClient } from "@/lib/supabase/server";
+import { InvoiceWithRelations } from '@/lib/types/invoice';
 
 export interface InvoicePDFData {
-  invoice: any;
-  organization: any;
-  items: any[];
+  invoice: InvoiceWithRelations;
+  organization: {
+    name?: string;
+    gstin?: string;
+    address?: string;
+    phone?: string;
+    email?: string;
+    logo_url?: string;
+  };
+  items: Array<{
+    description: string;
+    quantity: number;
+    weight: number;
+    rate: number;
+    amount: number;
+  }>;
 }
 
 export interface LabelPDFData {
-  invoice: any;
+  invoice: InvoiceWithRelations;
   barcode: string;
   qrCode: string;
 }
@@ -294,7 +308,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         </tr>
       </thead>
       <tbody>
-        ${items.map((item: any, index: number) => `
+        ${items.map((item, index: number) => `
           <tr>
             <td>${index + 1}</td>
             <td>${item.description || 'N/A'}</td>

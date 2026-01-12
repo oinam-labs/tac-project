@@ -162,8 +162,13 @@ export async function POST(request: NextRequest) {
 
     // Insert packages if provided
     if (packages && packages.length > 0) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const packageData = packages.map((pkg: any, index: number) => ({
+      const packageData = packages.map((pkg: {
+        length?: number;
+        width?: number;
+        height?: number;
+        weight?: number;
+        description?: string;
+      }, index: number) => ({
         invoice_id: invoice.id,
         package_no: index + 1,
         length: pkg.length,

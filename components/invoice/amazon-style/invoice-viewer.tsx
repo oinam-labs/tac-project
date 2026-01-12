@@ -9,9 +9,10 @@ import { InvoicePrint } from "./invoice-print";
 import { LabelPrint } from "./label-print";
 import { mapDatabaseInvoiceToV2 } from "@/lib/invoice/mapper";
 import { calculateLedger } from "@/lib/invoice/generator-v2";
+import { InvoiceWithRelations } from "@/lib/types/invoice";
 
 interface InvoiceViewerProps {
-    invoice: any; // Database invoice object
+    invoice: InvoiceWithRelations; // Database invoice object
 }
 
 export function InvoiceViewer({ invoice }: InvoiceViewerProps) {

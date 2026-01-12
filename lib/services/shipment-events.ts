@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { triggerWebhooks } from "@/lib/webhooks";
 import { createNotification } from "@/lib/notifications";
+import { ShipmentWithRelations } from '@/lib/types/shipment';
 import {
   sendEmail,
   generateShipmentCreatedEmail,
@@ -122,8 +123,7 @@ export async function createShipmentEvent(
 }
 
 async function sendStatusNotifications(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  shipment: any,
+  shipment: ShipmentWithRelations,
   status: ShipmentStatus,
 ): Promise<void> {
   const trackingUrl = `${process.env.NEXT_PUBLIC_APP_URL || "https://taccargo.com"}/track/${shipment.reference}`;

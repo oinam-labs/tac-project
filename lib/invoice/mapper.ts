@@ -1,8 +1,9 @@
 import { Invoice } from "@/types/database";
 import { ShipmentData, Address, PackageItem } from "@/types/invoice-v2";
+import { InvoiceWithRelations } from "@/lib/types/invoice";
 import { GENERATOR_DEFAULTS } from "./generator-v2";
 
-export function mapDatabaseInvoiceToV2(dbInvoice: any): ShipmentData {
+export function mapDatabaseInvoiceToV2(dbInvoice: InvoiceWithRelations): ShipmentData {
     // defaults
     const consignor: Address = {
         name: "TAPAN ASSOCIATE CARGO",
@@ -30,7 +31,7 @@ export function mapDatabaseInvoiceToV2(dbInvoice: any): ShipmentData {
     let items: PackageItem[] = [];
 
     if (dbInvoice.invoice_items && dbInvoice.invoice_items.length > 0) {
-        items = dbInvoice.invoice_items.map((item: any, idx: number) => ({
+        items = dbInvoice.invoice_items.map((item, idx: number) => ({
             id: item.id || `item-${idx}`,
             description: item.description || "General Cargo",
             length: item.length || 30,

@@ -70,9 +70,12 @@ export async function applyMigration(
     }
     
     return { success: true };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Supabase MCP migration error:', error);
-    return { success: false, error: error.message };
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
+    };
   }
 }
 
@@ -121,9 +124,12 @@ export async function generateTypes(
       types: '// TypeScript types will be generated here',
       error: undefined 
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Supabase MCP type generation error:', error);
-    return { types: '', error: error.message };
+    return { 
+      types: '', 
+      error: error instanceof Error ? error.message : 'Unknown error occurred'
+    };
   }
 }
 
