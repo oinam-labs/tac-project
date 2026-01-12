@@ -20,14 +20,14 @@ interface TrackingTimelineProps {
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  pending: { icon: Clock, color: "text-slate-500", label: "Pending" },
-  booked: { icon: Package, color: "text-blue-500", label: "Booked" },
-  picked_up: { icon: Package, color: "text-blue-500", label: "Picked Up" },
-  in_transit: { icon: Truck, color: "text-amber-500", label: "In Transit" },
-  at_hub: { icon: MapPin, color: "text-purple-500", label: "At Hub" },
-  out_for_delivery: { icon: Truck, color: "text-indigo-500", label: "Out for Delivery" },
-  delivered: { icon: CheckCircle, color: "text-emerald-500", label: "Delivered" },
-  failed: { icon: AlertCircle, color: "text-red-500", label: "Failed" },
+  pending: { icon: Clock, color: "text-muted-foreground", label: "Pending" },
+  booked: { icon: Package, color: "text-info-foreground", label: "Booked" },
+  picked_up: { icon: Package, color: "text-info-foreground", label: "Picked Up" },
+  in_transit: { icon: Truck, color: "text-warning-foreground", label: "In Transit" },
+  at_hub: { icon: MapPin, color: "text-accent-foreground", label: "At Hub" },
+  out_for_delivery: { icon: Truck, color: "text-primary-foreground", label: "Out for Delivery" },
+  delivered: { icon: CheckCircle, color: "text-success-foreground", label: "Delivered" },
+  failed: { icon: AlertCircle, color: "text-destructive-foreground", label: "Failed" },
 };
 
 export function TrackingTimeline({ events, orientation = "vertical" }: TrackingTimelineProps) {
