@@ -97,11 +97,11 @@ interface ManifestDetailClientProps {
 
 const statusConfig: Record<ManifestStatus, { label: string; color: string }> = {
   draft: { label: "Draft", color: "bg-muted text-muted-foreground" },
-  finalized: { label: "Finalized", color: "bg-blue-100 text-blue-700" },
-  dispatched: { label: "Dispatched", color: "bg-amber-100 text-amber-700" },
-  in_transit: { label: "In Transit", color: "bg-purple-100 text-purple-700" },
+  finalized: { label: "Finalized", color: "bg-primary/10 text-primary" },
+  dispatched: { label: "Dispatched", color: "bg-warning/10 text-warning" },
+  in_transit: { label: "In Transit", color: "bg-accent/10 text-accent" },
   arrived: { label: "Arrived", color: "bg-cyan-100 text-cyan-700" },
-  completed: { label: "Completed", color: "bg-emerald-100 text-emerald-700" },
+  completed: { label: "Completed", color: "bg-primary/10 text-primary" },
 };
 
 export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
@@ -174,7 +174,7 @@ export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
                 className="p-1 hover:bg-muted rounded transition-colors"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+                  <Check className="w-4 h-4 text-primary" />
                 ) : (
                   <Copy className="w-4 h-4 text-muted-foreground" />
                 )}
@@ -249,8 +249,8 @@ export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Package className="w-5 h-5 text-blue-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Package className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Shipments</div>
@@ -262,8 +262,8 @@ export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-100 rounded-lg">
-                <Package className="w-5 h-5 text-emerald-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Package className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Total Pieces</div>
@@ -275,8 +275,8 @@ export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <Truck className="w-5 h-5 text-amber-600" />
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <Truck className="w-5 h-5 text-warning" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Total Weight</div>
@@ -288,8 +288,8 @@ export function ManifestDetailClient({ manifest }: ManifestDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Clock className="w-5 h-5 text-purple-600" />
+              <div className="p-2 bg-accent/10 rounded-lg">
+                <Clock className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Mode</div>

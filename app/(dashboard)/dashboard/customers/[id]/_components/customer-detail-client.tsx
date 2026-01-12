@@ -91,9 +91,9 @@ interface CustomerDetailClientProps {
 }
 
 const customerTypeConfig: Record<CustomerType, { label: string; color: string }> = {
-  regular: { label: "Regular", color: "bg-gray-100 text-gray-700" },
-  corporate: { label: "Corporate", color: "bg-blue-100 text-blue-700" },
-  vip: { label: "VIP", color: "bg-amber-100 text-amber-700" },
+  regular: { label: "Regular", color: "bg-muted/10 text-muted-foreground" },
+  corporate: { label: "Corporate", color: "bg-primary/10 text-primary" },
+  vip: { label: "VIP", color: "bg-warning/10 text-warning" },
 };
 
 export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
@@ -206,8 +206,8 @@ export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Package className="w-5 h-5 text-blue-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Package className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Shipments</div>
@@ -219,8 +219,8 @@ export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-100 rounded-lg">
-                <Receipt className="w-5 h-5 text-emerald-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Receipt className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Invoices</div>
@@ -232,8 +232,8 @@ export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <CreditCard className="w-5 h-5 text-amber-600" />
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <CreditCard className="w-5 h-5 text-warning" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Total Revenue</div>
@@ -245,8 +245,8 @@ export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Building2 className="w-5 h-5 text-purple-600" />
+              <div className="p-2 bg-accent/10 rounded-lg">
+                <Building2 className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Credit Limit</div>
@@ -272,7 +272,7 @@ export function CustomerDetailClient({ customer }: CustomerDetailClientProps) {
               <Phone className="w-4 h-4 text-muted-foreground" />
               <span>{customer.phone}</span>
               <button onClick={handleCopyPhone} className="p-1 hover:bg-muted rounded">
-                {copied ? <Check className="w-3 h-3 text-emerald-500" /> : <Copy className="w-3 h-3" />}
+                {copied ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
               </button>
             </div>
             {customer.email && (

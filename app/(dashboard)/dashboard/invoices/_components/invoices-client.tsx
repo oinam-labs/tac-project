@@ -88,12 +88,12 @@ interface InvoicesClientProps {
 }
 
 const statusConfig: Record<InvoiceStatus, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; bgColor: string; dotColor: string }> = {
-    draft: { label: "Draft Protocol", variant: "outline", bgColor: "bg-slate-100 text-slate-600 border-slate-200", dotColor: "bg-slate-400" },
-    pending: { label: "Awaiting Settlement", variant: "secondary", bgColor: "bg-amber-50 text-amber-700 border-amber-100", dotColor: "bg-amber-500" },
-    paid: { label: "Settlement Confirmed", variant: "default", bgColor: "bg-emerald-50 text-emerald-700 border-emerald-100", dotColor: "bg-emerald-500" },
-    partial: { label: "Partial Settlement", variant: "secondary", bgColor: "bg-blue-50 text-blue-700 border-blue-100", dotColor: "bg-blue-500" },
-    overdue: { label: "Overdue Alert", variant: "destructive", bgColor: "bg-red-50 text-red-700 border-red-100", dotColor: "bg-red-500" },
-    cancelled: { label: "Protocol Aborted", variant: "outline", bgColor: "bg-slate-100 text-slate-400 border-slate-200", dotColor: "bg-slate-300" },
+    draft: { label: "Draft Protocol", variant: "outline", bgColor: "bg-muted/10 text-muted-foreground border-muted", dotColor: "bg-muted-foreground" },
+    pending: { label: "Awaiting Settlement", variant: "secondary", bgColor: "bg-warning/10 text-warning border-warning", dotColor: "bg-warning" },
+    paid: { label: "Settlement Confirmed", variant: "default", bgColor: "bg-primary/10 text-primary border-primary", dotColor: "bg-primary" },
+    partial: { label: "Partial Settlement", variant: "secondary", bgColor: "bg-primary/10 text-primary border-primary", dotColor: "bg-primary" },
+    overdue: { label: "Overdue Alert", variant: "destructive", bgColor: "bg-destructive/10 text-destructive border-destructive", dotColor: "bg-destructive" },
+    cancelled: { label: "Protocol Aborted", variant: "outline", bgColor: "bg-muted/10 text-muted-foreground border-muted", dotColor: "bg-muted" },
 };
 
 export function InvoicesClient({
@@ -216,32 +216,32 @@ export function InvoicesClient({
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <StatsCard
                     icon={Receipt}
-                    iconBg="bg-blue-500/10"
-                    iconColor="text-blue-600"
+                    iconBg="bg-primary/10"
+                    iconColor="text-primary"
                     label="Total Invoices"
                     value={stats.total.toString()}
                     subValue="All time"
                 />
                 <StatsCard
                     icon={TrendingUp}
-                    iconBg="bg-emerald-500/10"
-                    iconColor="text-emerald-600"
+                    iconBg="bg-primary/10"
+                    iconColor="text-primary"
                     label="Paid Invoices"
                     value={stats.paid.toString()}
                     subValue={`${Math.round((stats.paid / (stats.total || 1)) * 100)}% completion`}
                 />
                 <StatsCard
                     icon={Hourglass}
-                    iconBg="bg-amber-500/10"
-                    iconColor="text-amber-600"
+                    iconBg="bg-warning/10"
+                    iconColor="text-warning"
                     label="Pending Invoices"
                     value={stats.pending.toString()}
                     subValue="Awaiting payment"
                 />
                 <StatsCard
                     icon={AlertCircle}
-                    iconBg="bg-red-500/10"
-                    iconColor="text-red-600"
+                    iconBg="bg-destructive/10"
+                    iconColor="text-destructive"
                     label="Overdue Invoices"
                     value={stats.overdue.toString()}
                     subValue="Action required"
@@ -251,12 +251,12 @@ export function InvoicesClient({
             {/* Controls Row */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                 <div className="relative w-full sm:w-96 group">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 group-focus-within:text-primary transition-colors" />
+                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
                     <Input
                         placeholder="Search Central Ledger (Invoice, Customer, City)..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="pl-11 h-12 rounded-2xl bg-white border-2 border-slate-100 focus:border-primary/20 focus:bg-slate-50/50 transition-all font-bold"
+                        className="pl-11 h-12 rounded-2xl bg-white border-2 border-muted focus:border-primary/20 focus:bg-muted/10 transition-all font-bold"
                     />
                 </div>
 
@@ -328,21 +328,21 @@ export function InvoicesClient({
                             <Table>
                                 <TableHeader className="bg-muted/50 sticky top-0 z-10">
                                     <TableRow className="border-0 hover:bg-transparent">
-                                        <TableHead className="w-12 pl-6 bg-slate-50/50 rounded-l-3xl">
+                                        <TableHead className="w-12 pl-6 bg-muted/10 rounded-l-3xl">
                                             <Checkbox
                                                 checked={selectedIds.size === filteredInvoices.length && filteredInvoices.length > 0}
                                                 onCheckedChange={handleSelectAll}
-                                                className="border-slate-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                                className="border-muted data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                                             />
                                         </TableHead>
-                                        <TableHead className="w-[140px] bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">ID / Hash</TableHead>
-                                        <TableHead className="w-[100px] bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Protocol</TableHead>
-                                        <TableHead className="min-w-[180px] bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Entity (Origin)</TableHead>
-                                        <TableHead className="min-w-[180px] bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Destination</TableHead>
-                                        <TableHead className="w-[140px] bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Timeline</TableHead>
-                                        <TableHead className="w-[140px] text-right bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Net Value</TableHead>
-                                        <TableHead className="w-[140px] text-center bg-slate-50/50 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Status</TableHead>
-                                        <TableHead className="w-[140px] text-right pr-6 bg-slate-50/50 rounded-r-3xl text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">Actions</TableHead>
+                                        <TableHead className="w-[140px] bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">ID / Hash</TableHead>
+                                        <TableHead className="w-[100px] bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Protocol</TableHead>
+                                        <TableHead className="min-w-[180px] bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Entity (Origin)</TableHead>
+                                        <TableHead className="min-w-[180px] bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Destination</TableHead>
+                                        <TableHead className="w-[140px] bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Timeline</TableHead>
+                                        <TableHead className="w-[140px] text-right bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Net Value</TableHead>
+                                        <TableHead className="w-[140px] text-center bg-muted/10 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Status</TableHead>
+                                        <TableHead className="w-[140px] text-right pr-6 bg-muted/10 rounded-r-3xl text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Actions</TableHead>
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
@@ -351,36 +351,36 @@ export function InvoicesClient({
                                         return (
                                             <TableRow
                                                 key={invoice.id}
-                                                className="group border-b border-slate-50 hover:bg-blue-50/30 transition-colors cursor-pointer"
+                                                className="group border-b border-muted hover:bg-primary/10 transition-colors cursor-pointer"
                                                 onClick={() => router.push(`/dashboard/invoices/${invoice.id}`)}
                                             >
                                                 <TableCell className="pl-6" onClick={(e) => e.stopPropagation()}>
                                                     <Checkbox
                                                         checked={selectedIds.has(invoice.id)}
                                                         onCheckedChange={(checked) => handleSelectOne(invoice.id, !!checked)}
-                                                        className="border-slate-300 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
+                                                        className="border-muted data-[state=checked]:bg-primary data-[state=checked]:border-primary"
                                                     />
                                                 </TableCell>
-                                                <TableCell className="py-5 font-black text-[13px] text-slate-900 tracking-tight">
+                                                <TableCell className="py-5 font-black text-[13px] text-foreground tracking-tight">
                                                     {invoice.invoice_no}
                                                 </TableCell>
                                                 <TableCell>
-                                                    <Badge variant="outline" className="h-6 rounded-lg uppercase text-[9px] font-black tracking-widest bg-slate-100/50 border-slate-200 text-slate-500 py-0 px-2">
+                                                    <Badge variant="outline" className="h-6 rounded-lg uppercase text-[9px] font-black tracking-widest bg-muted/10 border-muted text-muted-foreground py-0 px-2">
                                                         {invoice.type}
                                                     </Badge>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="font-bold text-[13px] text-slate-700">{invoice.customers?.name || "TAC Cargo"}</div>
-                                                    <div className="text-[10px] text-slate-400 font-medium uppercase tracking-widest mt-0.5">Origin Protocol</div>
+                                                    <div className="font-bold text-[13px] text-foreground">{invoice.customers?.name || "TAC Cargo"}</div>
+                                                    <div className="text-[10px] text-muted-foreground font-medium uppercase tracking-widest mt-0.5">Origin Protocol</div>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <div className="font-bold text-[13px] text-slate-800">{invoice.consignee_name || "-"}</div>
-                                                    <div className="text-[10px] text-blue-500 font-black uppercase tracking-widest mt-0.5">{invoice.consignee_city}</div>
+                                                    <div className="font-bold text-[13px] text-foreground">{invoice.consignee_name || "-"}</div>
+                                                    <div className="text-[10px] text-primary font-black uppercase tracking-widest mt-0.5">{invoice.consignee_city}</div>
                                                 </TableCell>
-                                                <TableCell className="text-slate-500 text-[11px] font-bold">
+                                                <TableCell className="text-muted-foreground text-[11px] font-bold">
                                                     {new Date(invoice.invoice_date).toLocaleDateString("en-IN", { day: '2-digit', month: 'short', year: 'numeric' })}
                                                 </TableCell>
-                                                <TableCell className="text-right font-black text-[14px] text-slate-900 tracking-tighter">
+                                                <TableCell className="text-right font-black text-[14px] text-foreground tracking-tighter">
                                                     ₹{invoice.total_amount.toLocaleString("en-IN")}
                                                 </TableCell>
                                                 <TableCell className="text-center">
@@ -461,17 +461,17 @@ function StatsCard({
     subValue?: string;
 }) {
     return (
-        <Card className="border-2 border-slate-100 rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden group">
+        <Card className="border-2 border-muted rounded-[2rem] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white overflow-hidden group">
             <CardContent className="p-6">
                 <div className="flex items-center gap-5">
                     <div className={cn("p-4 rounded-2xl transition-transform group-hover:scale-110 duration-500", iconBg)}>
                         <Icon className={cn("w-6 h-6", iconColor)} />
                     </div>
                     <div className="space-y-1">
-                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">{label}</div>
-                        <div className="text-3xl font-black tracking-tighter text-slate-900 leading-none">{value}</div>
+                        <div className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{label}</div>
+                        <div className="text-3xl font-black tracking-tighter text-foreground leading-none">{value}</div>
                         {subValue && (
-                            <div className="text-[9px] font-bold text-slate-400 uppercase tracking-widest pt-1">{subValue}</div>
+                            <div className="text-[9px] font-bold text-muted-foreground uppercase tracking-widest pt-1">{subValue}</div>
                         )}
                     </div>
                 </div>
