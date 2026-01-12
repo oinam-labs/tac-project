@@ -111,7 +111,7 @@ export function Testimonials() {
               {[1, 2, 3, 4, 5].map((_, i) => (
                 <Star
                   key={i}
-                  className="h-3.5 w-3.5 fill-amber-400 text-amber-400"
+                  className="h-3.5 w-3.5 fill-warning text-warning"
                 />
               ))}
               <span className="text-foreground ml-1 font-medium">

@@ -9,8 +9,8 @@ function PaymentFailedContent() {
       <div className="max-w-md w-full">
         <div className="bg-card border border-border rounded-2xl shadow-xl p-8 text-center">
           {/* Failed Icon */}
-          <div className="w-20 h-20 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <XCircle className="w-10 h-10 text-red-600 dark:text-red-400" />
+          <div className="w-20 h-20 bg-destructive/10 dark:bg-destructive/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <XCircle className="w-10 h-10 text-destructive dark:text-destructive" />
           </div>
 
           {/* Title */}

@@ -133,15 +133,15 @@ interface ShipmentDetailClientProps {
 }
 
 const statusConfig: Record<ShipmentStatus, { label: string; color: string }> = {
-  booked: { label: "Booked", color: "bg-blue-100 text-blue-700" },
+  booked: { label: "Booked", color: "bg-primary/10 text-primary" },
   picked_up: { label: "Picked Up", color: "bg-indigo-100 text-indigo-700" },
-  at_origin_hub: { label: "At Origin Hub", color: "bg-purple-100 text-purple-700" },
-  in_transit: { label: "In Transit", color: "bg-amber-100 text-amber-700" },
+  at_origin_hub: { label: "At Origin Hub", color: "bg-accent/10 text-accent" },
+  in_transit: { label: "In Transit", color: "bg-warning/10 text-warning" },
   at_destination_hub: { label: "At Destination Hub", color: "bg-orange-100 text-orange-700" },
   out_for_delivery: { label: "Out for Delivery", color: "bg-cyan-100 text-cyan-700" },
-  delivered: { label: "Delivered", color: "bg-emerald-100 text-emerald-700" },
-  exception: { label: "Exception", color: "bg-red-100 text-red-700" },
-  returned: { label: "Returned", color: "bg-gray-100 text-gray-700" },
+  delivered: { label: "Delivered", color: "bg-primary/10 text-primary" },
+  exception: { label: "Exception", color: "bg-destructive/10 text-destructive" },
+  returned: { label: "Returned", color: "bg-muted/10 text-muted-foreground" },
   cancelled: { label: "Cancelled", color: "bg-muted text-muted-foreground line-through" },
 };
 
@@ -201,7 +201,7 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
                 className="p-1 hover:bg-muted rounded transition-colors"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-500" />
+                  <Check className="w-4 h-4 text-primary" />
                 ) : (
                   <Copy className="w-4 h-4 text-muted-foreground" />
                 )}
@@ -258,8 +258,8 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-blue-100 rounded-lg">
-                <Package className="w-5 h-5 text-blue-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Package className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Pieces</div>
@@ -271,8 +271,8 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-emerald-100 rounded-lg">
-                <Truck className="w-5 h-5 text-emerald-600" />
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Truck className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Weight</div>
@@ -284,8 +284,8 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-amber-100 rounded-lg">
-                <MapPin className="w-5 h-5 text-amber-600" />
+              <div className="p-2 bg-warning/10 rounded-lg">
+                <MapPin className="w-5 h-5 text-warning" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Destination</div>
@@ -299,8 +299,8 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
         <Card>
           <CardContent className="pt-6">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-purple-100 rounded-lg">
-                <Clock className="w-5 h-5 text-purple-600" />
+              <div className="p-2 bg-accent/10 rounded-lg">
+                <Clock className="w-5 h-5 text-accent" />
               </div>
               <div>
                 <div className="text-sm text-muted-foreground">Mode</div>

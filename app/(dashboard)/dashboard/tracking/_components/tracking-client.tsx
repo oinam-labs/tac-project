@@ -134,12 +134,12 @@ export function TrackingClient({ stats, initialShipments }: Readonly<TrackingCli
             <GlassPanel className="p-4">
                 <StatusPipeline
                     stages={[
-                        { id: "pending", label: "Pending", count: stats.pending, icon: Clock, color: "text-slate-500 bg-slate-500/10" },
-                        { id: "picked_up", label: "Picked Up", count: stats.pickedUp, icon: Package, color: "text-blue-500 bg-blue-500/10" },
-                        { id: "in_transit", label: "In Transit", count: stats.inTransit, icon: Truck, color: "text-amber-500 bg-amber-500/10" },
-                        { id: "out_for_delivery", label: "Out for Delivery", count: stats.outForDelivery, icon: MapPin, color: "text-purple-500 bg-purple-500/10" },
-                        { id: "delivered", label: "Delivered", count: stats.delivered, icon: CheckCircle, color: "text-emerald-500 bg-emerald-500/10" },
-                        { id: "failed", label: "Failed", count: stats.failed, icon: AlertCircle, color: "text-red-500 bg-red-500/10" },
+                        { id: "pending", label: "Pending", count: stats.pending, icon: Clock, color: "text-muted-foreground bg-muted-foreground/10" },
+                        { id: "picked_up", label: "Picked Up", count: stats.pickedUp, icon: Package, color: "text-primary bg-primary/10" },
+                        { id: "in_transit", label: "In Transit", count: stats.inTransit, icon: Truck, color: "text-warning bg-warning/10" },
+                        { id: "out_for_delivery", label: "Out for Delivery", count: stats.outForDelivery, icon: MapPin, color: "text-accent bg-accent/10" },
+                        { id: "delivered", label: "Delivered", count: stats.delivered, icon: CheckCircle, color: "text-primary bg-primary/10" },
+                        { id: "failed", label: "Failed", count: stats.failed, icon: AlertCircle, color: "text-destructive bg-destructive/10" },
                     ]}
                     onStageClick={(stageId) => setStatusFilter(stageId as ShipmentStatus | "all")}
                     activeStage={statusFilter !== "all" ? statusFilter : undefined}
