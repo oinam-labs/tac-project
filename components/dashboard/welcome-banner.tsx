@@ -107,7 +107,7 @@ export function WelcomeBanner({
               )}
               {stats.pendingTasks !== undefined && (
                 <div>
-                  <div className="text-xl font-bold text-amber-500">
+                  <div className="text-xl font-bold text-warning">
                     {stats.pendingTasks}
                   </div>
                   <div className="text-xs text-muted-foreground">
@@ -117,7 +117,7 @@ export function WelcomeBanner({
               )}
               {stats.revenue !== undefined && (
                 <div>
-                  <div className="text-xl font-bold text-emerald-500">
+                  <div className="text-xl font-bold text-primary">
                     ₹{(stats.revenue / 1000).toFixed(1)}K
                   </div>
                   <div className="text-xs text-muted-foreground">

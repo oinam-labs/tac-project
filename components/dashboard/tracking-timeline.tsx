@@ -20,14 +20,14 @@ interface TrackingTimelineProps {
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  pending: { icon: Clock, color: "text-slate-500", label: "Pending" },
-  booked: { icon: Package, color: "text-blue-500", label: "Booked" },
-  picked_up: { icon: Package, color: "text-blue-500", label: "Picked Up" },
-  in_transit: { icon: Truck, color: "text-amber-500", label: "In Transit" },
-  at_hub: { icon: MapPin, color: "text-purple-500", label: "At Hub" },
+  pending: { icon: Clock, color: "text-muted-foreground", label: "Pending" },
+  booked: { icon: Package, color: "text-primary", label: "Booked" },
+  picked_up: { icon: Package, color: "text-primary", label: "Picked Up" },
+  in_transit: { icon: Truck, color: "text-warning", label: "In Transit" },
+  at_hub: { icon: MapPin, color: "text-accent", label: "At Hub" },
   out_for_delivery: { icon: Truck, color: "text-indigo-500", label: "Out for Delivery" },
-  delivered: { icon: CheckCircle, color: "text-emerald-500", label: "Delivered" },
-  failed: { icon: AlertCircle, color: "text-red-500", label: "Failed" },
+  delivered: { icon: CheckCircle, color: "text-primary", label: "Delivered" },
+  failed: { icon: AlertCircle, color: "text-destructive", label: "Failed" },
 };
 
 export function TrackingTimeline({ events, orientation = "vertical" }: TrackingTimelineProps) {

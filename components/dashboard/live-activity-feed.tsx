@@ -29,14 +29,14 @@ interface LiveActivityFeedProps {
 }
 
 const eventConfig: Record<ActivityEvent["type"], { icon: React.ElementType; color: string }> = {
-  shipment_created: { icon: Package, color: "text-blue-500 bg-blue-500/10" },
-  status_update: { icon: Truck, color: "text-amber-500 bg-amber-500/10" },
-  delivery: { icon: CheckCircle, color: "text-emerald-500 bg-emerald-500/10" },
-  exception: { icon: AlertCircle, color: "text-red-500 bg-red-500/10" },
-  invoice: { icon: FileText, color: "text-purple-500 bg-purple-500/10" },
+  shipment_created: { icon: Package, color: "text-primary bg-primary/10" },
+  status_update: { icon: Truck, color: "text-warning bg-warning/10" },
+  delivery: { icon: CheckCircle, color: "text-primary bg-primary/10" },
+  exception: { icon: AlertCircle, color: "text-destructive bg-destructive/10" },
+  invoice: { icon: FileText, color: "text-accent bg-accent/10" },
   payment: { icon: CreditCard, color: "text-green-500 bg-green-500/10" },
   scan: { icon: Scan, color: "text-indigo-500 bg-indigo-500/10" },
-  customer: { icon: User, color: "text-slate-500 bg-slate-500/10" },
+  customer: { icon: User, color: "text-muted-foreground bg-muted/10" },
 };
 
 export function LiveActivityFeed({ events, maxItems = 10, className }: LiveActivityFeedProps) {
