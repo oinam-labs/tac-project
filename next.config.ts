@@ -5,6 +5,11 @@
 
 import type { NextConfig } from "next";
 
+// Bundle analyzer for performance optimization
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /**
  * Security headers for production deployment
  * Following OWASP recommendations
@@ -51,6 +56,12 @@ const nextConfig: NextConfig = {
    * React strict mode for development
    */
   reactStrictMode: true,
+
+  /**
+   * Compression and performance optimizations
+   */
+  compress: true,
+  generateEtags: true,
 
   /**
    * Allowed dev origins for cross-origin requests
@@ -173,6 +184,19 @@ const nextConfig: NextConfig = {
       "framer-motion",
       "@radix-ui/react-icons",
     ],
+    // Enable server components optimization
+    serverComponentsExternalPackages: ["@supabase/supabase-js"],
+    // Enable optimized CSS loading
+    optimizeCss: true,
+    // Enable faster builds
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
   },
 
   /**
@@ -186,10 +210,38 @@ const nextConfig: NextConfig = {
   },
 
   /**
-   * Webpack configuration to reduce file watcher usage
-   * Helps prevent ENOSPC errors on systems with limited inotify watchers
+   * Webpack configuration for performance optimization
    */
-  webpack: (config, { dev }) => {
+  webpack: (config, { dev, isServer }) => {
+    // Performance optimizations for production
+    if (!dev) {
+      // Enable tree shaking for better bundle size
+      config.optimization = {
+        ...config.optimization,
+        usedExports: true,
+        sideEffects: false,
+      };
+
+      // Optimize chunks for better caching
+      config.optimization.splitChunks = {
+        ...config.optimization.splitChunks,
+        chunks: "all",
+        cacheGroups: {
+          vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name: "vendors",
+            chunks: "all",
+          },
+          common: {
+            name: "common",
+            minChunks: 2,
+            chunks: "all",
+            enforce: true,
+          },
+        },
+      };
+    }
+
     if (dev) {
       // Reduce file watching overhead in development
       config.watchOptions = {
@@ -205,6 +257,15 @@ const nextConfig: NextConfig = {
         ],
       };
     }
+
+    // Optimize imports for better tree shaking
+    if (!isServer) {
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        "@": require("path").resolve(__dirname),
+      };
+    }
+
     return config;
   },
 
@@ -218,4 +279,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withBundleAnalyzer(nextConfig);

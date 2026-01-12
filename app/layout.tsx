@@ -3,6 +3,7 @@ import { Syne, Manrope, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { QueryProvider } from "@/lib/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { WebVitals } from "@/components/performance/web-vitals";
 import "./globals.css";
 
 const syne = Syne({
@@ -61,6 +62,7 @@ export default function RootLayout({
           <QueryProvider>
             {children}
             <Toaster />
+            <WebVitals />
           </QueryProvider>
         </ThemeProvider>
       </body>
