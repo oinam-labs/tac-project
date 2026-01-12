@@ -173,6 +173,11 @@ const nextConfig: NextConfig = {
   },
 
   /**
+   * Server external packages (moved from experimental)
+   */
+  serverExternalPackages: ["@supabase/supabase-js"],
+
+  /**
    * Experimental features for performance optimization
    */
   experimental: {
@@ -184,19 +189,8 @@ const nextConfig: NextConfig = {
       "framer-motion",
       "@radix-ui/react-icons",
     ],
-    // Enable server components optimization
-    serverComponentsExternalPackages: ["@supabase/supabase-js"],
     // Enable optimized CSS loading
     optimizeCss: true,
-    // Enable faster builds
-    turbo: {
-      rules: {
-        "*.svg": {
-          loaders: ["@svgr/webpack"],
-          as: "*.js",
-        },
-      },
-    },
   },
 
   /**
