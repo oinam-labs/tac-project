@@ -65,29 +65,29 @@ export function GlassmorphismStat({
 }: GlassmorphismStatProps) {
   const variantStyles = {
     default: {
-      card: "from-slate-500/10 to-slate-600/5",
-      icon: "bg-slate-500/20 text-slate-500",
+      card: "from-muted/50 to-muted/25",
+      icon: "bg-muted text-muted-foreground",
       value: "text-foreground",
     },
     success: {
-      card: "from-emerald-500/10 to-emerald-600/5",
-      icon: "bg-emerald-500/20 text-emerald-500",
-      value: "text-emerald-500",
+      card: "from-success/10 to-success/5",
+      icon: "bg-success/20 text-success-foreground",
+      value: "text-success-foreground",
     },
     warning: {
-      card: "from-amber-500/10 to-amber-600/5",
-      icon: "bg-amber-500/20 text-amber-500",
-      value: "text-amber-500",
+      card: "from-warning/10 to-warning/5",
+      icon: "bg-warning/20 text-warning-foreground",
+      value: "text-warning-foreground",
     },
     danger: {
-      card: "from-red-500/10 to-red-600/5",
-      icon: "bg-red-500/20 text-red-500",
-      value: "text-red-500",
+      card: "from-destructive/10 to-destructive/5",
+      icon: "bg-destructive/20 text-destructive-foreground",
+      value: "text-destructive-foreground",
     },
     info: {
-      card: "from-blue-500/10 to-blue-600/5",
-      icon: "bg-blue-500/20 text-blue-500",
-      value: "text-blue-500",
+      card: "from-info/10 to-info/5",
+      icon: "bg-info/20 text-info-foreground",
+      value: "text-info-foreground",
     },
   };
 

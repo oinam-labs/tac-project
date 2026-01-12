@@ -18,12 +18,12 @@ interface StatusPipelineProps {
 }
 
 const defaultStages: StatusStage[] = [
-  { id: "pending", label: "Pending", count: 0, icon: Clock, color: "text-slate-500 bg-slate-500/10" },
-  { id: "picked_up", label: "Picked Up", count: 0, icon: Package, color: "text-blue-500 bg-blue-500/10" },
-  { id: "in_transit", label: "In Transit", count: 0, icon: Truck, color: "text-amber-500 bg-amber-500/10" },
-  { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-purple-500 bg-purple-500/10" },
-  { id: "delivered", label: "Delivered", count: 0, icon: CheckCircle, color: "text-emerald-500 bg-emerald-500/10" },
-  { id: "failed", label: "Failed", count: 0, icon: AlertCircle, color: "text-red-500 bg-red-500/10" },
+  { id: "pending", label: "Pending", count: 0, icon: Clock, color: "text-muted-foreground bg-muted" },
+  { id: "picked_up", label: "Picked Up", count: 0, icon: Package, color: "text-info-foreground bg-info" },
+  { id: "in_transit", label: "In Transit", count: 0, icon: Truck, color: "text-warning-foreground bg-warning" },
+  { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-accent-foreground bg-accent" },
+  { id: "delivered", label: "Delivered", count: 0, icon: CheckCircle, color: "text-success-foreground bg-success" },
+  { id: "failed", label: "Failed", count: 0, icon: AlertCircle, color: "text-destructive-foreground bg-destructive" },
 ];
 
 export function StatusPipeline({

@@ -29,14 +29,14 @@ interface LiveActivityFeedProps {
 }
 
 const eventConfig: Record<ActivityEvent["type"], { icon: React.ElementType; color: string }> = {
-  shipment_created: { icon: Package, color: "text-blue-500 bg-blue-500/10" },
-  status_update: { icon: Truck, color: "text-amber-500 bg-amber-500/10" },
-  delivery: { icon: CheckCircle, color: "text-emerald-500 bg-emerald-500/10" },
-  exception: { icon: AlertCircle, color: "text-red-500 bg-red-500/10" },
-  invoice: { icon: FileText, color: "text-purple-500 bg-purple-500/10" },
-  payment: { icon: CreditCard, color: "text-green-500 bg-green-500/10" },
-  scan: { icon: Scan, color: "text-indigo-500 bg-indigo-500/10" },
-  customer: { icon: User, color: "text-slate-500 bg-slate-500/10" },
+  shipment_created: { icon: Package, color: "text-info-foreground bg-info" },
+  status_update: { icon: Truck, color: "text-warning-foreground bg-warning" },
+  delivery: { icon: CheckCircle, color: "text-success-foreground bg-success" },
+  exception: { icon: AlertCircle, color: "text-destructive-foreground bg-destructive" },
+  invoice: { icon: FileText, color: "text-accent-foreground bg-accent" },
+  payment: { icon: CreditCard, color: "text-success-foreground bg-success" },
+  scan: { icon: Scan, color: "text-primary-foreground bg-primary" },
+  customer: { icon: User, color: "text-muted-foreground bg-muted" },
 };
 
 export function LiveActivityFeed({ events, maxItems = 10, className }: LiveActivityFeedProps) {

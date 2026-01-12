@@ -109,11 +109,11 @@ export function OverviewClient({ stats, recentActivity }: OverviewClientProps) {
                 <h3 className="text-sm font-medium text-foreground mb-4">Shipment Pipeline</h3>
                 <StatusPipeline
                     stages={[
-                        { id: "pending", label: "Pending", count: stats.shipments.pending, icon: Clock, color: "text-muted-foreground bg-muted/10" },
-                        { id: "in_transit", label: "In Transit", count: stats.shipments.inTransit, icon: Truck, color: "text-warning bg-warning/10" },
-                        { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-accent bg-accent/10" },
-                        { id: "delivered", label: "Delivered", count: stats.shipments.delivered, icon: CheckCircle, color: "text-primary bg-primary/10" },
-                        { id: "failed", label: "Failed", count: stats.shipments.failed, icon: AlertCircle, color: "text-destructive bg-destructive/10" },
+                        { id: "pending", label: "Pending", count: stats.shipments.pending, icon: Clock, color: "text-muted-foreground bg-muted" },
+                        { id: "in_transit", label: "In Transit", count: stats.shipments.inTransit, icon: Truck, color: "text-warning-foreground bg-warning" },
+                        { id: "out_for_delivery", label: "Out for Delivery", count: 0, icon: MapPin, color: "text-info-foreground bg-info" },
+                        { id: "delivered", label: "Delivered", count: stats.shipments.delivered, icon: CheckCircle, color: "text-success-foreground bg-success" },
+                        { id: "failed", label: "Failed", count: stats.shipments.failed, icon: AlertCircle, color: "text-destructive-foreground bg-destructive" },
                     ]}
                 />
             </GlassPanel>
