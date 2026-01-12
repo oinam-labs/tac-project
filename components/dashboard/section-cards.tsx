@@ -76,7 +76,7 @@ export function SectionCards({ cards = defaultCards }: SectionCardsProps) {
               <CardAction>
                 <Badge 
                   variant="outline" 
-                  className={isPositive ? "text-emerald-600 border-emerald-200" : "text-red-600 border-red-200"}
+                  className={isPositive ? "text-primary border-primary/20" : "text-destructive border-destructive/20"}
                 >
                   <TrendIcon className="size-3" />
                   {card.trendLabel}

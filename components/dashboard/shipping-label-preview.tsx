@@ -195,7 +195,7 @@ export function ShippingLabelPreview({
       </div>
 
       {/* Return Address */}
-      <div className="border-t border-black bg-gray-50 p-1.5 text-[8px]">
+      <div className="border-t border-black bg-muted/5 p-1.5 text-[8px]">
         <span className="font-bold">Ship From:</span>{" "}
         {shipFrom.name || "TAC CARGO SERVICE"}
         <br />

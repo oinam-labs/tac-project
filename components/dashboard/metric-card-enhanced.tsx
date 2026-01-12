@@ -28,17 +28,17 @@ export function MetricCardEnhanced({
 }: MetricCardEnhancedProps) {
   const colorClasses = {
     default: "text-foreground",
-    success: "text-emerald-500",
-    warning: "text-amber-500",
-    destructive: "text-red-500",
+    success: "text-primary",
+    warning: "text-warning",
+    destructive: "text-destructive",
     primary: "text-primary",
   };
 
   const bgClasses = {
     default: "bg-card",
-    success: "bg-emerald-500/5 border-emerald-500/20",
-    warning: "bg-amber-500/5 border-amber-500/20",
-    destructive: "bg-red-500/5 border-red-500/20",
+    success: "bg-primary/5 border-primary/20",
+    warning: "bg-warning/5 border-warning/20",
+    destructive: "bg-destructive/5 border-destructive/20",
     primary: "bg-primary/5 border-primary/20",
   };
 
@@ -49,7 +49,7 @@ export function MetricCardEnhanced({
   };
 
   const TrendIcon = trend === "up" ? TrendingUp : trend === "down" ? TrendingDown : Minus;
-  const trendColor = trend === "up" ? "text-emerald-500" : trend === "down" ? "text-red-500" : "text-muted-foreground";
+  const trendColor = trend === "up" ? "text-primary" : trend === "down" ? "text-destructive" : "text-muted-foreground";
 
   if (loading) {
     return (

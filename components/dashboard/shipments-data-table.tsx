@@ -106,12 +106,12 @@ function DragHandle({ id }: Readonly<{ id: string }>) {
 }
 
 const statusConfig: Record<string, { icon: React.ElementType; color: string; label: string }> = {
-  pending: { icon: IconLoader, color: "text-slate-500", label: "Pending" },
-  picked_up: { icon: IconPackage, color: "text-blue-500", label: "Picked Up" },
-  in_transit: { icon: IconTruck, color: "text-amber-500", label: "In Transit" },
+  pending: { icon: IconLoader, color: "text-muted-foreground", label: "Pending" },
+  picked_up: { icon: IconPackage, color: "text-primary", label: "Picked Up" },
+  in_transit: { icon: IconTruck, color: "text-warning", label: "In Transit" },
   out_for_delivery: { icon: IconTruck, color: "text-indigo-500", label: "Out for Delivery" },
-  delivered: { icon: IconCircleCheckFilled, color: "text-emerald-500", label: "Delivered" },
-  failed: { icon: IconAlertCircle, color: "text-red-500", label: "Failed" },
+  delivered: { icon: IconCircleCheckFilled, color: "text-primary", label: "Delivered" },
+  failed: { icon: IconAlertCircle, color: "text-destructive", label: "Failed" },
 };
 
 const columns: ColumnDef<ShipmentRow>[] = [
