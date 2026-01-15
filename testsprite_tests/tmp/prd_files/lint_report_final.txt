@@ -1,0 +1,43 @@
+
+> tac-cargo@0.1.0 lint
+> eslint
+
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\quality-metric.tsx
+  5:55  warning  'Tooltip' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\inventory\_components\inventory-client.tsx
+   79:12  warning  'selectedWarehouse' is assigned a value but never used     @typescript-eslint/no-unused-vars
+   79:31  warning  'setSelectedWarehouse' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  148:22  warning  'row' is defined but never used                            @typescript-eslint/no-unused-vars
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\invoices\_components\invoices-client.tsx
+  30:10  warning  'toast' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\manifests\_components\manifests-client.tsx
+  117:12  warning  'isWizardOpen' is assigned a value but never used     @typescript-eslint/no-unused-vars
+  117:26  warning  'setIsWizardOpen' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+C:\tac-saas\tac-cargo\components\dashboard\data-table-premium.tsx
+  44:5  warning  Unused eslint-disable directive (no problems were reported from 'react-hooks/incompatible-library')
+
+C:\tac-saas\tac-cargo\components\dashboard\hero-banner.tsx
+  10:20   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  31:28   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  31:28   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  31:28   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  33:33   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  34:33   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  41:26   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  42:145  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  52:41   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  69:30   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  69:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  74:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  79:30   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  79:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  84:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+Γ£û 23 problems (0 errors, 23 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.
+

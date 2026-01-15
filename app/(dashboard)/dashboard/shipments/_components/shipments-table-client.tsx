@@ -33,7 +33,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { PageShell } from "@/components/dashboard/page-shell";
 import { DataTable } from "@/components/dashboard/data-table-premium";
 import { ShipmentWizard } from "@/components/shipments/shipment-wizard";
@@ -340,7 +341,10 @@ export function ShipmentsTableClient({
             />
 
             <Dialog open={isWizardOpen} onOpenChange={setIsWizardOpen}>
-                <DialogContent className="max-w-4xl h-[90vh] p-0 overflow-hidden">
+                <DialogContent className="max-w-4xl h-[90vh] p-0 overflow-hidden" aria-describedby={undefined}>
+                    <VisuallyHidden>
+                        <DialogTitle>Create New Shipment</DialogTitle>
+                    </VisuallyHidden>
                     <ShipmentWizard
                         warehouses={warehouses}
                         customers={customers}

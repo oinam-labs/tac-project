@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "loginUser": "admin@tac.app",
+  "loginPassword": "Test@1498",
+  "executionArgs": {
+    "projectName": "tac-cargo",
+    "projectPath": "C:/tac-saas/tac-cargo",
+    "testIds": [],
+    "additionalInstruction": "",
+    "envs": {
+      "API_KEY": "sk-user-nSvsLHrErLGKCBgYJTVDpO8gxJAn4Q063zkOELZ51scmxeW50AY-yTlqfHODSYkoCwB2JjaASt6OHIRGkhFGYLH8H-7nwzzIwYCWTaCKhNXqPDuMh57FVIAbkLk3-IqWtx8"
+    }
+  },
+  "proxy": "http://ebbd66e5-41f4-4ec4-8a79-5c6452a1995c:eQGF8RWQDZAvHkNNkdlXDNF7zpDFaySx@tun.testsprite.com:8080"
+}
