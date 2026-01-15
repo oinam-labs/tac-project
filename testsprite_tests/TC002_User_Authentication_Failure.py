@@ -46,39 +46,39 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on the 'Tracking' menu or 'Track Shipment' button to navigate to the public tracking page.
+        # -> Click on 'Sign In' to navigate to the login page
         frame = context.pages[-1]
-        # Click on 'Tracking' menu to go to public tracking page
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
+        # Click on 'Sign In' link to go to login page
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input a valid shipment reference 'TAC-8291' into the AWB input field and click TRACE to verify shipment status and event timeline.
+        # -> Input invalid email and password
         frame = context.pages[-1]
-        # Input valid shipment reference TAC-8291
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('TAC-8291')
+        # Input invalid email
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('invalid@tac.app')
         
 
         frame = context.pages[-1]
-        # Click TRACE button to submit shipment reference
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        # Input invalid password
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('WrongPassword123!')
         
 
-        # -> Click 'Show full tracking' button to verify full event timeline is displayed and updated in real-time.
         frame = context.pages[-1]
-        # Click 'Show full tracking' button to display full event timeline
-        elem = frame.locator('xpath=html/body/div[5]/div/div/button').nth(0)
+        # Click Sign In button to submit invalid credentials
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        try:
-            await expect(frame.locator('text=Shipment Reference Not Found').first).to_be_visible(timeout=3000)
-        except AssertionError:
-            raise AssertionError("Test case failed: Shipment statuses and event timelines are not accurately displayed as expected. The shipment reference lookup did not show the expected error message for invalid or non-existent shipment references.")
+        await expect(frame.locator('text=Authorized operatives only. Enter your credentials to access the command center.').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Email Address').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Password').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Forgot password?').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Sign In').first).to_be_visible(timeout=30000)
         await asyncio.sleep(5)
     
     finally:

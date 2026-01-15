@@ -46,39 +46,54 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on the 'Tracking' menu or 'Track Shipment' button to navigate to the public tracking page.
+        # -> Click on 'Sign In' to start authentication
         frame = context.pages[-1]
-        # Click on 'Tracking' menu to go to public tracking page
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
+        # Click on 'Sign In' link to open login page
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input a valid shipment reference 'TAC-8291' into the AWB input field and click TRACE to verify shipment status and event timeline.
+        # -> Input email and password, then click Sign In to authenticate user and obtain session token
         frame = context.pages[-1]
-        # Input valid shipment reference TAC-8291
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('TAC-8291')
+        # Input email address
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
         
 
         frame = context.pages[-1]
-        # Click TRACE button to submit shipment reference
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/button').nth(0)
+        # Input password
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Test@1498')
+        
+
+        frame = context.pages[-1]
+        # Click Sign In button to submit login form
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click 'Show full tracking' button to verify full event timeline is displayed and updated in real-time.
+        # -> Click Sign In button to authenticate user and obtain session token
         frame = context.pages[-1]
-        # Click 'Show full tracking' button to display full event timeline
-        elem = frame.locator('xpath=html/body/div[5]/div/div/button').nth(0)
+        # Click Sign In button to authenticate user and obtain session token
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Simulate session token expiration or invalidation to test redirection to login page
+        await page.goto('http://localhost:3000/logout', timeout=10000)
+        await asyncio.sleep(3)
+        
+
+        await page.goto('http://localhost:3000/dashboard/scanning', timeout=10000)
+        await asyncio.sleep(3)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Shipment Reference Not Found').first).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Session Active').first).to_be_visible(timeout=3000)
         except AssertionError:
-            raise AssertionError("Test case failed: Shipment statuses and event timelines are not accurately displayed as expected. The shipment reference lookup did not show the expected error message for invalid or non-existent shipment references.")
+            raise AssertionError("Test case failed: The test plan execution has failed because the session token did not grant access to the protected route or the user was not redirected to the login page after session expiration or invalidation.")
         await asyncio.sleep(5)
     
     finally:

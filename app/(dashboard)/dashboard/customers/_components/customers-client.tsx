@@ -272,14 +272,27 @@ function CreateCustomerForm({ onSuccess }: { onSuccess: (customer: unknown) => v
         e.preventDefault();
 
         startTransition(async () => {
-            const result = await createCustomer({
-                ...formData,
-                contact_person: formData.contact_person || formData.name,
-            });
-            if (result.success) {
-                onSuccess(result.data);
-            } else {
-                toast.error(result.error);
+            try {
+                const result = await createCustomer({
+                    name: formData.name,
+                    contact_person: formData.contact_person || formData.name,
+                    contact_phone: formData.contact_phone,
+                    contact_email: formData.contact_email,
+                    billing_address: formData.billing_address,
+                    city: formData.city,
+                    state: formData.state,
+                    pincode: formData.pincode,
+                    gst_number: formData.gst_number || undefined,
+                    credit_limit: formData.credit_limit,
+                });
+                if (result.success) {
+                    onSuccess(result.data);
+                } else {
+                    toast.error(result.error || "Failed to create customer");
+                }
+            } catch (err) {
+                console.error("Customer creation error:", err);
+                toast.error("An unexpected error occurred. Please try again.");
             }
         });
     };

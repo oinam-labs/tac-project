@@ -48,6 +48,7 @@ export async function updateSession(request: NextRequest) {
   );
 
   let user = null;
+  let authError = false;
   try {
     const {
       data: { user: u },
@@ -55,15 +56,30 @@ export async function updateSession(request: NextRequest) {
     } = await supabase.auth.getUser();
     user = u;
 
-    // If we have a refresh token error, we should effectively logout
+    // If we have a refresh token error, clear the session
     if (error) {
-      // Intentionally ignore the error to treat as logged out
-      // You could optionally clear cookies here if Supabase doesn't do it automatically
+      authError = true;
+      // Clear auth cookies to force re-authentication
+      const cookieNames = request.cookies.getAll().map(c => c.name);
+      cookieNames.forEach(name => {
+        if (name.includes('supabase') || name.includes('sb-')) {
+          supabaseResponse.cookies.delete(name);
+        }
+      });
     }
   } catch {
     // Catch any errors that might be thrown by the auth client
     // and treat the user as unauthenticated
     user = null;
+    authError = true;
+  }
+
+  // Force redirect to login if there was an auth error on protected routes
+  if (authError && isDashboardRoute) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    url.searchParams.set("error", "session_expired");
+    return NextResponse.redirect(url);
   }
 
   // Add security headers

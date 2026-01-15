@@ -46,39 +46,26 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on the 'Tracking' menu or 'Track Shipment' button to navigate to the public tracking page.
+        # -> Click on 'Start Shipping' to navigate to shipment creation page
         frame = context.pages[-1]
-        # Click on 'Tracking' menu to go to public tracking page
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
+        # Click on 'Start Shipping' to go to shipment creation page
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input a valid shipment reference 'TAC-8291' into the AWB input field and click TRACE to verify shipment status and event timeline.
+        # -> Locate and click the element to start creating a new shipment (e.g., 'Create Shipment' or similar)
         frame = context.pages[-1]
-        # Input valid shipment reference TAC-8291
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('TAC-8291')
-        
-
-        frame = context.pages[-1]
-        # Click TRACE button to submit shipment reference
-        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click 'Show full tracking' button to verify full event timeline is displayed and updated in real-time.
-        frame = context.pages[-1]
-        # Click 'Show full tracking' button to display full event timeline
-        elem = frame.locator('xpath=html/body/div[5]/div/div/button').nth(0)
+        # Click on 'Start Shipping' again to ensure navigation or find shipment creation form
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Shipment Reference Not Found').first).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Shipment Creation Successful').first).to_be_visible(timeout=3000)
         except AssertionError:
-            raise AssertionError("Test case failed: Shipment statuses and event timelines are not accurately displayed as expected. The shipment reference lookup did not show the expected error message for invalid or non-existent shipment references.")
+            raise AssertionError("Test case failed: Shipment creation did not complete successfully. The shipment record is not visible in the shipment list, or the shipment status and metadata are not set correctly as per the test plan.")
         await asyncio.sleep(5)
     
     finally:

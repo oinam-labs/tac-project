@@ -1,585 +1,738 @@
 [
   {
     "id": "TC001",
-    "title": "User Authentication - Successful Login",
-    "description": "Verify that a user can successfully log in with valid credentials and access the dashboard via protected routes.",
+    "title": "User Authentication Success",
+    "description": "Validate that users can successfully authenticate with valid credentials and gain access to protected routes.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to the login page."
+        "description": "Navigate to login page"
       },
       {
         "type": "action",
-        "description": "Enter valid username/email and password."
+        "description": "Input valid username/email and password"
       },
       {
         "type": "action",
-        "description": "Submit the login form."
+        "description": "Submit login form"
       },
       {
         "type": "assertion",
-        "description": "Verify that user is redirected to the dashboard and protected routes are accessible."
+        "description": "Check that authentication is successful and user is redirected to dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify session token is created and stored securely"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access is permitted to protected routes"
       }
     ]
   },
   {
     "id": "TC002",
-    "title": "User Authentication - Invalid Credentials",
-    "description": "Verify that the login process fails when invalid credentials are provided with appropriate error messages.",
+    "title": "User Authentication Failure",
+    "description": "Ensure authentication fails gracefully with invalid credentials without exposing sensitive information.",
     "category": "error handling",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to the login page."
+        "description": "Navigate to login page"
       },
       {
         "type": "action",
-        "description": "Enter invalid username/email or password."
+        "description": "Input invalid username/email or password"
       },
       {
         "type": "action",
-        "description": "Submit the login form."
+        "description": "Submit login form"
       },
       {
         "type": "assertion",
-        "description": "Verify that login is denied and a proper error message is displayed."
+        "description": "Check that authentication is denied"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error message is displayed appropriately and no session token is created"
       }
     ]
   },
   {
     "id": "TC003",
-    "title": "Session Management and Logout",
-    "description": "Verify that user sessions are maintained after login and users can successfully log out, invalidating the session.",
-    "category": "functional",
+    "title": "Session Management and Protected Routes Enforcement",
+    "description": "Verify active session tokens grant access to protected routes and expired or invalid sessions redirect to login.",
+    "category": "security",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Login with valid credentials."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm the session is active and persists on page reload."
+        "description": "Authenticate user and obtain session token"
       },
       {
         "type": "action",
-        "description": "Perform logout action."
+        "description": "Access protected route with valid session token"
       },
       {
         "type": "assertion",
-        "description": "Verify the session is terminated and protected routes are not accessible."
+        "description": "Verify access is granted to protected route"
+      },
+      {
+        "type": "action",
+        "description": "Invalidate session token or simulate expiration"
+      },
+      {
+        "type": "action",
+        "description": "Attempt to access protected route again"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is redirected to login page"
       }
     ]
   },
   {
     "id": "TC004",
-    "title": "Shipment Creation - Valid Data",
-    "description": "Verify that users can create shipments with valid consignee and shipment details successfully.",
+    "title": "Create New Shipment",
+    "description": "Validate creation of a new shipment with detailed consignee and shipment information.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Login and navigate to shipment creation page."
+        "description": "Navigate to shipment creation page"
       },
       {
         "type": "action",
-        "description": "Input all required fields with valid shipment and consignee data."
+        "description": "Input valid consignee and shipment details including weight, destination, and contents"
       },
       {
         "type": "action",
-        "description": "Submit the shipment creation form."
+        "description": "Submit the create shipment form"
       },
       {
         "type": "assertion",
-        "description": "Verify shipment is created successfully and visible in shipment list."
+        "description": "Verify shipment record is created successfully and visible in shipment list"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify shipment status is set correctly and essential metadata is stored"
       }
     ]
   },
   {
     "id": "TC005",
-    "title": "Shipment Creation - Missing Required Fields",
-    "description": "Verify shipment creation fails with appropriate validation errors when required fields are missing.",
-    "category": "error handling",
+    "title": "Update Existing Shipment",
+    "description": "Verify that users can update shipment details and that updates persist correctly.",
+    "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to shipment creation page."
+        "description": "Locate an existing shipment from the shipment list"
       },
       {
         "type": "action",
-        "description": "Fill shipment form omitting required fields such as consignee or shipment details."
+        "description": "Edit shipment fields such as status, consignee address, or contents"
       },
       {
         "type": "action",
-        "description": "Attempt to submit the form."
+        "description": "Submit the update form"
       },
       {
         "type": "assertion",
-        "description": "Confirm validation errors prevent shipment creation and error messages are displayed."
+        "description": "Confirm shipment details reflect the updated information"
       }
     ]
   },
   {
     "id": "TC006",
-    "title": "Shipment Update and Cancellation",
-    "description": "Verify users can update shipment details and successfully cancel shipments before dispatch.",
+    "title": "Cancel a Shipment",
+    "description": "Verify users can cancel a shipment and system updates shipment status appropriately.",
     "category": "functional",
-    "priority": "High",
+    "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Create a shipment or select an existing active shipment."
+        "description": "Access a shipment eligible for cancellation"
       },
       {
         "type": "action",
-        "description": "Modify shipment details and save changes."
+        "description": "Submit cancellation request"
       },
       {
         "type": "assertion",
-        "description": "Verify updated details are reflected accurately."
-      },
-      {
-        "type": "action",
-        "description": "Cancel the shipment."
+        "description": "Verify shipment status updates to 'Cancelled'"
       },
       {
         "type": "assertion",
-        "description": "Verify shipment status is set to canceled and no further updates allowed."
+        "description": "Confirm subsequent attempts to update canceled shipment are prevented"
       }
     ]
   },
   {
     "id": "TC007",
-    "title": "Shipment Search and Bulk Operations",
-    "description": "Verify shipment search functionality with filters and the ability to perform bulk operations such as bulk updates or cancellations.",
+    "title": "Bulk Shipment Search and Operations",
+    "description": "Validate search functionality with multiple filters and bulk operations on selected shipments.",
     "category": "functional",
-    "priority": "Medium",
+    "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to shipments list page."
+        "description": "Navigate to shipment management page"
       },
       {
         "type": "action",
-        "description": "Perform searches using filters like shipment status, date range, and consignee name."
+        "description": "Perform searches using different filter criteria (date range, status, consignee, weight)"
       },
       {
         "type": "assertion",
-        "description": "Confirm search results match the applied filters."
+        "description": "Verify search results match filter criteria accurately"
       },
       {
         "type": "action",
-        "description": "Select multiple shipments and perform a bulk operation (e.g., bulk cancel or update)."
+        "description": "Select multiple shipments from results list"
+      },
+      {
+        "type": "action",
+        "description": "Perform bulk update or cancellation on selected shipments"
       },
       {
         "type": "assertion",
-        "description": "Verify the bulk operation is applied successfully to the selected shipments."
+        "description": "Confirm bulk operations apply successfully to all selected shipments"
       }
     ]
   },
   {
     "id": "TC008",
-    "title": "Manifest Management Workflow",
-    "description": "Verify the complete manifest lifecycle including creation, locking shipments, dispatch, arrival logging, and marking manifests as complete.",
+    "title": "Manifest Creation and Lock Workflow",
+    "description": "Verify creation of a manifest, locking shipments to manifest, and deny changes after lock.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Create a new manifest and add shipments to it."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify shipments are correctly assigned and manifest is in 'created' state."
+        "description": "Create a new manifest with valid details"
       },
       {
         "type": "action",
-        "description": "Lock the manifest to prevent changes to shipment assignments."
-      },
-      {
-        "type": "assertion",
-        "description": "Confirm manifest status reflects 'locked' and no further edits allowed to shipments."
+        "description": "Assign multiple shipments to the manifest"
       },
       {
         "type": "action",
-        "description": "Dispatch the manifest and log arrival events."
+        "description": "Lock the manifest to prevent further changes"
       },
       {
         "type": "assertion",
-        "description": "Verify manifest status updates correctly to 'dispatched' and arrival logs are recorded."
+        "description": "Confirm manifest status is updated to locked"
       },
       {
         "type": "action",
-        "description": "Mark the manifest as complete."
+        "description": "Attempt to modify shipments in a locked manifest"
       },
       {
         "type": "assertion",
-        "description": "Confirm manifest is marked complete and closed for further operations."
+        "description": "Verify modifications are disallowed and relevant error messages are shown"
       }
     ]
   },
   {
     "id": "TC009",
-    "title": "Customer Management CRUD and Autocomplete Search",
-    "description": "Verify that users can perform full CRUD operations on customers and use autocomplete search effectively.",
+    "title": "Manifest Dispatch and Completion Workflow",
+    "description": "Validate dispatch process, arrival logging, and marking the manifest as complete.",
     "category": "functional",
     "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to customer management page."
+        "description": "Access a locked manifest ready for dispatch"
       },
       {
         "type": "action",
-        "description": "Create a new customer with valid details."
+        "description": "Mark manifest as dispatched"
       },
       {
         "type": "assertion",
-        "description": "Verify customer is added successfully and visible in the customer list."
+        "description": "Verify manifest status changes to dispatched"
       },
       {
         "type": "action",
-        "description": "Use the search input to type partial customer names/emails and observe autocomplete suggestions."
-      },
-      {
-        "type": "assertion",
-        "description": "Autocomplete returns relevant customer matches promptly."
+        "description": "Log arrival time and conditions upon manifest arrival"
       },
       {
         "type": "action",
-        "description": "Select a customer and update information."
+        "description": "Mark manifest as complete"
       },
       {
         "type": "assertion",
-        "description": "Verify updates are saved and displayed correctly."
-      },
-      {
-        "type": "action",
-        "description": "Delete a customer and confirm deletion."
-      },
-      {
-        "type": "assertion",
-        "description": "Verify the customer is removed from the system and no longer searchable."
+        "description": "Confirm manifest status updates to completed and is immutable thereafter"
       }
     ]
   },
   {
     "id": "TC010",
-    "title": "Invoice Management - Creation and PDF Generation",
-    "description": "Verify invoices can be created from shipment or customer order details, viewed correctly, and PDF invoices generated according to enterprise standards.",
+    "title": "Customer CRUD Operations",
+    "description": "Validate create, read, update, and delete operations for customer data including autocomplete search.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Create an invoice based on a specific shipment or customer order data."
+        "description": "Create a new customer with valid fields"
       },
       {
         "type": "assertion",
-        "description": "Invoice is created with correct details and status set appropriately."
+        "description": "Confirm customer is listed in customer management page"
       },
       {
         "type": "action",
-        "description": "View the invoice details page."
+        "description": "Use autocomplete search box to find customers by partial names or contacts"
       },
       {
         "type": "assertion",
-        "description": "Verify all data including taxes (IATA, FIATA, GST) and totals are accurate."
+        "description": "Verify autocomplete suggestions accurately match search input"
       },
       {
         "type": "action",
-        "description": "Trigger PDF generation of the invoice."
+        "description": "Update customer details"
       },
       {
         "type": "assertion",
-        "description": "Confirm that PDF is generated, downloadable, conforms to specified standards, and is printable."
+        "description": "Confirm updated details are saved and reflected"
+      },
+      {
+        "type": "action",
+        "description": "Delete a customer entry"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify customer is removed and cannot be selected in operations"
       }
     ]
   },
   {
     "id": "TC011",
-    "title": "Invoice Status Workflow and Notifications",
-    "description": "Verify that invoice status updates are handled correctly and multi-channel notifications (email, SMS, WhatsApp) are sent with audit logs.",
+    "title": "Invoice Creation and Status Workflow",
+    "description": "Verify creating invoices linked to shipments or customers, editing, status transitions, and audit logging.",
     "category": "functional",
-    "priority": "Medium",
+    "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Update invoice status to sent, paid, or overdue."
+        "description": "Create invoice for selected shipment or customer order"
       },
       {
         "type": "assertion",
-        "description": "Verify status transitions follow defined workflows and restrictions."
+        "description": "Verify invoice is created with correct amount, tax details and statuses"
       },
       {
         "type": "action",
-        "description": "Send notifications via email, SMS, and WhatsApp regarding invoice events."
+        "description": "Edit invoice details before finalization"
       },
       {
         "type": "assertion",
-        "description": "Confirm messages are sent successfully and logged in audit records."
+        "description": "Confirmed updated details are saved"
+      },
+      {
+        "type": "action",
+        "description": "Change invoice status through its allowed workflow (e.g., Draft → Issued → Paid)"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify status changes are properly reflected and prevented if invalid"
+      },
+      {
+        "type": "assertion",
+        "description": "Validate audit logs record all changes and status transitions"
       }
     ]
   },
   {
     "id": "TC012",
     "title": "Payment Processing with Razorpay Integration",
-    "description": "Verify payment process initiates correctly, payments are captured via Razorpay, and webhook events update payment status accurately including error scenarios.",
+    "description": "Test end-to-end payment flows including payment creation, verification, and webhook processing.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Initiate payment for an invoice using Razorpay integration."
-      },
-      {
-        "type": "assertion",
-        "description": "Payment request is sent and Razorpay UI or API responds with payment options."
+        "description": "Generate payment request linked to an invoice"
       },
       {
         "type": "action",
-        "description": "Complete payment successfully through Razorpay."
+        "description": "Simulate user completing payment via Razorpay"
       },
       {
         "type": "assertion",
-        "description": "Verify payment status updates to 'paid' in the system."
+        "description": "Verify payment status updates to confirmed and reflected in invoice"
       },
       {
         "type": "action",
-        "description": "Simulate Razorpay webhook calls with successful and failed payment events."
+        "description": "Trigger Razorpay webhook with valid payment event"
       },
       {
         "type": "assertion",
-        "description": "Verify webhook validation, payment status updates, and error handling are processed correctly."
+        "description": "Confirm webhook processes event accurately updating payment and invoice statuses"
+      },
+      {
+        "type": "action",
+        "description": "Trigger Razorpay webhook with invalid or tampered data"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify webhook validation fails and error handling works gracefully"
       }
     ]
   },
   {
     "id": "TC013",
     "title": "Real-Time Shipment Tracking Public Page",
-    "description": "Verify that public tracking pages display real-time and accurate shipment status and event timeline when valid shipment references are entered.",
+    "description": "Validate that shipment statuses and event timelines are accurately displayed to public users using shipment references.",
     "category": "functional",
     "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to public shipment tracking page."
+        "description": "Navigate to public tracking page"
       },
       {
         "type": "action",
-        "description": "Enter a valid shipment reference number."
+        "description": "Input valid shipment reference or AWB number"
       },
       {
         "type": "assertion",
-        "description": "Shipment status and event timeline information are displayed and synchronized with backend updates."
+        "description": "Verify shipment status and full event timeline are displayed and updated in real-time"
       },
       {
         "type": "action",
-        "description": "Enter an invalid or non-existent shipment reference."
+        "description": "Input invalid or non-existent shipment reference"
       },
       {
         "type": "assertion",
-        "description": "Verify appropriate error message or no data found response is shown."
+        "description": "Verify appropriate error or not found message is displayed"
       }
     ]
   },
   {
     "id": "TC014",
-    "title": "Warehouse Inventory Management - Stock Adjustments",
-    "description": "Verify the ability to add, update, and adjust warehouse inventory counts with correct reflecting of changes in inventory status.",
+    "title": "Warehouse Inventory Count and Adjustment",
+    "description": "Test inventory management including accurate counting, adjustments, and reflecting changes in balances.",
     "category": "functional",
     "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Navigate to warehouse inventory management page."
+        "description": "Access inventory management page"
       },
       {
         "type": "action",
-        "description": "Add new inventory items with valid details."
-      },
-      {
-        "type": "assertion",
-        "description": "New inventory records appear with correct data."
+        "description": "Record new inventory counts for selected SKU or warehouse location"
       },
       {
         "type": "action",
-        "description": "Adjust inventory counts for existing items."
+        "description": "Make adjustments such as adding or subtracting inventory quantities"
       },
       {
         "type": "assertion",
-        "description": "Verify updated counts are correctly saved and displayed."
+        "description": "Verify inventory balances reflect counts and adjustments correctly"
       }
     ]
   },
   {
     "id": "TC015",
-    "title": "Dashboard Analytics Rendering and Data Accuracy",
-    "description": "Verify dashboard overview cards, charts, and mission control panels render correctly and display data consistent with the underlying business metrics.",
+    "title": "Barcode Scanning for Shipment Processing",
+    "description": "Validate barcode scanning functionality correctly identifies shipments and updates statuses accordingly.",
     "category": "functional",
     "priority": "Medium",
     "steps": [
       {
         "type": "action",
-        "description": "Login as an administrator and navigate to the dashboard analytics page."
+        "description": "Access scanning module UI"
+      },
+      {
+        "type": "action",
+        "description": "Scan valid barcode linked to shipment"
       },
       {
         "type": "assertion",
-        "description": "Overview cards display key metrics as expected."
+        "description": "Verify shipment is identified correctly and related status or inventory updates are made"
+      },
+      {
+        "type": "action",
+        "description": "Attempt scanning invalid or unassigned barcode"
       },
       {
         "type": "assertion",
-        "description": "Charts visualize data trends accurately."
-      },
-      {
-        "type": "assertion",
-        "description": "Mission control UI components update dynamically and reflect operational statuses."
+        "description": "Verify error message displayed and no updates performed"
       }
     ]
   },
   {
     "id": "TC016",
-    "title": "API Endpoint Input Validation and Error Handling",
-    "description": "Verify all RESTful API endpoints validate inputs using Zod schemas and return graceful, standardized error responses on invalid input.",
-    "category": "error handling",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Send API requests to shipment, manifest, customer, invoice, and payment endpoints with invalid or malformed data."
-      },
-      {
-        "type": "assertion",
-        "description": "API responds with validation errors following standardized ActionResult formats."
-      },
-      {
-        "type": "action",
-        "description": "Send valid requests and verify normal operation responses."
-      },
-      {
-        "type": "assertion",
-        "description": "No unexpected errors occur and data is processed correctly."
-      }
-    ]
-  },
-  {
-    "id": "TC017",
-    "title": "Security - RLS Policy Enforcement and Cross-Tenant Access Prevention",
-    "description": "Verify that Row-Level Security (RLS) enforces scoping by organization and prevents cross-tenant data access.",
-    "category": "security",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Login as a user from organization A and attempt to access data owned by organization B via UI and API calls."
-      },
-      {
-        "type": "assertion",
-        "description": "Access to organization B's data is denied and data is not leaked."
-      },
-      {
-        "type": "action",
-        "description": "Validate log entries and audit trails for attempted unauthorized access."
-      },
-      {
-        "type": "assertion",
-        "description": "All authorization failures are recorded appropriately."
-      }
-    ]
-  },
-  {
-    "id": "TC018",
-    "title": "Performance - Page Load and Server Startup Times",
-    "description": "Verify system meets performance targets including sub-2 second page loads, optimized bundle sizes, and server startup under 1 second.",
-    "category": "performance",
-    "priority": "Medium",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Measure page load times for dashboard, shipment management, and tracking pages."
-      },
-      {
-        "type": "assertion",
-        "description": "Page loads complete in under 2 seconds consistently."
-      },
-      {
-        "type": "action",
-        "description": "Analyze bundle sizes of client-side bundles."
-      },
-      {
-        "type": "assertion",
-        "description": "Bundle sizes remain optimized as per targets."
-      },
-      {
-        "type": "action",
-        "description": "Start server instance and measure startup time."
-      },
-      {
-        "type": "assertion",
-        "description": "Server starts up under 1 second."
-      }
-    ]
-  },
-  {
-    "id": "TC019",
-    "title": "Security Utilities - Headers, CORS, and Environment Validation",
-    "description": "Verify that all security headers are correctly applied, CORS policies enforce allowed origins, and environment variables are validated on startup.",
-    "category": "security",
-    "priority": "High",
-    "steps": [
-      {
-        "type": "action",
-        "description": "Inspect HTTP response headers for security-related headers (CSP, HSTS, X-Frame-Options, etc.)."
-      },
-      {
-        "type": "assertion",
-        "description": "All required security headers are present and correctly set."
-      },
-      {
-        "type": "action",
-        "description": "Send requests from allowed and disallowed origins to verify CORS policy enforcement."
-      },
-      {
-        "type": "assertion",
-        "description": "Requests from disallowed origins are rejected appropriately."
-      },
-      {
-        "type": "action",
-        "description": "Start application with missing or invalid environment variables."
-      },
-      {
-        "type": "assertion",
-        "description": "Application fails startup with clear validation errors preventing runtime misconfiguration."
-      }
-    ]
-  },
-  {
-    "id": "TC020",
-    "title": "Deployment Readiness - Database Migrations and Lint Reports",
-    "description": "Verify successful database migrations and zero critical linting warnings before deployment.",
+    "title": "Notification Send and Audit Logging",
+    "description": "Ensure email, SMS, and WhatsApp notifications are sent correctly with audit logs maintained.",
     "category": "functional",
     "priority": "High",
     "steps": [
       {
         "type": "action",
-        "description": "Run database migration scripts on a fresh environment."
+        "description": "Trigger notification events for shipment status changes, invoice sent, or payment confirmation"
       },
       {
         "type": "assertion",
-        "description": "Migrations complete successfully with expected schema changes."
+        "description": "Verify notifications are sent via appropriate channels (email, SMS, WhatsApp)"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm audit logs record all sent notifications with timestamps and delivery statuses"
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "PDF Generation for Invoices and Labels",
+    "description": "Verify PDF documents for invoices and shipping labels are generated correctly and downloadable via REST APIs.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Request PDF generation for an invoice"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify returned PDF document is valid, printable, and adheres to enterprise standards"
       },
       {
         "type": "action",
-        "description": "Run linting tools across the entire codebase."
+        "description": "Request shipping label PDF for a shipment"
       },
       {
         "type": "assertion",
-        "description": "No critical warnings or errors are reported."
+        "description": "Confirm label PDF renders correctly with accurate shipment information"
+      },
+      {
+        "type": "action",
+        "description": "Invoke PDF generation API with invalid or missing parameters"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify error responses are returned gracefully"
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Dashboard Analytics Overview Cards and Charts Accuracy",
+    "description": "Validate dashboard analytics components render accurate KPIs and graphical data consistent with backend inputs.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Access dashboard analytics page"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify overview cards display correct totals and metrics"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify charts render data accurately and update on filter changes"
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Security Headers and CORS Enforcement",
+    "description": "Ensure production environment enforces strict security headers, CORS policies, and environment variable validation.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send requests to application endpoints in production environment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify security headers (CSP, HSTS, X-Frame-Options, etc.) are present and configured correctly"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify CORS policies prevent unauthorized cross-origin requests"
+      },
+      {
+        "type": "action",
+        "description": "Check environment variable validation during startup"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm application startup fails or warns on invalid environment configuration"
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "API Input Validation and Error Handling",
+    "description": "Validate all RESTful API endpoints enforce strict input validation (via Zod schemas) and return standardized errors.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send API requests with valid payloads to shipments, manifests, customers, invoices, and payments endpoints"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify successful responses with expected data"
+      },
+      {
+        "type": "action",
+        "description": "Send API requests with invalid or malformed payloads"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm standardized error responses with appropriate HTTP codes and messages"
+      }
+    ]
+  },
+  {
+    "id": "TC021",
+    "title": "RLS Policies Prevent Cross-Tenant Data Access",
+    "description": "Automated tests verify Row-Level Security policies scope data access correctly by organization to prevent cross-tenant leaks.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Attempt to access shipment, manifest, customer, invoice, and payment data belonging to different organization tenant"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access is denied or no data returned"
+      },
+      {
+        "type": "action",
+        "description": "Access the same data as authorized tenant user"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm full access is granted to authorized user's organization's data"
+      }
+    ]
+  },
+  {
+    "id": "TC022",
+    "title": "Performance: Page Load and Server Startup Metrics",
+    "description": "Verify pages load under 2 seconds, bundle size is optimized, and server startup completes under 1 second.",
+    "category": "performance",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Measure load time of critical pages (dashboard, shipment list, invoice page)"
+      },
+      {
+        "type": "assertion",
+        "description": "Check load time does not exceed 2 seconds"
+      },
+      {
+        "type": "action",
+        "description": "Analyze bundled assets for size optimization"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify bundle sizes comply with target thresholds"
+      },
+      {
+        "type": "action",
+        "description": "Restart server and measure startup time"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm server startup completes within 1 second"
+      }
+    ]
+  },
+  {
+    "id": "TC023",
+    "title": "Audit Logs Verification for Critical Operations",
+    "description": "Verify audit logs capture all critical operations including authentication events, invoice changes, payment status updates, and shipment lifecycle changes.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Perform operations: login/logout, create/update/delete invoice, update payment status, change shipment status"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify audit logs record who performed the operation, when, and what changed"
+      },
+      {
+        "type": "assertion",
+        "description": "Audit logs should be immutable and consistently available for review"
+      }
+    ]
+  },
+  {
+    "id": "TC024",
+    "title": "Accessibility Compliance (WCAG AA) and UI Token Design Consistency",
+    "description": "Validate UI components conform to accessibility standards and the OKLCH color token design system.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Inspect key UI screens across the app for color contrast, keyboard navigability, screen reader compatibility"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify accessibility audit tools report WCAG AA compliance"
+      },
+      {
+        "type": "action",
+        "description": "Compare UI color usage against token design system guidelines"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm consistency in color tokens and adherence to design tokens"
+      }
+    ]
+  },
+  {
+    "id": "TC025",
+    "title": "Deployment Readiness Validation",
+    "description": "Ensure database migrations succeed, environment configuration is validated, and code linting produces zero critical warnings.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Run full deployment including applying all database migrations on staging environment"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify migrations complete without errors"
+      },
+      {
+        "type": "action",
+        "description": "Validate environment variables and configuration during deployment"
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm environment validation rejects missing or invalid configuration"
+      },
+      {
+        "type": "action",
+        "description": "Run linting and static code analysis tools"
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure zero critical lint warnings or errors exist"
       }
     ]
   }
