@@ -171,7 +171,7 @@ function FeaturesSection() {
         <section className="bg-background px-6 py-24 min-h-screen flex items-center justify-center">
             <div className="max-w-7xl w-full mx-auto">
                 <motion.p
-                    className="text-muted-foreground text-sm uppercase tracking-widest mb-8"
+                    className="text-muted-foreground text-sm mb-8"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}

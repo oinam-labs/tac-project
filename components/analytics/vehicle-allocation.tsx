@@ -11,7 +11,7 @@ const data = [
 export function VehicleAllocation() {
   return (
     <div className="bg-card flex h-full flex-col justify-between rounded-[24px] border border-border p-6 shadow-lg backdrop-blur-xl transition-all hover:border-primary/20">
-      <h3 className="mb-6 flex items-center gap-2 text-sm font-bold tracking-wider text-foreground uppercase">
+      <h3 className="mb-6 flex items-center gap-2 text-sm font-semibold text-foreground">
         <span className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />{" "}
         Fleet Allocation
       </h3>
@@ -61,7 +61,7 @@ export function VehicleAllocation() {
           </ResponsiveContainer>
           <div className="absolute text-center">
             <div className="font-display text-3xl font-bold text-foreground">48</div>
-            <div className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase">
+            <div className="text-muted-foreground text-xs font-medium">
               Total
             </div>
           </div>
@@ -81,7 +81,7 @@ export function VehicleAllocation() {
                     boxShadow: `0 0 10px ${item.color}`,
                   }}
                 ></div>
-                <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase transition-colors group-hover:text-foreground">
+                <span className="text-muted-foreground text-xs font-medium transition-colors group-hover:text-foreground">
                   {item.name}
                 </span>
               </div>

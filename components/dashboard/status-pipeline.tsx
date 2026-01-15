@@ -32,7 +32,7 @@ export function StatusPipeline({
   activeStage,
 }: StatusPipelineProps) {
   return (
-    <div className="flex items-stretch gap-1 overflow-x-auto pb-2">
+    <div className="flex items-stretch gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-muted-foreground/20">
       {stages.map((stage, index) => {
         const Icon = stage.icon;
         const isActive = activeStage === stage.id;
@@ -43,23 +43,27 @@ export function StatusPipeline({
             <button
               onClick={() => onStageClick?.(stage.id)}
               className={cn(
-                "flex flex-col items-center justify-center min-w-[100px] px-4 py-3 rounded-lg border transition-all",
-                "hover:shadow-md hover:scale-[1.02]",
-                isActive ? "ring-2 ring-primary ring-offset-2" : "",
-                bgColor
+                "flex flex-col items-center justify-center min-w-[110px] px-4 py-3 rounded-lg border transition-all",
+                "hover:bg-muted/50 hover:border-primary/30",
+                isActive 
+                  ? "ring-2 ring-primary border-primary/50 bg-primary/5" 
+                  : "border-border bg-card",
               )}
             >
-              <Icon className={cn("w-5 h-5 mb-1", textColor)} />
-              <span className={cn("text-lg font-bold", textColor)}>{stage.count}</span>
-              <span className="text-[10px] text-muted-foreground font-medium uppercase tracking-wider">
+              <div className={cn("p-2 rounded-full mb-2 bg-muted/50", bgColor?.replace("bg-", "bg-opacity-10 " + "bg-"))}>
+                 <Icon className={cn("w-5 h-5", textColor)} />
+              </div>
+              <span className="text-2xl font-bold tracking-tight text-foreground">{stage.count}</span>
+              <span className="text-xs text-muted-foreground font-medium mt-0.5">
                 {stage.label}
               </span>
             </button>
             
             {index < stages.length - 1 && (
-              <div className="flex items-center px-1">
-                <div className="w-4 h-0.5 bg-border" />
-                <div className="w-0 h-0 border-t-4 border-b-4 border-l-4 border-transparent border-l-border" />
+              <div className="mx-2 text-muted-foreground/20">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                  <path d="m9 18 6-6-6-6"/>
+                </svg>
               </div>
             )}
           </div>

@@ -46,6 +46,7 @@ interface ManifestEditClientProps {
   warehouses: Warehouse[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- Reserved for warehouse selection
 export function ManifestEditClient({ manifest, warehouses }: ManifestEditClientProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);

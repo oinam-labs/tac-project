@@ -25,7 +25,7 @@ const PackageImageContainer = ({ children }: { children: React.ReactNode }) => (
     <div
       className={cn(
         "absolute inset-0 z-0 h-full w-full",
-        "bg-[hsl(var(--muted)/0.3)]",
+        "bg-muted/30",
         "bg-[size:80px_80px]",
         "bg-gradient-to-r from-transparent via-[hsl(var(--muted)/0.3)] to-transparent",
         "animate-conveyor-belt", // This requires a custom animation keyframe in globals.css or tailwind config

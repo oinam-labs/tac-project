@@ -1,21 +1,32 @@
 "use client";
 
 import React, { useState, useTransition } from "react";
-import { 
-    User, 
-    Shield, 
+import { useTheme } from "next-themes";
+import {
+    User,
+    Shield,
     Bell,
-    Save
+    Save,
+    Mail,
+    Building2,
+    Warehouse,
+    Palette,
+    LogOut,
+    CheckCircle2
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
+import { PageShell } from "@/components/dashboard/page-shell";
 import type { UserRole } from "@/types/database";
+import { Badge } from "@/components/ui/badge";
 
 interface Profile {
     id: string;
@@ -41,12 +52,10 @@ interface SettingsClientProps {
     warehouses: Warehouse[];
 }
 
-type TabType = "account" | "security" | "notifications";
-
 export function SettingsClient({ profile, warehouses }: SettingsClientProps) {
-    const [activeTab, setActiveTab] = useState<TabType>("account");
     const [isPending, startTransition] = useTransition();
-    
+    const { setTheme: applyTheme } = useTheme();
+
     const [formData, setFormData] = useState({
         full_name: profile?.full_name || "",
         phone: profile?.phone || "",
@@ -58,7 +67,7 @@ export function SettingsClient({ profile, warehouses }: SettingsClientProps) {
     const handleSave = async () => {
         startTransition(async () => {
             const supabase = createClient();
-            
+
             const { error } = await supabase
                 .from("profiles")
                 .update({
@@ -76,236 +85,315 @@ export function SettingsClient({ profile, warehouses }: SettingsClientProps) {
             if (error) {
                 toast.error("Failed to save settings");
             } else {
-                toast.success("Settings saved");
+                toast.success("Settings saved successfully");
             }
         });
     };
 
     if (!profile) {
         return (
-            <GlassPanel className="p-8 text-center">
-                <User className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                <h2 className="text-lg font-medium text-foreground mb-2">Not Logged In</h2>
-                <p className="text-sm text-muted-foreground">Please log in to access settings</p>
-            </GlassPanel>
+            <div className="flex h-[50vh] flex-col items-center justify-center p-8 text-center">
+                <User className="w-16 h-16 mb-6 text-muted" />
+                <h2 className="text-2xl font-bold text-foreground mb-2">Not Logged In</h2>
+                <p className="text-muted-foreground mb-6">Please log in to access your account settings.</p>
+                <Button>Go to Login</Button>
+            </div>
         );
     }
 
+    const getInitials = (name: string) => {
+        return name
+            .split(" ")
+            .map((n) => n[0])
+            .join("")
+            .toUpperCase()
+            .substring(0, 2);
+    };
+
     return (
-        <GlassPanel className="p-8 bg-card/40">
-            <h1 className="text-2xl font-bold text-foreground mb-8">Settings</h1>
-
-            {/* Tabs */}
-            <div className="flex gap-8 border-b border-border mb-8">
-                <TabButton 
-                    active={activeTab === "account"} 
-                    onClick={() => setActiveTab("account")}
-                    icon={User}
-                >
-                    Account
-                </TabButton>
-                <TabButton 
-                    active={activeTab === "security"} 
-                    onClick={() => setActiveTab("security")}
-                    icon={Shield}
-                >
-                    Security
-                </TabButton>
-                <TabButton 
-                    active={activeTab === "notifications"} 
-                    onClick={() => setActiveTab("notifications")}
-                    icon={Bell}
-                >
-                    Notifications
-                </TabButton>
-            </div>
-
-            {/* Account Tab */}
-            {activeTab === "account" && (
-                <div className="space-y-6">
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label>Full Name</Label>
-                            <Input 
-                                value={formData.full_name}
-                                onChange={(e) => setFormData(prev => ({ ...prev, full_name: e.target.value }))}
-                            />
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Phone</Label>
-                            <Input 
-                                value={formData.phone}
-                                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
-                            />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label>Email</Label>
-                            <Input value={profile.email} disabled className="opacity-50" />
-                            <p className="text-[10px] text-muted-foreground">Contact admin to change email</p>
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Role</Label>
-                            <Input value={profile.role} disabled className="opacity-50 capitalize" />
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="space-y-2">
-                            <Label>Default Warehouse</Label>
-                            <select
-                                value={formData.warehouse_id}
-                                onChange={(e) => setFormData(prev => ({ ...prev, warehouse_id: e.target.value }))}
-                                className="w-full bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-foreground"
-                            >
-                                <option value="">No default</option>
-                                {warehouses.map((w) => (
-                                    <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
-                                ))}
-                            </select>
-                        </div>
-                        <div className="space-y-2">
-                            <Label>Organization</Label>
-                            <Input 
-                                value={profile.organizations?.name || "—"} 
-                                disabled 
-                                className="opacity-50" 
-                            />
-                        </div>
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label>Theme</Label>
-                        <div className="flex gap-2">
-                            {["light", "dark", "system"].map((theme) => (
-                                <button
-                                    key={theme}
-                                    onClick={() => setFormData(prev => ({ ...prev, theme }))}
-                                    className={cn(
-                                        "px-4 py-2 rounded-lg text-sm capitalize transition-colors",
-                                        formData.theme === theme
-                                            ? "bg-primary text-primary-foreground"
-                                            : "bg-muted text-muted-foreground hover:bg-muted/80"
-                                    )}
-                                >
-                                    {theme}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {/* Security Tab */}
-            {activeTab === "security" && (
-                <div className="space-y-6">
-                    <div className="p-4 rounded-lg bg-card border border-border">
-                        <h3 className="text-sm font-medium text-foreground mb-2">Password</h3>
-                        <p className="text-xs text-muted-foreground mb-4">
-                            Password changes are handled through Supabase Auth
-                        </p>
-                        <Button variant="outline" size="sm" disabled>
-                            Change Password
-                        </Button>
-                    </div>
-
-                    <div className="p-4 rounded-lg bg-card border border-border">
-                        <h3 className="text-sm font-medium text-foreground mb-2">Two-Factor Authentication</h3>
-                        <p className="text-xs text-muted-foreground mb-4">
-                            Add an extra layer of security to your account
-                        </p>
-                        <Button variant="outline" size="sm" disabled>
-                            Enable 2FA
-                        </Button>
-                    </div>
-
-                    <div className="p-4 rounded-lg bg-card border border-border">
-                        <h3 className="text-sm font-medium text-foreground mb-2">Sessions</h3>
-                        <p className="text-xs text-muted-foreground">
-                            You are currently logged in from this device
-                        </p>
-                    </div>
-                </div>
-            )}
-
-            {/* Notifications Tab */}
-            {activeTab === "notifications" && (
-                <div className="space-y-6">
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-card border border-border">
-                        <div>
-                            <h3 className="text-sm font-medium text-foreground">Email Notifications</h3>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Receive email notifications for important updates
-                            </p>
-                        </div>
-                        <Switch 
-                            checked={formData.notifications}
-                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, notifications: checked }))}
-                        />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-card border border-border opacity-50">
-                        <div>
-                            <h3 className="text-sm font-medium text-foreground">Push Notifications</h3>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Receive browser push notifications
-                            </p>
-                        </div>
-                        <Switch disabled />
-                    </div>
-
-                    <div className="flex items-center justify-between p-4 rounded-lg bg-card border border-border opacity-50">
-                        <div>
-                            <h3 className="text-sm font-medium text-foreground">SMS Notifications</h3>
-                            <p className="text-xs text-muted-foreground mt-1">
-                                Receive SMS for critical alerts
-                            </p>
-                        </div>
-                        <Switch disabled />
-                    </div>
-                </div>
-            )}
-
-            {/* Save Button */}
-            <div className="pt-8 mt-8 border-t border-border flex justify-end">
-                <Button 
-                    onClick={handleSave} 
+        <PageShell
+            title="Settings"
+            description="Manage your personal information, security preferences, and notification settings."
+            breadcrumb={["Dashboard", "Settings"]}
+            action={
+                <Button
+                    onClick={handleSave}
                     disabled={isPending}
-                    className="gap-2"
+                    className="rounded-full shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90"
                 >
-                    <Save className="w-4 h-4" />
-                    {isPending ? "Saving..." : "Save Changes"}
+                    {isPending ? (
+                        <>Saving...</>
+                    ) : (
+                        <>
+                            <Save className="w-4 h-4 mr-2" />
+                            Save Changes
+                        </>
+                    )}
                 </Button>
-            </div>
-        </GlassPanel>
-    );
-}
-
-function TabButton({ 
-    active, 
-    onClick, 
-    icon: Icon,
-    children 
-}: { 
-    active: boolean; 
-    onClick: () => void;
-    icon: React.ElementType;
-    children: React.ReactNode;
-}) {
-    return (
-        <button 
-            onClick={onClick}
-            className={cn(
-                "pb-3 text-sm font-medium transition-colors flex items-center gap-2",
-                active 
-                    ? "text-primary border-b-2 border-primary" 
-                    : "text-muted-foreground hover:text-foreground"
-            )}
+            }
         >
-            <Icon className="w-4 h-4" />
-            {children}
-        </button>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                {/* Sidebar / Quick User Info */}
+                <div className="lg:col-span-4 space-y-6">
+                    <Card className="overflow-hidden border-border shadow-sm">
+                        <div className="h-32 bg-primary/10 relative">
+                            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-purple-500/20" />
+                        </div>
+                        <CardContent className="pt-0 relative">
+                            <div className="flex justify-center -mt-16 mb-4">
+                                <Avatar className="w-32 h-32 border-4 border-background shadow-lg">
+                                    <AvatarImage src={`https://avatar.vercel.sh/${profile.email}`} />
+                                    <AvatarFallback className="text-2xl font-bold bg-muted">
+                                        {formData.full_name ? getInitials(formData.full_name) : "?"}
+                                    </AvatarFallback>
+                                </Avatar>
+                            </div>
+                            <div className="text-center space-y-1 mb-6">
+                                <h3 className="text-xl font-bold text-foreground">
+                                    {formData.full_name || "User"}
+                                </h3>
+                                <p className="text-sm text-muted-foreground">{profile.email}</p>
+                            </div>
+
+                            <div className="space-y-4">
+                                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-card rounded-md shadow-sm text-muted-foreground">
+                                            <Building2 className="w-4 h-4" />
+                                        </div>
+                                        <div className="text-sm">
+                                            <p className="text-xs text-muted-foreground font-medium">Organization</p>
+                                            <p className="font-medium text-foreground">{profile.organizations?.name || "—"}</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
+                                    <div className="flex items-center gap-3">
+                                        <div className="p-2 bg-card rounded-md shadow-sm text-muted-foreground">
+                                            <Shield className="w-4 h-4" />
+                                        </div>
+                                        <div className="text-sm">
+                                            <p className="text-xs text-muted-foreground font-medium">Role</p>
+                                            <Badge variant="secondary" className="mt-0.5 capitalize font-normal">
+                                                {profile.role}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="border-destructive/20 bg-destructive/5">
+                        <CardContent className="p-4 flex items-center justify-between">
+                            <span className="text-sm font-medium text-destructive">Sign Out</span>
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-8 w-8 rounded-full text-destructive hover:text-destructive hover:bg-destructive/10"
+                                onClick={() => {/* Sign out logic would go here */ }}
+                            >
+                                <LogOut className="w-4 h-4" />
+                            </Button>
+                        </CardContent>
+                    </Card>
+                </div>
+
+                {/* Main Settings Form */}
+                <div className="lg:col-span-8">
+                    <Tabs defaultValue="account" className="space-y-6">
+                        <TabsList className="bg-muted/50 p-1 rounded-xl w-full justify-start overflow-x-auto">
+                            <TabsTrigger value="account" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm gap-2">
+                                <User className="w-4 h-4" />
+                                General
+                            </TabsTrigger>
+                            <TabsTrigger value="preferences" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm gap-2">
+                                <Palette className="w-4 h-4" />
+                                Preferences
+                            </TabsTrigger>
+                            <TabsTrigger value="notifications" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm gap-2">
+                                <Bell className="w-4 h-4" />
+                                Notifications
+                            </TabsTrigger>
+                            <TabsTrigger value="security" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm gap-2">
+                                <Shield className="w-4 h-4" />
+                                Security
+                            </TabsTrigger>
+                        </TabsList>
+
+                        <TabsContent value="account" className="space-y-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Personal Information</CardTitle>
+                                    <CardDescription>Update your personal details here.</CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                        <div className="space-y-2">
+                                            <Label>Full Name</Label>
+                                            <Input
+                                                value={formData.full_name}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, full_name: e.target.value }))}
+                                                className="bg-muted/50 border-input focus:bg-background transition-colors"
+                                            />
+                                        </div>
+                                        <div className="space-y-2">
+                                            <Label>Phone Number</Label>
+                                            <Input
+                                                value={formData.phone}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, phone: e.target.value }))}
+                                                className="bg-muted/50 border-input focus:bg-background transition-colors"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label>Email Address</Label>
+                                        <div className="relative">
+                                            <Input
+                                                value={profile.email}
+                                                disabled
+                                                className="bg-muted text-muted-foreground pl-9"
+                                            />
+                                            <Mail className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+                                        </div>
+                                        <p className="text-[11px] text-muted-foreground">Email cannot be changed manually. Contact support.</p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Work Information</CardTitle>
+                                    <CardDescription>Warehouse and organization details.</CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-6">
+                                    <div className="space-y-2">
+                                        <Label>Default Warehouse</Label>
+                                        <div className="relative">
+                                            <select
+                                                value={formData.warehouse_id}
+                                                onChange={(e) => setFormData(prev => ({ ...prev, warehouse_id: e.target.value }))}
+                                                className="w-full h-10 rounded-md border border-input bg-muted/50 pl-9 px-3 py-2 text-sm focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all appearance-none"
+                                            >
+                                                <option value="">No default assigned</option>
+                                                {warehouses.map((w) => (
+                                                    <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
+                                                ))}
+                                            </select>
+                                            <Warehouse className="w-4 h-4 text-muted-foreground absolute left-3 top-3" />
+                                        </div>
+                                        <p className="text-[11px] text-muted-foreground">Preferred warehouse for inventory and shipping operations.</p>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        <TabsContent value="preferences" className="space-y-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Appearance</CardTitle>
+                                    <CardDescription>Customize how the dashboard looks on your device.</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <div className="space-y-4">
+                                        <Label>Interface Theme</Label>
+                                        <div className="grid grid-cols-3 gap-4">
+                                            {["light", "dark", "system"].map((theme) => (
+                                                <button
+                                                    key={theme}
+                                                    onClick={() => {
+                                                        setFormData(prev => ({ ...prev, theme }));
+                                                        applyTheme(theme);
+                                                    }}
+                                                    className={cn(
+                                                        "flex flex-col items-center justify-center gap-2 p-4 rounded-xl border-2 transition-all",
+                                                        formData.theme === theme
+                                                            ? "border-primary bg-primary/5 text-primary"
+                                                            : "border-border bg-card hover:border-primary/50 text-muted-foreground"
+                                                    )}
+                                                >
+                                                    <div className={cn(
+                                                        "w-full h-20 rounded-lg mb-2 relative overflow-hidden ring-1 ring-border",
+                                                        theme === "light" ? "bg-white" :
+                                                            theme === "dark" ? "bg-black" : "bg-gradient-to-br from-white to-black"
+                                                    )}>
+                                                        {/* Mock UI elements */}
+                                                        <div className="absolute top-2 left-2 right-2 h-2 rounded bg-current opacity-10" />
+                                                        <div className="absolute top-6 left-2 w-8 h-8 rounded bg-current opacity-10" />
+                                                        <div className="absolute top-6 left-12 right-2 h-8 rounded bg-current opacity-5" />
+                                                    </div>
+                                                    <span className="capitalize font-medium text-sm">{theme}</span>
+                                                    {formData.theme === theme && (
+                                                        <CheckCircle2 className="w-4 h-4 absolute top-2 right-2 text-primary opacity-0" />
+                                                    )}
+                                                </button>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        <TabsContent value="notifications" className="space-y-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Notification Channels</CardTitle>
+                                    <CardDescription>Choose how you want to be notified.</CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-0 divide-y divide-border">
+                                    <div className="flex items-center justify-between py-4">
+                                        <div className="flex items-start gap-3">
+                                            <div className="p-2 bg-primary/10 text-primary rounded-lg">
+                                                <Mail className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-foreground">Email Notifications</p>
+                                                <p className="text-sm text-muted-foreground">Receive digests and important alerts</p>
+                                            </div>
+                                        </div>
+                                        <Switch
+                                            checked={formData.notifications}
+                                            onCheckedChange={(checked) => setFormData(prev => ({ ...prev, notifications: checked }))}
+                                        />
+                                    </div>
+                                    <div className="flex items-center justify-between py-4 opacity-50">
+                                        <div className="flex items-start gap-3">
+                                            <div className="p-2 bg-muted text-muted-foreground rounded-lg">
+                                                <Bell className="w-4 h-4" />
+                                            </div>
+                                            <div>
+                                                <p className="font-medium text-foreground">Push Notifications</p>
+                                                <p className="text-sm text-muted-foreground">Real-time browser alerts (Coming Soon)</p>
+                                            </div>
+                                        </div>
+                                        <Switch disabled />
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+
+                        <TabsContent value="security" className="space-y-6">
+                            <Card>
+                                <CardHeader>
+                                    <CardTitle>Security Preferences</CardTitle>
+                                    <CardDescription>Manage your password and authentication methods.</CardDescription>
+                                </CardHeader>
+                                <CardContent className="space-y-4">
+                                    <div className="p-4 bg-warning/10 border border-warning/20 rounded-lg text-warning text-sm">
+                                        <p className="font-medium mb-1">Managed By Organization</p>
+                                        <p>Your security settings are currently managed by your organization&apos;s administrator. Please contact them to reset your password or enable 2FA.</p>
+                                    </div>
+                                    <Button variant="outline" className="w-full justify-between" disabled>
+                                        Change Password
+                                        <Shield className="w-4 h-4 text-muted-foreground" />
+                                    </Button>
+                                </CardContent>
+                            </Card>
+                        </TabsContent>
+                    </Tabs>
+                </div>
+            </div>
+        </PageShell>
     );
 }

@@ -88,7 +88,7 @@ export function ProgressCard({
         {/* Badge */}
         <span
           className={cn(
-            "mb-1 inline-block rounded-md border px-2.5 py-1 text-[10px] font-bold tracking-wider uppercase",
+            "mb-1 inline-block rounded-md border px-2.5 py-1 text-xs font-medium",
             theme.badge,
           )}
         >
@@ -96,13 +96,13 @@ export function ProgressCard({
         </span>
 
         {/* Title */}
-        <h3 className="font-display text-foreground line-clamp-2 min-h-[3.5rem] text-lg leading-snug font-bold">
+        <h3 className="text-foreground line-clamp-2 min-h-[3.5rem] text-lg leading-snug font-semibold">
           {title}
         </h3>
 
         {/* Progress Bar */}
         <div className="space-y-2">
-          <div className="text-muted-foreground flex justify-between text-[10px] font-medium tracking-wide uppercase">
+          <div className="text-muted-foreground flex justify-between text-xs font-medium">
             <span>Transit Progress</span>
             <span>{Math.round(progress)}%</span>
           </div>
@@ -134,7 +134,7 @@ export function ProgressCard({
               <p className="text-foreground font-body text-xs font-bold">
                 {mentorName}
               </p>
-              <p className="text-muted-foreground text-[10px] uppercase">
+              <p className="text-muted-foreground text-xs">
                 {mentorRole}
               </p>
             </div>

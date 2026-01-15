@@ -20,9 +20,9 @@ export function TrackingTimeline() {
       </h3>
       <div className="relative">
         {/* Progress Bar Background */}
-        <div className="bg-muted absolute top-[15px] left-0 h-0.5 w-full"></div>
+        <div className="bg-muted absolute top-4 left-0 h-0.5 w-full"></div>
         {/* Active Progress Bar (Mocked 50% for now based on 'Lucknow Hub') */}
-        <div className="bg-primary absolute top-[15px] left-0 h-0.5 w-3/5"></div>
+        <div className="bg-primary absolute top-4 left-0 h-0.5 w-3/5"></div>
 
         <div className="relative z-10 grid grid-cols-5 gap-4">
           {steps.map((step, index) => {

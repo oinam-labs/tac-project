@@ -55,7 +55,7 @@ export function HeroSection() {
               className="border-primary/20 bg-primary/10 hover:bg-primary/15 inline-flex items-center gap-2 rounded-sm border px-4 py-1.5 backdrop-blur-md transition-colors"
             >
               <Award className="text-primary h-4 w-4" />
-              <span className="text-primary text-xs font-medium tracking-wider uppercase">
+              <span className="text-primary text-xs font-medium">
                 Premier Logistics Partner
               </span>
             </motion.div>
@@ -171,9 +171,9 @@ export function HeroSection() {
                       <div className="text-foreground text-5xl font-medium transition-transform duration-300 group-hover:scale-105">
                         {stat.value}
                       </div>
-                      <div className="text-muted-foreground mt-1 text-[10px] tracking-wider uppercase">
+                      <span className="text-muted-foreground font-mono text-[10px] font-bold">
                         {stat.label}
-                      </div>
+                      </span>
                     </div>
                   ))}
                 </div>

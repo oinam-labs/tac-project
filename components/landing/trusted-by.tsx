@@ -22,7 +22,7 @@ export function TrustedBy() {
       }}
     >
       <div className="mx-auto max-w-7xl px-6">
-        <p className="text-muted-foreground mb-8 text-center text-xs font-medium tracking-widest uppercase">
+        <p className="text-muted-foreground mb-8 text-center text-xs font-medium">
           Powering supply chains across Manipur
         </p>
         <div

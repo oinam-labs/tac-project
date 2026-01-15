@@ -77,7 +77,7 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
           {/* Error details (development only) */}
           {process.env.NODE_ENV === "development" && (
             <div className="border-destructive/20 bg-destructive/5 w-full max-w-lg rounded-lg border p-4">
-              <p className="text-destructive mb-2 font-mono text-xs font-medium">
+              <p className="text-destructive mb-2 text-sm font-semibold">
                 Error Details:
               </p>
               <pre className="text-muted-foreground overflow-auto font-mono text-xs whitespace-pre-wrap">

@@ -2,6 +2,7 @@
  * Audit Logging Service
  * Tracks all entity changes for compliance and security
  */
+/* eslint-disable @typescript-eslint/no-explicit-any -- Audit log data structures are dynamic */
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -12,8 +13,11 @@ export interface AuditLogData {
   action: AuditAction;
   entityType: EntityType;
   entityId: string;
+   
   oldData?: Record<string, any>;
+   
   newData?: Record<string, any>;
+   
   metadata?: Record<string, any>;
   ipAddress?: string;
   userAgent?: string;
@@ -47,6 +51,7 @@ export async function logAuditEvent(data: AuditLogData): Promise<void> {
 export async function getEntityAuditLogs(
   entityType: EntityType,
   entityId: string
+   
 ): Promise<any[]> {
   try {
     const supabase = await createClient();

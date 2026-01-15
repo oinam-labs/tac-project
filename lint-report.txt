@@ -1,0 +1,411 @@
+
+> tac-cargo@0.1.0 lint
+> eslint
+
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\analytics-client.tsx
+   3:5   warning  'Package' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+   4:5   warning  'CheckCircle' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   5:5   warning  'AlertCircle' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   6:5   warning  'TrendingUp' is defined but never used                                                                                 @typescript-eslint/no-unused-vars
+   7:5   warning  'Scale' is defined but never used                                                                                      @typescript-eslint/no-unused-vars
+   8:5   warning  'DollarSign' is defined but never used                                                                                 @typescript-eslint/no-unused-vars
+  10:10  warning  'MetricCardEnhanced' is defined but never used                                                                         @typescript-eslint/no-unused-vars
+  11:10  warning  'AnalyticsCharts' is defined but never used                                                                            @typescript-eslint/no-unused-vars
+  40:35  warning  'data' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+  44:28  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  47:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  49:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  57:39  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  61:39  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  62:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  64:39  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  64:39  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  65:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  66:41  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\delivery-timeline.tsx
+  47:25   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  49:38   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  50:61   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  55:35   warning  'index' is defined but never used                                                                                      @typescript-eslint/no-unused-vars
+  56:50   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  58:40   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  62:40   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  65:40   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  65:40   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  67:47   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  68:51   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  72:42   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  77:80   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  77:138  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  77:138  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  80:68   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  80:68   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  83:68   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  83:68   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  88:44   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  88:44   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  93:48   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  95:67   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\quality-metric.tsx
+   5:55  warning  'Tooltip' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+  18:25  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  23:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  24:45  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  24:45  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  26:38  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  29:50  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  29:50  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  39:36  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\revenue-metric.tsx
+   8:25  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  12:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  18:50  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  18:50  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                      no-restricted-syntax
+  31:45  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  32:45  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc      no-restricted-syntax
+  40:48  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  44:36  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  46:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+  46:40  warning  Γ¥î Arbitrary spacing values are forbidden. Use semantic spacing: p-section, p-group, p-field, or standard Tailwind spacing  no-restricted-syntax
+  51:28  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc               no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\throughput-metric.tsx
+  20:25  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  26:44  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  27:57  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  32:54  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                    no-restricted-syntax
+  44:54  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  44:54  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                    no-restricted-syntax
+  68:68  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  90:45  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  91:45  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  99:25  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\analytics\_components\worker-capacity.tsx
+  16:25  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  18:38  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  19:61  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  30:63  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  30:63  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  34:49  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  36:45  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  37:69  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  41:73  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  43:49  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\customers\_components\customers-client.tsx
+   17:10  warning  'cn' is defined but never used                                                                                         @typescript-eslint/no-unused-vars
+   34:5   warning  'DialogTrigger' is defined but never used                                                                              @typescript-eslint/no-unused-vars
+   62:70  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   62:70  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   62:70  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   63:88  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   63:88  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   63:88  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   64:77  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   78:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   90:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  116:32  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  117:39  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  128:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  130:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  136:22  warning  'row' is defined but never used                                                                                        @typescript-eslint/no-unused-vars
+  140:75  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  174:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  174:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  177:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  178:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  182:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  182:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  188:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  188:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  191:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  192:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  196:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  196:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  202:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  202:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  205:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  206:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  210:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  210:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  216:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  216:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  219:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  220:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  224:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  224:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\exceptions\_components\exceptions-client.tsx
+   13:5   warning  'Truck' is defined but never used                                                                                      @typescript-eslint/no-unused-vars
+   18:10  warning  'Card' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+   18:16  warning  'CardContent' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+   86:96  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   86:96  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   86:96  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   87:78  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   87:78  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   87:78  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  170:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  196:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  197:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  204:33  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  213:75  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  272:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  272:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  273:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  275:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  276:50  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  279:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  279:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  280:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  282:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  283:49  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  286:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  286:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  287:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  289:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  290:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  315:17  error    Unexpected any. Specify a different type                                                                               @typescript-eslint/no-explicit-any
+  316:20  error    Unexpected any. Specify a different type                                                                               @typescript-eslint/no-explicit-any
+  335:68  error    Unexpected any. Specify a different type                                                                               @typescript-eslint/no-explicit-any
+  377:69  error    Unexpected any. Specify a different type                                                                               @typescript-eslint/no-explicit-any
+  400:59  error    Unexpected any. Specify a different type                                                                               @typescript-eslint/no-explicit-any
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\inventory\_components\inventory-client.tsx
+    3:27  warning  'useMemo' is defined but never used                                                                                    @typescript-eslint/no-unused-vars
+    5:5   warning  'Search' is defined but never used                                                                                     @typescript-eslint/no-unused-vars
+    9:5   warning  'Truck' is defined but never used                                                                                      @typescript-eslint/no-unused-vars
+   14:5   warning  'CheckCircle2' is defined but never used                                                                               @typescript-eslint/no-unused-vars
+   15:5   warning  'Filter' is defined but never used                                                                                     @typescript-eslint/no-unused-vars
+   67:65  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   67:65  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   67:65  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   68:69  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   68:69  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   68:69  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   69:77  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   69:77  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   69:77  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   70:71  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   70:71  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   70:71  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   71:80  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   71:80  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   71:80  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   72:83  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   72:83  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   72:83  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   73:69  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   73:69  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   73:69  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   74:73  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   74:73  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   74:73  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   75:71  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   75:71  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   75:71  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   76:71  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   83:12  warning  'activeTab' is assigned a value but never used                                                                         @typescript-eslint/no-unused-vars
+   93:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   95:41  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   95:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   99:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  120:32  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  121:37  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  121:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  124:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  125:37  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  125:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  135:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  136:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  143:32  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  145:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  152:22  warning  'row' is defined but never used                                                                                        @typescript-eslint/no-unused-vars
+  156:75  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  195:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  195:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  196:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  198:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  199:44  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  202:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  202:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  203:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  205:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  206:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  209:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  209:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  210:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  212:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  213:42  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  216:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  216:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  217:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  219:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  220:50  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  256:64  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  256:64  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  269:60  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  269:60  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  270:64  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  271:64  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  273:60  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  273:60  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  274:64  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  275:64  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\invoices\_components\invoices-client.tsx
+    3:17  warning  'useState' is defined but never used                                                                                   @typescript-eslint/no-unused-vars
+   29:10  warning  'toast' is defined but never used                                                                                      @typescript-eslint/no-unused-vars
+   39:65  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   39:65  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   39:65  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+   40:59  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+   40:59  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+   40:59  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  115:39  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  115:56  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  128:75  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  185:44  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  185:44  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  205:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  205:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\manifests\_components\manifests-client.tsx
+   42:10  warning  'Card' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+   42:16  warning  'CardContent' is defined but never used                                                                                @typescript-eslint/no-unused-vars
+  101:69  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  101:69  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  101:69  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  104:65  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  104:65  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  104:65  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  105:71  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  105:71  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  105:71  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  118:12  warning  'selectedShipmentIds' is assigned a value but never used                                                               @typescript-eslint/no-unused-vars
+  118:33  warning  'setSelectedShipmentIds' is assigned a value but never used                                                            @typescript-eslint/no-unused-vars
+  242:75  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  300:32  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  301:37  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  302:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  303:37  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  311:32  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  400:44  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  403:32  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  403:32  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  404:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  406:41  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  407:48  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\payments\_components\payments-client.tsx
+  134:35  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  162:33  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  202:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  207:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  207:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  217:43  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  222:40  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  222:40  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  223:30  error    'AlertCircle' is not defined                                                                                           react/jsx-no-undef
+  345:37  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  396:70  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\settings\_components\settings-client.tsx
+  314:80  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  357:60  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  357:60  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  378:52  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  378:52  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  378:52  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\app\(dashboard)\dashboard\shipments\_components\shipments-table-client.tsx
+  19:0  error  Parsing error: Declaration or statement expected
+
+C:\tac-saas\tac-cargo\components\dashboard\data-table-premium.tsx
+   25:10  warning  'Select' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       @typescript-eslint/no-unused-vars
+   25:18  warning  'SelectContent' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   25:33  warning  'SelectItem' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+   25:45  warning  'SelectTrigger' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @typescript-eslint/no-unused-vars
+   25:60  warning  'SelectValue' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+   27:10  warning  'cn' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           @typescript-eslint/no-unused-vars
+   45:19  warning  Compilation Skipped: Use of incompatible library
+
+This API returns functions which cannot be memoized without leading to stale UI. To prevent this, by default React Compiler will skip memoizing this component/hook. However, you may see issues if values from this API are passed to other components/hooks that are memoized.
+
+C:\tac-saas\tac-cargo\components\dashboard\data-table-premium.tsx:45:19
+  43 |     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  44 |
+> 45 |     const table = useReactTable({
+     |                   ^^^^^^^^^^^^^ TanStack Table's `useReactTable()` API returns functions that cannot be memoized safely
+  46 |         data,
+  47 |         columns,
+  48 |         getCoreRowModel: getCoreRowModel(),  react-hooks/incompatible-library
+   66:47  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   73:39  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+   73:39  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   76:67  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+   76:67  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   76:67  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   82:63  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+   82:63  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   82:63  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   89:28  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+   89:28  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   91:44  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+   93:70  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+   96:78  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+  115:47  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+  115:47  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+  118:76  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+  149:35  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+  158:44  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             no-restricted-syntax
+  158:44  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+  168:35  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    no-restricted-syntax
+
+C:\tac-saas\tac-cargo\components\dashboard\hero-banner.tsx
+   9:20   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  12:9    warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+  28:28   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  28:28   warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                                                                                                                                                                                    no-restricted-syntax
+  28:28   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  30:33   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  31:33   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  38:26   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  39:145  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  49:41   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  66:30   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  66:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  71:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  76:30   warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc                                                                                                                                                                             no-restricted-syntax
+  76:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+  81:30   warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc                                                                                                                                                                    no-restricted-syntax
+
+C:\tac-saas\tac-cargo\components\dashboard\page-shell.tsx
+   6:8   warning  'Link' is defined but never used                                                                                       @typescript-eslint/no-unused-vars
+  30:28  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  30:28  warning  Γ¥î Tailwind palette border colors are forbidden. Use semantic design tokens: border, border-input, etc                  no-restricted-syntax
+  43:61  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  49:35  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  53:38  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  61:36  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  65:47  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+  68:43  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  71:71  warning  Γ¥î Tailwind palette colors are forbidden. Use semantic design tokens: bg-primary, bg-secondary, bg-muted, etc           no-restricted-syntax
+  71:71  warning  Γ¥î Tailwind palette text colors are forbidden. Use semantic design tokens: text-foreground, text-muted-foreground, etc  no-restricted-syntax
+
+C:\tac-saas\tac-cargo\components\dashboard\shipment-drawer.tsx
+   5:10  warning  'cn' is defined but never used        @typescript-eslint/no-unused-vars
+  18:5   warning  'Calendar' is defined but never used  @typescript-eslint/no-unused-vars
+  21:5   warning  'Clock' is defined but never used     @typescript-eslint/no-unused-vars
+
+C:\tac-saas\tac-cargo\components\invoice\enterprise\invoice-wizard-v2\step-indicator.tsx
+   5:10  warning  'Check' is defined but never used                                                                           @typescript-eslint/no-unused-vars
+  55:21  warning  Γ¥î Arbitrary shadow values are forbidden. Use elevation system: shadow-elevation-1, shadow-elevation-2, etc  no-restricted-syntax
+
+Γ£û 355 problems (7 errors, 348 warnings)
+

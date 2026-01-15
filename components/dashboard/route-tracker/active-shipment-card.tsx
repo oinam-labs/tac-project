@@ -77,16 +77,16 @@ export function ActiveShipmentCard({
         {/* Header */}
         <div className="mb-5 flex items-start justify-between">
           <div>
-            <p className="text-muted-foreground/50 mb-1 text-[9px] font-bold tracking-[0.25em] uppercase">
+            <p className="text-muted-foreground/50 mb-1 text-xs font-medium">
               AWB Number
             </p>
-            <p className="text-foreground font-mono text-lg font-black tracking-tight">
+            <p className="text-foreground font-mono text-lg font-bold">
               {awb}
             </p>
           </div>
           <div
             className={cn(
-              "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[10px] font-bold tracking-wide uppercase",
+              "flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium",
               currentStatus.class,
             )}
           >
@@ -105,10 +105,10 @@ export function ActiveShipmentCard({
 
         {/* ETA Display */}
         <div className="from-primary/10 via-accent/5 border-primary/10 mb-5 rounded-xl border bg-gradient-to-br to-transparent p-4">
-          <p className="text-muted-foreground/60 mb-1 text-[9px] font-bold tracking-[0.2em] uppercase">
+          <p className="text-muted-foreground/60 mb-1 text-xs font-medium">
             Estimated Arrival
           </p>
-          <p className="text-primary text-3xl font-black tracking-tight">
+          <p className="text-primary text-3xl font-bold tracking-tight">
             {eta}
           </p>
         </div>
@@ -120,7 +120,7 @@ export function ActiveShipmentCard({
               <RiUser3Line className="text-muted-foreground size-4" />
             </div>
             <div className="flex-1">
-              <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Driver
               </p>
               <p className="text-foreground text-sm font-bold">{driver}</p>
@@ -131,7 +131,7 @@ export function ActiveShipmentCard({
               <RiPhoneLine className="text-muted-foreground size-4" />
             </div>
             <div className="flex-1">
-              <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Contact
               </p>
               <p className="text-foreground font-mono text-sm font-bold">
@@ -144,7 +144,7 @@ export function ActiveShipmentCard({
               <RiMapPin2Line className="text-warning size-4" />
             </div>
             <div className="flex-1">
-              <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Current Location
               </p>
               <p className="text-foreground text-sm font-bold">
@@ -159,7 +159,7 @@ export function ActiveShipmentCard({
           <div className="bg-muted/30 flex items-center gap-3 rounded-lg p-3">
             <RiBox3Line className="text-primary size-5" />
             <div>
-              <p className="text-muted-foreground/50 text-[9px] font-medium uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Packages
               </p>
               <p className="text-foreground text-sm font-bold">{packages}</p>
@@ -168,7 +168,7 @@ export function ActiveShipmentCard({
           <div className="bg-muted/30 flex items-center gap-3 rounded-lg p-3">
             <RiScales2Line className="text-primary size-5" />
             <div>
-              <p className="text-muted-foreground/50 text-[9px] font-medium uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Weight
               </p>
               <p className="text-foreground text-sm font-bold">{weight}</p>

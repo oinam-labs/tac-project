@@ -16,17 +16,17 @@ const ProductInsightsCard = ({ className }: { className?: string }) => {
   return (
     <Card
       className={cn(
-        "glass-card noise-overlay relative overflow-hidden border-none shadow-none",
+        "bg-card relative overflow-hidden border-none shadow-none",
         className,
       )}
     >
       <CardHeader className="border-border/40 border-b pb-2">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
-            <span className="text-foreground text-xs font-bold tracking-widest uppercase">
+            <span className="text-foreground text-sm font-semibold">
               Hub Performance
             </span>
-            <span className="text-muted-foreground text-[10px] font-medium tracking-tighter uppercase opacity-70">
+            <span className="text-muted-foreground text-xs font-medium opacity-70">
               Region: Imphal Hub • SYSLOG_MAY_25
             </span>
           </div>
@@ -36,10 +36,10 @@ const ProductInsightsCard = ({ className }: { className?: string }) => {
       <CardContent className="flex flex-col gap-8 pt-6">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-1">
-            <span className="text-muted-foreground/60 text-[10px] font-bold tracking-[0.2em] uppercase">
+            <span className="text-muted-foreground/60 text-xs font-medium">
               Reliability Index
             </span>
-            <span className="text-kpi text-primary shadow-glow-primary/20 text-4xl font-black tracking-tighter">
+            <span className="text-kpi text-primary shadow-glow-primary/20 text-4xl font-bold">
               98.5%
             </span>
           </div>
@@ -49,12 +49,12 @@ const ProductInsightsCard = ({ className }: { className?: string }) => {
         </div>
 
         <div className="flex flex-col gap-1">
-          <span className="text-muted-foreground/60 text-[10px] font-bold tracking-[0.2em] uppercase">
+          <span className="text-muted-foreground/60 text-xs font-medium">
             System Throughput
           </span>
           <span className="text-kpi text-2xl font-bold">
             2,123{" "}
-            <span className="text-muted-foreground/40 ml-1 text-[10px] font-medium tracking-normal uppercase">
+            <span className="text-muted-foreground/40 ml-1 text-xs font-medium">
               Manifests
             </span>
           </span>
@@ -62,7 +62,7 @@ const ProductInsightsCard = ({ className }: { className?: string }) => {
 
         <div className="space-y-4">
           <div className="flex items-end justify-between">
-            <span className="text-muted-foreground/60 text-[10px] font-bold tracking-[0.2em] uppercase">
+            <span className="text-muted-foreground/60 text-xs font-medium">
               Capacity Load
             </span>
             <span className="text-kpi text-foreground text-sm font-bold">
@@ -84,7 +84,7 @@ const ProductInsightsCard = ({ className }: { className?: string }) => {
       <CardFooter className="pt-2">
         <Button
           variant="outline"
-          className="hover:bg-primary/10 border-border/40 h-9 w-full text-[10px] font-bold tracking-widest uppercase transition-all"
+          className="hover:bg-primary/10 border-border/40 h-9 w-full text-xs font-medium transition-all"
         >
           Access Detailed Telemetry
           <ChevronRightIcon className="ml-2 size-3 opacity-60" />

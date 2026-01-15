@@ -508,7 +508,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
             <CardContent className="p-5 space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Invoice No</span>
+                  <span className="text-xs text-muted-foreground font-medium">Invoice No</span>
                   <div className="flex items-center gap-1.5">
                     <span className="text-base font-mono font-bold text-primary">
                       {formData.invoiceNo || "..."}
@@ -527,16 +527,6 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                         </TooltipTrigger>
                         <TooltipContent>Copy Invoice No</TooltipContent>
                       </Tooltip>
-                    </TooltipProvider>
-                  </div>
-                </div>
-                <div className="space-y-1">
-                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">AWB / Tracking</span>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-sm font-mono font-medium truncate">
-                      {formData.awbNo || "..."}
-                    </span>
-                    <TooltipProvider>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <Button 
@@ -575,8 +565,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-blue-500/10">
-                  <User className="w-4 h-4 text-blue-500" />
+                <div className="p-1.5 rounded-md bg-primary/10">
+                  <User className="w-4 h-4 text-primary" />
                 </div>
                 Consignor (Sender)
                 <Button variant="ghost" size="sm" className="ml-auto h-7 text-xs">
@@ -611,7 +601,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                       value={formData.consignor.gstin}
                       onChange={(e) => updateNestedField("consignor", "gstin", e.target.value.toUpperCase())}
                       placeholder="22AAAAA0000A1Z5"
-                      className="pl-10 uppercase"
+                      className="pl-10"
                       maxLength={15}
                     />
                   </div>
@@ -636,8 +626,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
           <Card className="border-border/60">
             <CardHeader className="pb-4">
               <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <div className="p-1.5 rounded-md bg-emerald-500/10">
-                  <Truck className="w-4 h-4 text-emerald-500" />
+                <div className="p-1.5 rounded-md bg-success/10">
+                  <Truck className="w-4 h-4 text-success" />
                 </div>
                 Consignee (Receiver)
               </CardTitle>
@@ -704,8 +694,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <CardTitle className="text-base font-semibold flex items-center gap-2">
-                    <div className="p-1.5 rounded-md bg-orange-500/10">
-                      <Package className="w-4 h-4 text-orange-500" />
+                    <div className="p-1.5 rounded-md bg-warning/10">
+                      <Package className="w-4 h-4 text-warning" />
                     </div>
                     Shipment Details
                   </CardTitle>
@@ -869,8 +859,8 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
             <Card className="border-border/60">
               <CardHeader className="pb-4">
                 <CardTitle className="text-base font-semibold flex items-center gap-2">
-                  <div className="p-1.5 rounded-md bg-purple-500/10">
-                    <CreditCard className="w-4 h-4 text-purple-500" />
+                  <div className="p-1.5 rounded-md bg-accent/10">
+                    <CreditCard className="w-4 h-4 text-accent" />
                   </div>
                   Charges & Fees
                 </CardTitle>
@@ -947,7 +937,7 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                       value={formData.charges.advancePaid || ""}
                       onChange={(e) => updateNestedField("charges", "advancePaid", parseFloat(e.target.value) || 0)}
                       placeholder="0"
-                      className="border-emerald-500/30 bg-emerald-500/5"
+                      className="border-success/30 bg-success/5"
                     />
                   </FormField>
                 </div>
@@ -1041,14 +1031,14 @@ export function InvoiceCreationFormV2({ onSuccess, onCancel }: InvoiceCreationFo
                     </div>
 
                     {calculation.advancePaid > 0 && (
-                      <div className="flex justify-between text-emerald-600 font-medium pt-2">
+                      <div className="flex justify-between text-success font-medium pt-2">
                         <span>Advance Paid</span>
                         <span>- {formatCurrency(calculation.advancePaid)}</span>
                       </div>
                     )}
 
                     {calculation.balanceDue > 0 && calculation.balanceDue !== calculation.tax.grandTotal && (
-                      <div className="flex justify-between text-orange-600 font-bold pt-1 text-base">
+                      <div className="flex justify-between text-warning font-bold pt-1 text-base">
                         <span>Balance Due</span>
                         <span>{formatCurrency(calculation.balanceDue)}</span>
                       </div>

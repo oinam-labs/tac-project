@@ -35,10 +35,10 @@ const notificationIcons = {
 };
 
 const notificationColors = {
-  shipment: "bg-blue-500/10 text-blue-500",
-  alert: "bg-red-500/10 text-red-500",
-  success: "bg-emerald-500/10 text-emerald-500",
-  info: "bg-amber-500/10 text-amber-500",
+  shipment: "bg-primary/10 text-primary",
+  alert: "bg-destructive/10 text-destructive",
+  success: "bg-success/10 text-success",
+  info: "bg-warning/10 text-warning",
 };
 
 export function NotificationBell({

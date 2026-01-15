@@ -12,21 +12,21 @@ export function KpiGrid() {
   return (
     <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
       {/* KPI 1 */}
-      <div className="bg-card/50 group hover:border-primary/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-[0_0_30px_var(--primary)] text-card-foreground">
+      <div className="bg-card/50 group hover:border-primary/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-lg hover:shadow-primary/20 text-card-foreground">
         <div className="from-primary/10 absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="relative z-10 mb-4 flex items-start justify-between">
-          <div className="bg-primary/10 border-primary/20 text-primary flex h-10 w-10 items-center justify-center rounded-xl border shadow-[0_0_15px_var(--primary)]">
+          <div className="bg-primary/10 border-primary/20 text-primary flex h-10 w-10 items-center justify-center rounded-xl border shadow-md shadow-primary/30">
             <RiMoneyDollarCircleLine size={20} />
           </div>
-          <span className="flex items-center gap-1 rounded border border-primary/20 bg-primary/10 px-2 py-1 text-[10px] font-bold tracking-wider text-primary uppercase backdrop-blur-sm">
+          <span className="flex items-center gap-1 rounded border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-medium text-primary backdrop-blur-sm">
             +12.5% <RiArrowRightUpLine size={12} />
           </span>
         </div>
         <div className="relative z-10">
-          <div className="text-muted-foreground mb-1 text-[10px] font-bold tracking-widest uppercase">
+          <div className="text-muted-foreground mb-1 text-xs font-medium">
             Total Revenue
           </div>
-          <div className="flex items-baseline gap-1 font-mono text-3xl font-bold tracking-tight text-foreground">
+          <div className="flex items-baseline gap-1 font-mono text-3xl font-bold text-foreground">
             <span className="text-primary">$</span>842,400
           </div>
         </div>
@@ -49,18 +49,18 @@ export function KpiGrid() {
       </div>
 
       {/* KPI 2 */}
-      <div className="bg-card/50 group hover:border-warning/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-[0_0_30px_var(--warning)] text-card-foreground">
+      <div className="bg-card/50 group hover:border-warning/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-lg hover:shadow-warning/20 text-card-foreground">
         <div className="from-warning/10 absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="relative z-10 mb-4 flex items-start justify-between">
-          <div className="bg-warning/10 border-warning/20 text-warning flex h-10 w-10 items-center justify-center rounded-xl border shadow-[0_0_15px_var(--warning)]">
+          <div className="bg-warning/10 border-warning/20 text-warning flex h-10 w-10 items-center justify-center rounded-xl border shadow-md shadow-warning/30">
             <RiBox3Line size={20} />
           </div>
-          <span className="flex items-center gap-1 rounded border border-primary/20 bg-primary/10 px-2 py-1 text-[10px] font-bold tracking-wider text-primary uppercase backdrop-blur-sm">
+          <span className="flex items-center gap-1 rounded border border-primary/20 bg-primary/10 px-2 py-1 text-xs font-medium text-primary backdrop-blur-sm">
             +4.2% <RiArrowRightUpLine size={12} />
           </span>
         </div>
         <div className="relative z-10">
-          <div className="text-muted-foreground mb-1 text-[10px] font-bold tracking-widest uppercase">
+          <div className="text-muted-foreground mb-1 text-xs font-medium">
             Active Shipments
           </div>
           <div className="font-mono text-3xl font-bold tracking-tight text-foreground">
@@ -81,18 +81,18 @@ export function KpiGrid() {
       </div>
 
       {/* KPI 3 */}
-      <div className="bg-card/50 group hover:border-destructive/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-[0_0_30px_var(--destructive)] text-card-foreground">
+      <div className="bg-card/50 group hover:border-destructive/50 relative overflow-hidden rounded-[24px] border border-border p-6 backdrop-blur-xl transition-all duration-500 hover:shadow-lg hover:shadow-destructive/20 text-card-foreground">
         <div className="from-destructive/10 absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
         <div className="relative z-10 mb-4 flex items-start justify-between">
-          <div className="bg-destructive/10 border-destructive/20 text-destructive flex h-10 w-10 items-center justify-center rounded-xl border shadow-[0_0_15px_var(--destructive)]">
+          <div className="bg-destructive/10 border-destructive/20 text-destructive flex h-10 w-10 items-center justify-center rounded-xl border shadow-md shadow-destructive/30">
             <RiGasStationLine size={20} />
           </div>
-          <span className="flex items-center gap-1 rounded border border-destructive/20 bg-destructive/10 px-2 py-1 text-[10px] font-bold tracking-wider text-destructive uppercase backdrop-blur-sm">
+          <span className="flex items-center gap-1 rounded border border-destructive/20 bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive backdrop-blur-sm">
             -2.1% <RiArrowRightDownLine size={12} />
           </span>
         </div>
         <div className="relative z-10">
-          <div className="text-muted-foreground mb-1 text-[10px] font-bold tracking-widest uppercase">
+          <div className="text-muted-foreground mb-1 text-xs font-medium">
             Fuel Efficiency
           </div>
           <div className="font-mono text-3xl font-bold tracking-tight text-foreground">

@@ -36,7 +36,7 @@ export function Footer() {
                         <span className="text-foreground text-lg font-bold tracking-tight">
                           TAC
                         </span>
-                        <span className="text-muted-foreground group-hover:text-primary font-mono text-[10px] tracking-[0.25em] uppercase transition-colors">
+                        <span className="text-muted-foreground group-hover:text-primary font-mono text-[10px] font-bold transition-colors">
                           Infrastructure
                         </span>
                       </div>

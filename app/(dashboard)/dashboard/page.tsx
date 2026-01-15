@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "./_components/v2-header";
 import { MissionControl } from "./_components/mission-control";
 
 async function getDashboardStats() {
@@ -95,47 +94,54 @@ export default async function OverviewPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Mission Control" section="Main Deck" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1600px] mx-auto pb-20">
-                    <MissionControl 
-                        stats={stats} 
-                        recentActivity={recentActivity}
-                        shipmentTrend={shipmentTrend}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <MissionControl
+                stats={stats}
+                recentActivity={recentActivity}
+                shipmentTrend={shipmentTrend}
+            />
+        </div>
     );
 }
 
 async function getShipmentTrend() {
     const supabase = await createClient();
-    
-    const sevenDaysAgo = new Date();
-    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-    
+
+    // Fetch 90 days of shipment data for comprehensive trend visualization
+    const ninetyDaysAgo = new Date();
+    ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+
     const { data } = await supabase
         .from("shipments")
-        .select("created_at")
-        .gte("created_at", sevenDaysAgo.toISOString());
-    
-    // Group by date
-    const grouped: Record<string, number> = {};
+        .select("created_at, status")
+        .gte("created_at", ninetyDaysAgo.toISOString());
+
+    // Group by date with total and delivered counts
+    const grouped: Record<string, { total: number; delivered: number }> = {};
     (data || []).forEach(s => {
         const date = new Date(s.created_at).toISOString().split("T")[0];
-        grouped[date] = (grouped[date] || 0) + 1;
+        if (!grouped[date]) {
+            grouped[date] = { total: 0, delivered: 0 };
+        }
+        grouped[date].total++;
+        if (s.status === "delivered") {
+            grouped[date].delivered++;
+        }
     });
-    
-    // Fill in missing dates
-    const result: Array<{ date: string; count: number }> = [];
-    for (let i = 6; i >= 0; i--) {
+
+    // Fill in all dates in the range (90 days)
+    const result: Array<{ date: string; count: number; delivered: number }> = [];
+    for (let i = 89; i >= 0; i--) {
         const d = new Date();
         d.setDate(d.getDate() - i);
         const dateStr = d.toISOString().split("T")[0];
-        result.push({ date: dateStr, count: grouped[dateStr] || 0 });
+        const dayData = grouped[dateStr] || { total: 0, delivered: 0 };
+        result.push({
+            date: dateStr,
+            count: dayData.total,
+            delivered: dayData.delivered
+        });
     }
-    
+
     return result;
 }

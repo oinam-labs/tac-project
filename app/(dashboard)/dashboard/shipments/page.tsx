@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { ShipmentsTableClient } from "./_components/shipments-table-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -53,7 +52,7 @@ async function getWarehouses() {
 
     const { data } = await supabase
         .from("warehouses")
-        .select("id, name, code")
+        .select("*")
         .eq("is_active", true)
         .order("name");
 
@@ -65,7 +64,7 @@ async function getCustomers() {
 
     const { data } = await supabase
         .from("customers")
-        .select("id, name, phone")
+        .select("*")
         .order("name")
         .limit(100);
 
@@ -80,17 +79,12 @@ export default async function ShipmentsPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Shipments" section="Operations" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1600px] mx-auto pb-20">
-                    <ShipmentsTableClient
-                        initialShipments={shipments}
-                        warehouses={warehouses}
-                        customers={customers}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <ShipmentsTableClient
+                initialShipments={shipments}
+                warehouses={warehouses}
+                customers={customers}
+            />
+        </div>
     );
 }

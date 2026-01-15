@@ -30,7 +30,7 @@ export default function NotFound() {
             <span className="text-foreground text-sm font-semibold tracking-tight">
               TAC
             </span>
-            <span className="text-muted-foreground mt-[2px] font-mono text-[9px] tracking-widest uppercase">
+            <span className="text-muted-foreground mt-0.5 font-mono text-[9px] font-bold">
               Infrastructure
             </span>
           </div>
@@ -49,7 +49,7 @@ export default function NotFound() {
 
           {/* Error Message */}
           <div className="mb-8 space-y-3">
-            <span className="text-muted-foreground block font-mono text-[10px] tracking-widest uppercase">
+            <span className="text-muted-foreground block font-mono text-[10px] font-bold">
               Route Not Found
             </span>
             <h1 className="text-foreground text-2xl font-semibold tracking-tight">
@@ -98,8 +98,8 @@ export default function NotFound() {
 
       {/* Footer */}
       <footer className="border-border/40 border-t px-6 py-4">
-        <p className="text-muted-foreground text-center font-mono text-[10px] tracking-widest uppercase">
-          TAC Cargo Infrastructure © {new Date().getFullYear()}
+        <p className="text-muted-foreground text-center text-xs">
+          © {new Date().getFullYear()} TAC Cargo Infrastructure. All rights reserved.
         </p>
       </footer>
     </div>

@@ -1,10 +1,10 @@
 "use client";
 
 import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react";
+import { cn } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
-  CardAction,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -61,35 +61,39 @@ const defaultCards: SectionCardData[] = [
 
 export function SectionCards({ cards = defaultCards }: SectionCardsProps) {
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs sm:grid-cols-2 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 xl:grid-cols-4">
       {cards.map((card, index) => {
         const isPositive = card.trend >= 0;
         const TrendIcon = isPositive ? IconTrendingUp : IconTrendingDown;
 
         return (
-          <Card key={index} className="@container/card group">
-            <CardHeader>
-              <CardDescription>{card.title}</CardDescription>
-              <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-                {card.value}
-              </CardTitle>
-              <CardAction>
+          <Card key={index} className="flex flex-col">
+            <CardHeader className="pb-2">
+              <CardDescription className="text-sm font-medium">{card.title}</CardDescription>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-3xl font-bold tracking-tight tabular-nums">
+                  {card.value}
+                </CardTitle>
                 <Badge 
                   variant="outline" 
-                  className={isPositive ? "text-emerald-600 border-emerald-200" : "text-red-600 border-red-200"}
+                  className={cn(
+                    "h-6 gap-1 border px-2 text-xs font-medium",
+                    isPositive 
+                      ? "bg-success/10 text-success border-success/20" 
+                      : "bg-destructive/10 text-destructive border-destructive/20"
+                  )}
                 >
                   <TrendIcon className="size-3" />
                   {card.trendLabel}
                 </Badge>
-              </CardAction>
-            </CardHeader>
-            <CardFooter className="flex-col items-start gap-1.5 text-sm pt-4">
-              <div className="line-clamp-1 flex gap-2 font-medium">
-                {card.footerLabel}
-                <TrendIcon className="size-4" />
               </div>
-              <div className="text-muted-foreground text-xs">
-                {card.description}
+            </CardHeader>
+            <CardFooter className="mt-auto pt-0">
+              <div className="flex flex-col gap-1 text-xs">
+                 <span className="text-muted-foreground">{card.description}</span>
+                 <span className={cn("font-medium", isPositive ? "text-success" : "text-muted-foreground")}>
+                   {card.footerLabel}
+                 </span>
               </div>
             </CardFooter>
           </Card>

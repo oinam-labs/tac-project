@@ -47,7 +47,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="bg-primary/10 border-primary/30 text-primary inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 font-mono text-[10px] tracking-[0.2em] uppercase backdrop-blur-sm"
+            className="bg-primary/10 border-primary/30 text-primary inline-flex items-center gap-2 rounded-sm border px-3 py-1.5 font-mono text-[10px] font-bold backdrop-blur-sm"
           >
             <span className="relative flex h-2 w-2">
               <span className="bg-primary absolute inline-flex h-full w-full animate-ping rounded-full opacity-75"></span>
@@ -128,11 +128,11 @@ export function Hero() {
                 className="group relative flex flex-col items-center space-y-3"
               >
                 <stat.icon className="text-primary/60 mb-0.5 h-4 w-4" />
-                <span className="text-foreground text-4xl font-bold tracking-tighter tabular-nums md:text-5xl">
+                <span className="text-foreground text-4xl font-bold tabular-nums md:text-5xl">
                   {stat.value}
                 </span>
                 <div className="via-primary/50 h-px w-8 bg-gradient-to-r from-transparent to-transparent" />
-                <span className="text-muted-foreground font-mono text-[10px] tracking-[0.2em] uppercase">
+                <span className="text-muted-foreground font-mono text-[10px] font-bold">
                   {stat.label}
                 </span>
               </div>

@@ -42,7 +42,7 @@ export default function Error({
 
       {process.env.NODE_ENV === "development" && (
         <div className="border-destructive/20 bg-destructive/5 mt-8 w-full max-w-lg rounded-lg border p-4 text-left">
-          <p className="text-destructive mb-2 font-mono text-xs font-medium">
+          <p className="text-destructive mb-2 text-sm font-semibold">
             Error Details (Dev Only):
           </p>
           <pre className="text-muted-foreground max-h-40 overflow-auto font-mono text-xs whitespace-pre-wrap">

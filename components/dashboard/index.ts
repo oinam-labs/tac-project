@@ -27,6 +27,7 @@ export { RevenueSummaryChart } from "./revenue-summary-chart";
 export { CustomerAnalytics } from "./customer-analytics";
 export { CommandPalette, CommandPaletteButton } from "./command-palette";
 export { FloatingActionButton } from "./floating-action-button";
+export { ShipmentTrendsChart } from "./shipment-trends-chart";
 export { NotificationBell } from "./notification-bell";
 export { WelcomeBanner } from "./welcome-banner";
 

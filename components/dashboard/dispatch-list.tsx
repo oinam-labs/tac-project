@@ -27,7 +27,7 @@ export function DispatchList() {
               <span className="text-muted-foreground text-xs">Route A4</span>
             </div>
           </div>
-          <div className="bg-muted-foreground/30 group-hover:bg-success h-2 w-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0)] transition-colors group-hover:shadow-[0_0_8px_rgba(var(--success),0.5)]"></div>
+          <div className="bg-muted-foreground/30 group-hover:bg-success h-2 w-2 rounded-full transition-colors group-hover:shadow-sm group-hover:shadow-success/50"></div>
         </div>
         {/* Item 2 */}
         <div className="bg-card border-border/50 hover:bg-muted/50 group flex cursor-pointer items-center justify-between rounded-2xl border p-4 transition-colors">
@@ -46,7 +46,7 @@ export function DispatchList() {
               <span className="text-muted-foreground text-xs">Route B2</span>
             </div>
           </div>
-          <div className="bg-muted-foreground/30 group-hover:bg-warning h-2 w-2 rounded-full shadow-[0_0_8px_rgba(0,0,0,0)] transition-colors group-hover:shadow-[0_0_8px_rgba(var(--warning),0.5)]"></div>
+          <div className="bg-muted-foreground/30 group-hover:bg-warning h-2 w-2 rounded-full transition-colors group-hover:shadow-sm group-hover:shadow-warning/50"></div>
         </div>
       </div>
     </section>

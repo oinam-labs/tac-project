@@ -9,8 +9,8 @@ function PaymentSuccessContent() {
       <div className="max-w-md w-full">
         <div className="bg-card border border-border rounded-2xl shadow-xl p-8 text-center">
           {/* Success Icon */}
-          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle className="w-10 h-10 text-green-600 dark:text-green-400" />
+          <div className="w-20 h-20 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-6">
+            <CheckCircle className="w-10 h-10 text-success" />
           </div>
 
           {/* Title */}

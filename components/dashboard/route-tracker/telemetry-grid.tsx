@@ -27,7 +27,7 @@ export function TelemetryGrid() {
           <div className="absolute top-0 right-0 p-4 opacity-10 transition-opacity group-hover:opacity-20">
             <RiSpeedUpLine className="size-12 text-primary" />
           </div>
-          <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wider uppercase">
+          <p className="text-muted-foreground mb-1 text-xs font-medium">
             Avg Speed
           </p>
           <h3 className="text-foreground text-2xl font-semibold tracking-tight">
@@ -46,7 +46,7 @@ export function TelemetryGrid() {
           <div className="absolute top-0 right-0 p-4 opacity-10 transition-opacity group-hover:opacity-20">
             <RiGasStationLine className="size-12 text-warning" />
           </div>
-          <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wider uppercase">
+          <p className="text-muted-foreground mb-1 text-xs font-medium">
             Fuel Econ
           </p>
           <h3 className="text-foreground text-2xl font-semibold tracking-tight">
@@ -65,7 +65,7 @@ export function TelemetryGrid() {
           <div className="absolute top-0 right-0 p-4 opacity-10 transition-opacity group-hover:opacity-20">
             <RiTimeLine className="size-12 text-primary" />
           </div>
-          <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wider uppercase">
+          <p className="text-muted-foreground mb-1 text-xs font-medium">
             Duration
           </p>
           <h3 className="text-foreground text-2xl font-semibold tracking-tight">
@@ -84,7 +84,7 @@ export function TelemetryGrid() {
           <div className="absolute top-0 right-0 p-4 opacity-10 transition-opacity group-hover:opacity-20">
             <RiWalletLine className="size-12 text-success" />
           </div>
-          <p className="text-muted-foreground mb-1 text-xs font-medium tracking-wider uppercase">
+          <p className="text-muted-foreground mb-1 text-xs font-medium">
             Toll Cost
           </p>
           <h3 className="text-foreground text-2xl font-semibold tracking-tight">

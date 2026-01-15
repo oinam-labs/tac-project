@@ -32,8 +32,9 @@ export const shipmentSchema = z.object({
     .max(100, "Name too long"),
   consignee_phone: z
     .string()
-    .min(10, "Phone number is required")
-    .max(15, "Phone number too long"),
+    .min(10, "Phone number must be at least 10 digits")
+    .max(15, "Phone number too long")
+    .regex(/^[\d+\-\s()]+$/, "Phone number can only contain digits, +, -, spaces, and parentheses"),
   consignee_email: z
     .string()
     .email("Invalid email address")
@@ -68,25 +69,26 @@ export const manifestSchema = z.object({
   transport_mode: z.enum(["air", "surface", "express", "economy"]),
   vehicle_number: z
     .string()
-    .min(5, "Vehicle number is required")
     .max(20, "Vehicle number too long")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   driver_name: z
     .string()
-    .min(2, "Driver name is required")
     .max(100, "Name too long")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
   driver_phone: z
     .string()
-    .regex(/^\+?[1-9]\d{9,14}$/, "Invalid phone number")
-    .optional(),
+    .max(15, "Phone number too long")
+    .optional()
+    .or(z.literal("")),
   planned_departure: z.string().datetime("Invalid departure time"),
   planned_arrival: z.string().datetime("Invalid arrival time"),
   seal_number: z
     .string()
-    .min(5, "Seal number is required")
     .max(50, "Seal number too long")
-    .optional(),
+    .optional()
+    .or(z.literal("")),
 });
 
 export type ManifestFormData = z.infer<typeof manifestSchema>;
@@ -126,7 +128,10 @@ export const customerSchema = z.object({
     .min(2, "Contact person name is required")
     .max(100, "Name too long"),
   contact_email: z.string().email("Invalid email address"),
-  contact_phone: z.string().regex(/^\+?[1-9]\d{9,14}$/, "Invalid phone number"),
+  contact_phone: z
+    .string()
+    .min(10, "Phone number must be at least 10 digits")
+    .max(15, "Phone number too long"),
   billing_address: z
     .string()
     .min(10, "Billing address is required")

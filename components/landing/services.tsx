@@ -45,7 +45,7 @@ export function Services() {
             className="flex items-center gap-2"
           >
             <div className="bg-primary h-px w-8" />
-            <span className="text-primary font-mono text-sm tracking-widest uppercase">
+            <span className="text-primary font-mono text-sm font-medium">
               Core Competencies
             </span>
           </motion.div>

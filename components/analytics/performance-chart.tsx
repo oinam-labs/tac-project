@@ -64,7 +64,7 @@ export function PerformanceChart() {
           <CardTitle className="font-display text-lg tracking-tight text-foreground">
             Performance Overview
           </CardTitle>
-          <CardDescription className="text-muted-foreground/60 text-xs font-bold tracking-wider uppercase">
+          <CardDescription className="text-muted-foreground/60 text-xs font-medium">
             Operational costs vs Revenue
           </CardDescription>
         </div>
@@ -78,7 +78,7 @@ export function PerformanceChart() {
                 className="group relative z-30 flex flex-1 flex-col justify-center gap-1 border-t border-border px-6 py-4 text-left transition-colors even:border-l hover:bg-muted/50 data-[active=true]:bg-muted/50 sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
                 onClick={() => setActiveChart(chart)}
               >
-                <span className="text-muted-foreground text-[10px] font-bold tracking-widest uppercase transition-colors group-hover:text-foreground">
+                <span className="text-muted-foreground text-xs font-medium transition-colors group-hover:text-foreground">
                   {chartConfig[chart].label}
                 </span>
                 <span className="font-mono text-xl font-bold text-foreground sm:text-2xl">
@@ -86,7 +86,7 @@ export function PerformanceChart() {
                 </span>
                 {/* Active Indicator Line */}
                 {activeChart === chart && (
-                  <div className="bg-primary absolute top-0 right-0 left-0 h-[2px] shadow-[0_0_10px_var(--primary)]" />
+                  <div className="bg-primary absolute top-0 right-0 left-0 h-[2px] shadow-md shadow-primary/50" />
                 )}
               </button>
             );

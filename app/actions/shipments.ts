@@ -70,7 +70,7 @@ export async function createShipment(
         pieces: parsed.data.pieces || 1,
         declared_value: parsed.data.declared_value || null,
         notes: parsed.data.notes || null,
-        status: "pending",
+        status: "booked",
         created_by: user.id,
         organization_id: profile?.organization_id,
       })

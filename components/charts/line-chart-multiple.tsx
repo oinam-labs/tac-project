@@ -76,18 +76,20 @@ export function LineChartMultiple({
           content={<ChartTooltipContent indicator="line" />}
         />
         {showLegend && <ChartLegend content={<ChartLegendContent />} />}
-        {lines.map((line) => (
-          <Line
-            key={line.dataKey}
-            dataKey={line.dataKey}
-            type="monotone"
-            stroke={line.color}
-            strokeWidth={2}
-            strokeDasharray={line.dashed ? "5 5" : undefined}
-            dot={false}
-            activeDot={{ r: 4, strokeWidth: 0 }}
-          />
-        ))}
+        {lines.map((line) => {
+          return (
+            <Line
+              key={line.dataKey}
+              dataKey={line.dataKey}
+              type="monotone"
+              stroke={line.color}
+              strokeWidth={2}
+              dot={false}
+              activeDot={{ r: 4, strokeWidth: 0 }}
+              {...(line.dashed ? { strokeDasharray: "5 5" } : {})}
+            />
+          );
+        })}
       </LineChart>
     </ChartContainer>
   );

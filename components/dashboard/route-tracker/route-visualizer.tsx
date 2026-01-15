@@ -43,8 +43,8 @@ export function RouteVisualizer() {
 
           {/* Live Indicator */}
           <div className="absolute top-3 left-3 z-10 flex items-center gap-2 rounded-full border border-border bg-card/60 px-2.5 py-1 backdrop-blur-md">
-            <span className="size-1.5 animate-pulse rounded-full bg-destructive shadow-[0_0_6px_var(--destructive)]"></span>
-            <span className="text-[9px] font-bold tracking-wider text-muted-foreground uppercase">
+            <span className="size-1.5 animate-pulse rounded-full bg-destructive shadow-sm shadow-destructive/50"></span>
+            <span className="text-[9px] font-bold text-muted-foreground">
               Live
             </span>
           </div>
@@ -63,8 +63,8 @@ export function RouteVisualizer() {
               </p>
             </div>
             <div className="flex items-center gap-1.5">
-              <span className="size-2 rounded-full bg-primary shadow-[0_0_6px_var(--primary)]"></span>
-              <span className="text-[9px] font-bold text-primary uppercase">
+              <span className="size-2 rounded-full bg-primary shadow-sm shadow-primary/50"></span>
+              <span className="text-[9px] font-bold text-primary">
                 On Track
               </span>
             </div>
@@ -73,7 +73,7 @@ export function RouteVisualizer() {
           {/* Corridor Info - Compact */}
           <div className="bg-muted/30 border-border/50 space-y-2 rounded-lg border p-2.5">
             <div className="flex items-center justify-between">
-              <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
+              <span className="text-muted-foreground text-[9px] font-bold">
                 Corridor
               </span>
               <span className="text-primary font-mono text-[10px] font-bold">
@@ -100,7 +100,7 @@ export function RouteVisualizer() {
             <div className="bg-muted/20 border-border/50 rounded-lg border p-2.5">
               <div className="text-muted-foreground mb-1 flex items-center gap-1">
                 <RiMapPinLine className="size-2.5" />
-                <span className="text-[8px] font-bold tracking-wider uppercase">
+                <span className="text-[8px] font-bold">
                   Distance
                 </span>
               </div>
@@ -114,7 +114,7 @@ export function RouteVisualizer() {
             <div className="bg-muted/20 border-border/50 rounded-lg border p-2.5">
               <div className="text-muted-foreground mb-1 flex items-center gap-1">
                 <RiTimeLine className="size-2.5" />
-                <span className="text-[8px] font-bold tracking-wider uppercase">
+                <span className="text-[8px] font-bold">
                   ETA
                 </span>
               </div>
@@ -127,7 +127,7 @@ export function RouteVisualizer() {
             <div className="bg-muted/20 border-border/50 rounded-lg border p-2.5">
               <div className="text-muted-foreground mb-1 flex items-center gap-1">
                 <RiSpeedUpLine className="size-2.5" />
-                <span className="text-[8px] font-bold tracking-wider uppercase">
+                <span className="text-[8px] font-bold">
                   Speed
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function RouteVisualizer() {
             <div className="bg-muted/20 border-border/50 rounded-lg border p-2.5">
               <div className="text-muted-foreground mb-1 flex items-center gap-1">
                 <RiTempColdLine className="size-2.5" />
-                <span className="text-[8px] font-bold tracking-wider uppercase">
+                <span className="text-[8px] font-bold">
                   Cargo Temp
                 </span>
               </div>
@@ -159,7 +159,7 @@ export function RouteVisualizer() {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-1">
                 <RiNavigationLine className="text-primary size-3" />
-                <span className="text-primary text-[9px] font-bold tracking-wider uppercase">
+                <span className="text-primary text-[9px] font-bold">
                   Next Stop
                 </span>
               </div>
@@ -181,7 +181,7 @@ export function RouteVisualizer() {
               </div>
               <div className="flex-shrink-0 text-right">
                 <div className="text-foreground text-xs font-bold">~28m</div>
-                <div className="text-[8px] font-medium text-primary uppercase">
+                <div className="text-[8px] font-medium text-primary">
                   Clear
                 </div>
               </div>

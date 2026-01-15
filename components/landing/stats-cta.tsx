@@ -58,7 +58,7 @@ export function StatsCTA() {
               <Box className="text-primary h-24 w-24 rotate-12" />
             </div>
             <div>
-              <p className="text-primary mb-4 text-xs font-bold tracking-[0.2em] uppercase">
+              <p className="text-primary mb-4 text-xs font-bold">
                 Throughput
               </p>
               <p className="font-playfair text-foreground text-6xl font-medium tracking-tight sm:text-7xl">
@@ -83,7 +83,7 @@ export function StatsCTA() {
             className="bg-card group hover:border-primary/30 flex flex-col justify-between rounded-[2.5rem] border border-white/5 px-8 py-10 transition-colors"
           >
             <div>
-              <p className="mb-4 text-xs font-bold tracking-[0.2em] text-success uppercase">
+              <p className="mb-4 text-xs font-bold text-success">
                 Reliability
               </p>
               <div className="flex items-baseline gap-1">
@@ -113,7 +113,7 @@ export function StatsCTA() {
             className="bg-card group hover:border-primary/30 flex flex-col justify-between rounded-[2.5rem] border border-white/5 px-8 py-10 transition-colors"
           >
             <div>
-              <p className="mb-4 text-xs font-bold tracking-[0.2em] text-primary uppercase">
+              <p className="mb-4 text-xs font-bold text-primary">
                 Velocity
               </p>
               <div className="flex items-baseline gap-1">

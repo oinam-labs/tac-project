@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { InventoryClient } from "./_components/inventory-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -36,7 +35,7 @@ async function getInventorySummary() {
             destination_warehouse:warehouses!destination_warehouse_id(id, name, code),
             manifests(manifest_number, status)
         `)
-        .in("status", ["pending", "picked_up", "in_transit"])
+        .in("status", ["booked", "picked_up", "in_transit"])
         .order("created_at", { ascending: false })
         .limit(100);
 
@@ -55,16 +54,11 @@ export default async function InventoryPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Inventory" section="Operations" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1600px] mx-auto pb-20">
-                    <InventoryClient 
-                        warehouses={warehouses}
-                        initialInventory={inventory}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <InventoryClient 
+                warehouses={warehouses}
+                initialInventory={inventory}
+            />
+        </div>
     );
 }

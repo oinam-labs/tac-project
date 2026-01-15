@@ -249,7 +249,7 @@ export default function RadialOrbitalTimeline({
                 {/* Label (Visible when not expanded) */}
                 <div
                   className={cn(
-                    "absolute top-14 left-1/2 -translate-x-1/2 text-xs font-semibold tracking-wider whitespace-nowrap uppercase transition-all duration-300",
+                    "absolute top-14 left-1/2 -translate-x-1/2 text-xs font-semibold whitespace-nowrap transition-all duration-300",
                     isExpanded ? "opacity-0" : "text-muted-foreground/70",
                   )}
                 >
@@ -289,7 +289,7 @@ export default function RadialOrbitalTimeline({
                       <p className="leading-relaxed">{item.content}</p>
 
                       <div className="border-border mt-4 border-t pt-3">
-                        <div className="text-muted-foreground/60 mb-1 flex items-center justify-between text-[10px] tracking-widest uppercase">
+                        <div className="text-muted-foreground/60 mb-1 flex items-center justify-between text-[10px]">
                           <span className="flex items-center gap-1">
                             <Zap size={10} className="text-primary" />
                             Efficiency
@@ -313,7 +313,7 @@ export default function RadialOrbitalTimeline({
                               size={10}
                               className="text-muted-foreground/60 mr-1"
                             />
-                            <h4 className="text-muted-foreground/60 text-[10px] font-medium tracking-wider uppercase">
+                            <h4 className="text-muted-foreground/60 text-[10px] font-medium">
                               Linked Processes
                             </h4>
                           </div>

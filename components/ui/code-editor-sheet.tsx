@@ -298,7 +298,7 @@ function CodeEditorSheetControls({
                             </SelectContent>
                         </Select>
                     ) : (
-                        <div className="border border-input bg-muted rounded-md px-2 py-1 uppercase">
+                        <div className="border border-input bg-muted rounded-md px-2 py-1">
                             {language}
                         </div>
                     )}

@@ -123,8 +123,9 @@ export function InvoiceAnalytics({ data }: InvoiceAnalyticsProps) {
                   tickFormatter={(value) => `₹${(value / 1000).toFixed(0)}k`}
                 />
                 <Tooltip
-                  formatter={(value: number) => [
-                    formatCurrency(value),
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  formatter={(value: any) => [
+                    formatCurrency(Number(value) || 0),
                     "Revenue",
                   ]}
                   contentStyle={{

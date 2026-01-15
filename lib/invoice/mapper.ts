@@ -1,7 +1,8 @@
-import { Invoice } from "@/types/database";
+// import { Invoice } from "@/types/database"; // Reserved for type checking
 import { ShipmentData, Address, PackageItem } from "@/types/invoice-v2";
-import { GENERATOR_DEFAULTS } from "./generator-v2";
+// import { GENERATOR_DEFAULTS } from "./generator-v2"; // Reserved for defaults
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any -- Database invoice has dynamic structure
 export function mapDatabaseInvoiceToV2(dbInvoice: any): ShipmentData {
     // defaults
     const consignor: Address = {
@@ -30,7 +31,8 @@ export function mapDatabaseInvoiceToV2(dbInvoice: any): ShipmentData {
     let items: PackageItem[] = [];
 
     if (dbInvoice.invoice_items && dbInvoice.invoice_items.length > 0) {
-        items = dbInvoice.invoice_items.map((item: any, idx: number) => ({
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Dynamic item structure
+items = dbInvoice.invoice_items.map((item: any, idx: number) => ({
             id: item.id || `item-${idx}`,
             description: item.description || "General Cargo",
             length: item.length || 30,

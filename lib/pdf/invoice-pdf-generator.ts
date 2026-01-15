@@ -274,7 +274,8 @@ export async function generateInvoicePDF(data: InvoicePDFData): Promise<Buffer> 
     },
   });
 
-  yPos = (doc as any).lastAutoTable.finalY + 10;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- jsPDF autoTable plugin adds dynamic properties
+yPos = (doc as any).lastAutoTable.finalY + 10;
 
   // Charges Summary
   const summaryX = pageWidth - 80;

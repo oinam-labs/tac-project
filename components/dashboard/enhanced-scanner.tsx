@@ -185,8 +185,8 @@ export function EnhancedScanner({
             disabled={isProcessing}
             className={cn(
               "h-14 text-lg font-mono pr-24 transition-all",
-              lastResult?.success === true && "border-emerald-500 ring-2 ring-emerald-500/20",
-              lastResult?.success === false && "border-red-500 ring-2 ring-red-500/20"
+              lastResult?.success === true && "border-success ring-2 ring-success/20",
+              lastResult?.success === false && "border-destructive ring-2 ring-destructive/20"
             )}
           />
           <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-2">
@@ -240,18 +240,18 @@ export function EnhancedScanner({
         <div className={cn(
           "flex items-center gap-3 p-3 rounded-lg transition-all",
           lastResult.success
-            ? "bg-emerald-500/10 border border-emerald-500/20"
-            : "bg-red-500/10 border border-red-500/20"
+            ? "bg-success/10 border border-success/20"
+            : "bg-destructive/10 border border-destructive/20"
         )}>
           {lastResult.success ? (
-            <CheckCircle className="w-5 h-5 text-emerald-500 flex-shrink-0" />
+            <CheckCircle className="w-5 h-5 text-success flex-shrink-0" />
           ) : (
-            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+            <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0" />
           )}
           <div className="flex-1 min-w-0">
             <div className={cn(
               "text-sm font-mono truncate",
-              lastResult.success ? "text-emerald-600" : "text-red-600"
+              lastResult.success ? "text-success" : "text-destructive"
             )}>
               {lastResult.barcode}
             </div>
@@ -276,9 +276,9 @@ export function EnhancedScanner({
                 className="flex items-center gap-2 p-2 rounded bg-muted/50 text-xs"
               >
                 {scan.success ? (
-                  <CheckCircle className="w-3 h-3 text-emerald-500" />
+                  <CheckCircle className="w-3 h-3 text-success" />
                 ) : (
-                  <AlertCircle className="w-3 h-3 text-red-500" />
+                  <AlertCircle className="w-3 h-3 text-destructive" />
                 )}
                 <span className="font-mono text-muted-foreground truncate flex-1">
                   {scan.barcode}

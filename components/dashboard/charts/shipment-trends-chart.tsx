@@ -124,16 +124,16 @@ export function ShipmentTrendsChart({ className }: ShipmentTrendsChartProps) {
     >
       <CardHeader className="border-border/30 flex items-center gap-2 space-y-0 border-b px-6 py-4 sm:flex-row">
         <div className="grid flex-1 gap-1">
-          <h3 className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+          <h3 className="text-foreground text-sm font-semibold">
             Shipment Trends
           </h3>
-          <p className="text-muted-foreground/60 text-[10px] font-medium tracking-wide uppercase">
+          <p className="text-muted-foreground/60 text-xs font-medium">
             Volume analysis for the selected period
           </p>
         </div>
         <Select value={timeRange} onValueChange={setTimeRange}>
           <SelectTrigger
-            className="bg-muted/50 border-border/40 h-8 w-[130px] text-[10px] font-bold tracking-wide uppercase"
+            className="bg-muted/50 border-border/40 h-8 w-[130px] text-xs font-medium"
             aria-label="Select time range"
           >
             <SelectValue placeholder="Last 30 days" />

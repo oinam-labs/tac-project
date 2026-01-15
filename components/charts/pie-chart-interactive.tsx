@@ -22,6 +22,9 @@ interface PieChartInteractiveProps {
   labelType?: "value" | "percent" | "name";
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const PieAny = Pie as any;
+
 export function PieChartInteractive({
   data,
   height = 250,
@@ -70,7 +73,7 @@ export function PieChartInteractive({
           content={<ChartTooltipContent hideLabel />}
         />
         {showLegend && <ChartLegend content={<ChartLegendContent nameKey="name" />} />}
-        <Pie
+        <PieAny
           data={data}
           dataKey="value"
           nameKey="name"
@@ -79,7 +82,7 @@ export function PieChartInteractive({
           paddingAngle={2}
           activeIndex={activeIndex}
           activeShape={renderActiveShape}
-          onMouseEnter={(_, index) => setActiveIndex(index)}
+          onMouseEnter={(_: unknown, index: number) => setActiveIndex(index)}
           onMouseLeave={() => setActiveIndex(undefined)}
         >
           {data.map((entry, index) => (
@@ -123,7 +126,7 @@ export function PieChartInteractive({
               }}
             />
           )}
-        </Pie>
+        </PieAny>
       </PieChart>
     </ChartContainer>
   );

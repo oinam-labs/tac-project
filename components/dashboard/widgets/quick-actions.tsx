@@ -60,10 +60,10 @@ export function QuickActions({ className }: QuickActionsProps) {
     >
       <CardHeader className="border-border/30 border-b px-5 pb-3">
         <div className="flex flex-col gap-0.5">
-          <h3 className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+          <h3 className="text-foreground text-sm font-semibold">
             Quick Actions
           </h3>
-          <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+          <p className="text-muted-foreground/50 text-xs font-medium">
             Frequently used operations
           </p>
         </div>
@@ -90,7 +90,7 @@ export function QuickActions({ className }: QuickActionsProps) {
                     action.variant === "primary" && "text-primary",
                   )}
                 />
-                <span className="flex-1 text-left text-[11px] font-bold tracking-wide uppercase">
+                <span className="flex-1 text-left text-xs font-medium">
                   {action.label}
                 </span>
                 <RiArrowRightLine className="size-3.5 -translate-x-2 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-60" />

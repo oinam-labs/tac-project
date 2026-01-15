@@ -146,30 +146,24 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
   return (
     <Sidebar
       variant="inset"
-      className="glass-sidebar noise-overlay border-border/10 my-2 ml-2 h-[calc(100vh-16px)] rounded-r-3xl border-r bg-black/40 backdrop-blur-xl"
       collapsible="icon"
       {...props}
     >
-      <SidebarHeader className="border-b border-white/5 pt-4 pb-4">
+      <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               size="lg"
               asChild
-              className="transition-all group-data-[collapsible=icon]:justify-center hover:bg-white/5"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <a href="/dashboard" className="flex items-center gap-3">
-                <div className="bg-primary/20 border-primary/30 group relative flex aspect-square size-10 items-center justify-center overflow-hidden rounded-xl border shadow-[0_0_15px_rgba(var(--primary),0.3)]">
-                  <div className="from-primary/40 absolute inset-0 bg-gradient-to-tr to-transparent opacity-50" />
-                  <Box className="text-primary relative z-10 size-6" />
+              <a href="/dashboard">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Box className="size-4" />
                 </div>
-                <div className="grid flex-1 text-left group-data-[collapsible=icon]:hidden">
-                  <span className="font-heading text-base font-bold tracking-tight text-white uppercase">
-                    TAC Cargo
-                  </span>
-                  <span className="text-primary/80 text-[9px] font-bold tracking-[0.2em] uppercase">
-                    Command v2
-                  </span>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">TAC Cargo</span>
+                  <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>
             </SidebarMenuButton>
@@ -177,42 +171,19 @@ export function AppSidebar({ user, ...props }: AppSidebarProps) {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="gap-2 px-2 py-4">
-        <div className="mb-2 px-2 group-data-[collapsible=icon]:hidden">
-          <span className="text-muted-foreground/50 pl-2 text-[10px] font-bold tracking-widest uppercase">
-            Main Deck
-          </span>
-        </div>
+      <SidebarContent>
         <NavMain label="Overview" items={navConfig.overview} />
-
-        <div className="mt-4 mb-2 px-2 group-data-[collapsible=icon]:hidden">
-          <span className="text-muted-foreground/50 pl-2 text-[10px] font-bold tracking-widest uppercase">
-            Ops Control
-          </span>
-        </div>
         <NavMain label="Operations" items={navConfig.operations} />
-
-        <div className="mt-4 mb-2 px-2 group-data-[collapsible=icon]:hidden">
-          <span className="text-muted-foreground/50 pl-2 text-[10px] font-bold tracking-widest uppercase">
-            Finance
-          </span>
-        </div>
         <NavMain label="Finance" items={navConfig.finance} />
-
-        <div className="mt-4 mb-2 px-2 group-data-[collapsible=icon]:hidden">
-          <span className="text-muted-foreground/50 pl-2 text-[10px] font-bold tracking-widest uppercase">
-            Management
-          </span>
-        </div>
         <NavMain label="Management" items={navConfig.management} />
 
         <NavSecondary
           items={navConfig.navSecondary}
-          className="mt-auto border-t border-white/5 pt-4"
+          className="mt-auto"
         />
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-white/5 p-2">
+      <SidebarFooter>
         <NavUser user={displayUser} />
       </SidebarFooter>
     </Sidebar>

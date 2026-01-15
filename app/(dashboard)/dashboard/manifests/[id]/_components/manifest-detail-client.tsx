@@ -100,7 +100,7 @@ const statusConfig: Record<ManifestStatus, { label: string; color: string }> = {
   finalized: { label: "Finalized", color: "bg-primary/10 text-primary" },
   dispatched: { label: "Dispatched", color: "bg-warning/10 text-warning" },
   in_transit: { label: "In Transit", color: "bg-accent/10 text-accent" },
-  arrived: { label: "Arrived", color: "bg-cyan-100 text-cyan-700" },
+  arrived: { label: "Arrived", color: "bg-info/10 text-info" },
   completed: { label: "Completed", color: "bg-primary/10 text-primary" },
 };
 

@@ -3,7 +3,7 @@
 import React from "react";
 import { format } from "date-fns";
 // import { QRCodeSVG } from "qrcode.react"; // Removed to prevent build issues
-import { cn } from "@/lib/utils";
+// import { cn } from "@/lib/utils"; // Reserved for className utilities
 import { InvoiceCalculation } from "@/lib/invoice/calculations";
 import { VOLUMETRIC_FACTORS } from "@/lib/invoice/calculations";
 
@@ -70,10 +70,10 @@ export function InvoicePrintView({
             <div className="flex justify-between items-start border-b-2 border-black pb-4 mb-4">
                 <div>
                     <div className="flex items-center gap-2 mb-2">
-                        <h1 className="text-3xl font-bold tracking-tighter">TAC<span className="text-orange-500">.</span></h1>
-                        <span className="text-xs font-semibold px-2 py-0.5 border border-black rounded">ORIGINAL FOR RECIPIENT</span>
+                        <h1 className="text-3xl font-bold tracking-tight">TAC<span className="text-warning">.</span></h1>
+                        <span className="text-xs font-semibold px-2 py-0.5 border border-black rounded">Original for Recipient</span>
                     </div>
-                    <div className="text-xs space-y-0.5 text-gray-600">
+                    <div className="text-xs space-y-0.5 text-muted-foreground">
                         <p className="font-bold text-black">Tapan Associate Cargo</p>
                         <p>Regd. Office: Imphal-Delhi Logistics Zone</p>
                         <p>GSTIN: 15AABCT1234F1Z5</p>
@@ -81,22 +81,22 @@ export function InvoicePrintView({
                     </div>
                 </div>
                 <div className="text-right">
-                    <h2 className="text-xl font-bold mb-1">TAX INVOICE</h2>
+                    <h2 className="text-xl font-bold mb-1">Tax Invoice</h2>
                     <div className="text-sm font-mono font-bold mb-1">{invoiceNo}</div>
-                    <p className="text-xs text-gray-600">Date: {format(invoiceDate, "dd MMM yyyy")}</p>
+                    <p className="text-xs text-muted-foreground">Date: {format(invoiceDate, "dd MMM yyyy")}</p>
                     <div className="mt-2">
                         <span className="barcode-font text-5xl leading-none block">{awbNo}</span>
-                        <span className="text-[10px] tracking-widest">{awbNo}</span>
+                        <span className="text-[10px] font-medium">{awbNo}</span>
                     </div>
                 </div>
             </div>
 
             {/* Addresses */}
-            <div className="grid grid-cols-2 gap-8 mb-6 border-b border-gray-200 pb-4">
+            <div className="grid grid-cols-2 gap-8 mb-6 border-b border-border pb-4">
                 <div>
-                    <h3 className="font-bold text-xs uppercase text-gray-500 mb-2">Shipped From (Consignor)</h3>
+                    <h3 className="font-bold text-xs text-muted-foreground mb-2">Shipped From (Consignor)</h3>
                     <div className="text-sm font-semibold">{consignor.name}</div>
-                    <div className="text-xs mt-1 whitespace-pre-line text-gray-700">
+                    <div className="text-xs mt-1 whitespace-pre-line text-foreground/80">
                         {consignor.address.address}
                         <br />
                         {consignor.address.city}, {consignor.address.state} - {consignor.address.pincode}
@@ -107,9 +107,9 @@ export function InvoicePrintView({
                     {consignor.gstin && <div className="text-xs mt-0.5"><span className="font-semibold">GST:</span> {consignor.gstin}</div>}
                 </div>
                 <div>
-                    <h3 className="font-bold text-xs uppercase text-gray-500 mb-2">Shipped To (Consignee)</h3>
+                    <h3 className="font-bold text-xs text-muted-foreground mb-2">Shipped To (Consignee)</h3>
                     <div className="text-sm font-semibold">{consignee.name}</div>
-                    <div className="text-xs mt-1 whitespace-pre-line text-gray-700">
+                    <div className="text-xs mt-1 whitespace-pre-line text-foreground/80">
                         {consignee.address.address}
                         <br />
                         {consignee.address.city}, {consignee.address.state} - {consignee.address.pincode}
@@ -134,11 +134,11 @@ export function InvoicePrintView({
                     </thead>
                     <tbody>
                         {packages.map((pkg, idx) => (
-                            <tr key={idx} className="border-b border-gray-200 zebra-row">
+                            <tr key={idx} className="border-b border-border zebra-row">
                                 <td className="py-2 align-top">{idx + 1}</td>
                                 <td className="py-2 align-top">
                                     <div className="font-semibold">{pkg.description}</div>
-                                    <div className="text-[10px] text-gray-500">Volumetric Divisor: {VOLUMETRIC_FACTORS['air']}</div>
+                                    <div className="text-[10px] text-muted-foreground">Volumetric Divisor: {VOLUMETRIC_FACTORS['air']}</div>
                                 </td>
                                 <td className="py-2 align-top text-center">{pkg.quantity}</td>
                                 <td className="py-2 align-top text-right">{pkg.weight.toFixed(2)}</td>
@@ -146,7 +146,7 @@ export function InvoicePrintView({
                             </tr>
                         ))}
                     </tbody>
-                    <tfoot className="border-t-2 border-black bg-gray-50">
+                    <tfoot className="border-t-2 border-black bg-muted/50">
                         <tr>
                             <td colSpan={2} className="py-2 font-bold text-right pr-4">Total:</td>
                             <td className="py-2 font-bold text-center">{totalPieces}</td>
@@ -162,9 +162,9 @@ export function InvoicePrintView({
                 <div className="col-span-7">
                     <div className="border rounded p-4 h-full flex flex-col justify-between">
                         <div>
-                            <h3 className="font-bold text-xs uppercase mb-2">Terms & Conditions</h3>
-                            <ul className="list-disc list-inside text-[10px] text-gray-600 space-y-1">
-                                <li>Goods carried at owner's risk unless insured.</li>
+                            <h3 className="font-bold text-xs mb-2">Terms & Conditions</h3>
+                            <ul className="list-disc list-inside text-[10px] text-muted-foreground space-y-1">
+                                <li>Goods carried at owner&apos;s risk unless insured.</li>
                                 <li>Disputes subject to Imphal jurisdiction.</li>
                                 <li>Interest @ 24% p.a. charged if bill not paid on due date.</li>
                             </ul>
@@ -172,12 +172,13 @@ export function InvoicePrintView({
                         <div className="mt-4 pt-4 border-t border-dashed">
                             <div className="flex items-center gap-4">
                                 {/* QR Code Placeholder using API */}
+                                {/* eslint-disable-next-line @next/next/no-img-element -- Print-specific component */}
                                 <img
                                     src={`https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=${encodeURIComponent(awbNo)}`}
                                     alt="QR"
                                     className="w-16 h-16"
                                 />
-                                <div className="text-[10px] text-gray-500">
+                                <div className="text-[10px] text-muted-foreground">
                                     Scan to verify invoice<br />
                                     & track shipment
                                 </div>
@@ -186,34 +187,34 @@ export function InvoicePrintView({
                     </div>
                 </div>
                 <div className="col-span-5">
-                    <div className="bg-gray-50 border rounded p-4">
+                    <div className="bg-muted/50 border rounded p-4">
                         <div className="space-y-2">
                             <div className="flex justify-between">
                                 <span>Freight Charge</span>
                                 <span>₹{calculation.charges.freightCharge.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-gray-600">
+                            <div className="flex justify-between text-muted-foreground">
                                 <span>Pickup & Delivery</span>
                                 <span>₹{(calculation.charges.pickupCharge + calculation.charges.deliveryCharge).toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-gray-600">
+                            <div className="flex justify-between text-muted-foreground">
                                 <span>Packing & Handling</span>
                                 <span>₹{(calculation.charges.packingCharge + calculation.charges.handlingCharge).toFixed(2)}</span>
                             </div>
                             {calculation.charges.insuranceCharge > 0 && (
-                                <div className="flex justify-between text-gray-600">
+                                <div className="flex justify-between text-muted-foreground">
                                     <span>Insurance</span>
                                     <span>₹{calculation.charges.insuranceCharge.toFixed(2)}</span>
                                 </div>
                             )}
 
-                            <div className="border-t border-gray-300 my-2"></div>
+                            <div className="border-t border-border my-2"></div>
 
                             <div className="flex justify-between font-semibold">
                                 <span>Subtotal</span>
                                 <span>₹{calculation.tax.subtotal.toFixed(2)}</span>
                             </div>
-                            <div className="flex justify-between text-xs text-gray-600">
+                            <div className="flex justify-between text-xs text-muted-foreground">
                                 <span>GST ({calculation.tax.isInterState ? "IGST" : "CGST+SGST"})</span>
                                 <span>₹{calculation.tax.totalTax.toFixed(2)}</span>
                             </div>
@@ -226,7 +227,7 @@ export function InvoicePrintView({
                             </div>
 
                             {calculation.advancePaid > 0 && (
-                                <div className="flex justify-between text-green-600 text-sm font-medium mt-1">
+                                <div className="flex justify-between text-success text-sm font-medium mt-1">
                                     <span>Less: Advance</span>
                                     <span>- ₹{calculation.advancePaid.toFixed(2)}</span>
                                 </div>
@@ -238,7 +239,7 @@ export function InvoicePrintView({
                             </div>
                         </div>
                         <div className="mt-4 text-center">
-                            <div className="inline-block px-3 py-1 border border-black rounded text-xs font-bold uppercase">
+                            <div className="inline-block px-3 py-1 border border-black rounded text-xs font-bold">
                                 {paymentMode}
                             </div>
                         </div>
@@ -248,14 +249,14 @@ export function InvoicePrintView({
 
             {/* Footer / Auth */}
             <div className="flex justify-between items-end mt-auto pt-8">
-                <div className="text-[10px] text-gray-500">
+                <div className="text-[10px] text-muted-foreground">
                     Generated by TAC Enterprise System v4.0.0<br />
                     {format(new Date(), "PPpp")}
                 </div>
                 <div className="text-center">
-                    <div className="h-12 w-32 border-b border-gray-400 mb-1"></div>
+                    <div className="h-12 w-32 border-b border-border mb-1"></div>
                     <div className="text-xs font-bold">Authorized Signatory</div>
-                    <div className="text-[10px] text-gray-500">Tapan Associate Cargo</div>
+                    <div className="text-[10px] text-muted-foreground">Tapan Associate Cargo</div>
                 </div>
             </div>
         </div>

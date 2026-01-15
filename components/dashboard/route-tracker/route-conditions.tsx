@@ -108,10 +108,10 @@ export function RouteConditions({ className }: RouteConditionsProps) {
               <RiRoadMapLine className="size-4" />
             </div>
             <div className="flex flex-col gap-0.5">
-              <h3 className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+              <h3 className="text-foreground text-sm font-semibold">
                 Route Conditions
               </h3>
-              <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+              <p className="text-muted-foreground/50 text-xs font-medium">
                 Real-time segment status
               </p>
             </div>
@@ -143,7 +143,7 @@ export function RouteConditions({ className }: RouteConditionsProps) {
                 </div>
                 <div
                   className={cn(
-                    "flex items-center gap-1 rounded-full border px-2 py-1 text-[9px] font-bold tracking-wide uppercase",
+                    "flex items-center gap-1 rounded-full border px-2 py-1 text-xs font-medium",
                     config.class,
                   )}
                 >

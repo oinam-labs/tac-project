@@ -351,7 +351,7 @@ export function BarcodeScanner({
                     {/* Scan History */}
                     {scanHistory.length > 0 && (
                         <div className="border-t pt-4">
-                            <h4 className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
+                            <h4 className="text-xs font-medium text-muted-foreground mb-2">
                                 Recent Scans
                             </h4>
                             <div className="space-y-1 max-h-32 overflow-y-auto">

@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { RoutesClient } from "./_components/routes-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -40,11 +39,8 @@ export default async function RoutesPage() {
     const manifests = await getActiveManifests();
 
     return (
-        <>
-            <V2Header title="Route Tracker" section="Ops Control" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <RoutesClient manifests={manifests} />
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <RoutesClient manifests={manifests} />
+        </div>
     );
 }

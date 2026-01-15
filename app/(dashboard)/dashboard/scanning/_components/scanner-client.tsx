@@ -20,9 +20,17 @@ const CameraScanner = dynamic(
     { ssr: false, loading: () => <div className="h-[200px] bg-muted/50 rounded-lg animate-pulse" /> }
 );
 import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 import { toast } from "sonner";
 import { processScan, lookupByBarcode } from "@/app/actions/scanning";
 import type { ShipmentStatus } from "@/types/database";
@@ -57,20 +65,6 @@ const scanTypeConfig: Record<ScanType, { label: string; icon: React.ElementType;
     delivered: { label: "Delivered", icon: CheckCircle, color: "bg-success" },
     failed_delivery: { label: "Failed Delivery", icon: AlertCircle, color: "bg-destructive" },
 };
-
-const statusColors: Record<ShipmentStatus, string> = {
-    booked: "text-muted-foreground",
-    picked_up: "text-primary",
-    at_origin_hub: "text-primary",
-    in_transit: "text-primary",
-    at_destination_hub: "text-primary",
-    out_for_delivery: "text-warning",
-    delivered: "text-success",
-    exception: "text-destructive",
-    returned: "text-warning",
-    cancelled: "text-muted-foreground",
-};
-
 type ScanMode = "manual" | "camera";
 
 export function ScannerClient({ warehouses, initialRecentScans }: ScannerClientProps) {
@@ -235,203 +229,209 @@ export function ScannerClient({ warehouses, initialRecentScans }: ScannerClientP
             {/* Scanner Panel */}
             <div className="lg:col-span-2 space-y-6">
                 {/* Scan Type Selector */}
-                <GlassPanel className="p-4">
-                    <div className="flex flex-wrap gap-2">
-                        {Object.entries(scanTypeConfig).map(([type, config]) => {
-                            const Icon = config.icon;
-                            return (
-                                <button
-                                    key={type}
-                                    onClick={() => setSelectedScanType(type as ScanType)}
-                                    className={cn(
-                                        "flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium transition-all",
-                                        selectedScanType === type
-                                            ? `${config.color} text-white shadow-lg`
-                                            : "bg-muted text-muted-foreground hover:bg-muted/80"
-                                    )}
-                                >
-                                    <Icon className="w-4 h-4" />
-                                    {config.label}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </GlassPanel>
+                <Card>
+                    <CardHeader className="pb-3">
+                        <CardTitle className="text-base">Scan Operation</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex flex-wrap gap-2">
+                            {Object.entries(scanTypeConfig).map(([type, config]) => {
+                                const Icon = config.icon;
+                                return (
+                                    <Button
+                                        key={type}
+                                        variant={selectedScanType === type ? "default" : "outline"}
+                                        onClick={() => setSelectedScanType(type as ScanType)}
+                                        className={cn(
+                                            "gap-2 text-xs h-9",
+                                            selectedScanType === type && config.color.replace("bg-", "bg-") // Keep default button color for active state
+                                        )}
+                                    >
+                                        <Icon className="w-3.5 h-3.5" />
+                                        {config.label}
+                                    </Button>
+                                );
+                            })}
+                        </div>
+                    </CardContent>
+                </Card>
 
                 {/* Scanner Input */}
-                <GlassPanel className="p-6">
-                    <div className="flex items-center justify-between gap-4 mb-4">
-                        <select
-                            value={selectedWarehouse}
-                            onChange={(e) => setSelectedWarehouse(e.target.value)}
-                            className="bg-card border border-border rounded px-3 py-2 text-sm text-foreground"
-                        >
-                            {warehouses.map((w) => (
-                                <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
-                            ))}
-                        </select>
+                <Card>
+                    <CardContent className="p-6">
+                        <div className="flex items-center justify-between gap-4 mb-6">
+                            <div className="flex-1 max-w-xs">
+                                <Select value={selectedWarehouse} onValueChange={setSelectedWarehouse}>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Select Warehouse" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {warehouses.map((w) => (
+                                            <SelectItem key={w.id} value={w.id}>
+                                                {w.name} ({w.code})
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
+                            </div>
 
-                        {/* Mode Toggle */}
-                        <div className="flex rounded-lg border border-border overflow-hidden">
-                            <button
-                                type="button"
-                                onClick={() => setScanMode("manual")}
-                                className={cn(
-                                    "flex items-center gap-2 px-3 py-2 text-xs font-medium transition-colors",
-                                    scanMode === "manual"
-                                        ? "bg-primary text-primary-foreground"
-                                        : "bg-card text-muted-foreground hover:bg-muted"
-                                )}
-                            >
-                                <Keyboard className="w-3.5 h-3.5" />
-                                Manual
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => setScanMode("camera")}
-                                className={cn(
-                                    "flex items-center gap-2 px-3 py-2 text-xs font-medium transition-colors",
-                                    scanMode === "camera"
-                                        ? "bg-primary text-primary-foreground"
-                                        : "bg-card text-muted-foreground hover:bg-muted"
-                                )}
-                            >
-                                <Camera className="w-3.5 h-3.5" />
-                                Camera
-                            </button>
+                            {/* Mode Toggle */}
+                            <div className="flex rounded-md border p-1 bg-muted/20">
+                                <Button
+                                    variant={scanMode === "manual" ? "secondary" : "ghost"}
+                                    size="sm"
+                                    onClick={() => setScanMode("manual")}
+                                    className="gap-2 h-8 text-xs"
+                                >
+                                    <Keyboard className="w-3.5 h-3.5" />
+                                    Manual
+                                </Button>
+                                <Button
+                                    variant={scanMode === "camera" ? "secondary" : "ghost"}
+                                    size="sm"
+                                    onClick={() => setScanMode("camera")}
+                                    className="gap-2 h-8 text-xs"
+                                >
+                                    <Camera className="w-3.5 h-3.5" />
+                                    Camera
+                                </Button>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* Camera Scanner */}
-                    {scanMode === "camera" && (
-                        <div className="mb-4">
-                            <CameraScanner
-                                onScan={handleCameraScan}
-                                onError={(err) => toast.error(err)}
-                            />
-                        </div>
-                    )}
+                        {/* Camera Scanner */}
+                        {scanMode === "camera" && (
+                            <div className="mb-6 rounded-lg overflow-hidden border">
+                                <CameraScanner
+                                    onScan={handleCameraScan}
+                                    onError={(err) => toast.error(err)}
+                                />
+                            </div>
+                        )}
 
-                    {/* Manual Input */}
-                    <form onSubmit={handleScan} className={cn("relative", scanMode === "camera" && "opacity-50")}>
-                        <div className="relative">
-                            <Scan className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" />
-                            <Input
-                                ref={inputRef}
-                                type="text"
-                                value={barcodeInput}
-                                onChange={(e) => setBarcodeInput(e.target.value)}
-                                placeholder="Scan barcode or enter reference..."
-                                className="pl-14 pr-4 py-6 text-xl font-mono bg-card border-border focus:border-primary"
-                                autoFocus
-                                disabled={isPending}
-                            />
-                        </div>
-                        <div className="flex gap-2 mt-4">
-                            <Button
-                                type="submit"
-                                className="flex-1 gap-2"
-                                disabled={isPending || !barcodeInput.trim()}
-                            >
-                                <Scan className="w-4 h-4" />
-                                {isPending ? "Processing..." : `Scan as ${scanTypeConfig[selectedScanType].label}`}
-                            </Button>
-                            <Button
-                                type="button"
-                                variant="outline"
-                                onClick={handleLookup}
-                                disabled={isPending || !barcodeInput.trim()}
-                                className="gap-2"
-                            >
-                                <Keyboard className="w-4 h-4" />
-                                Lookup Only
-                            </Button>
-                        </div>
-                    </form>
+                        {/* Manual Input */}
+                        <form onSubmit={handleScan} className={cn("relative", scanMode === "camera" && "opacity-50")}>
+                            <div className="relative">
+                                <Scan className="absolute left-4 top-1/2 -translate-y-1/2 w-6 h-6 text-muted-foreground" />
+                                <Input
+                                    ref={inputRef}
+                                    type="text"
+                                    value={barcodeInput}
+                                    onChange={(e) => setBarcodeInput(e.target.value)}
+                                    placeholder="Scan barcode or enter reference..."
+                                    className="pl-14 pr-4 py-6 text-xl font-mono"
+                                    autoFocus
+                                    disabled={isPending}
+                                />
+                            </div>
+                            <div className="flex gap-2 mt-4">
+                                <Button
+                                    type="submit"
+                                    className="flex-1 gap-2"
+                                    disabled={isPending || !barcodeInput.trim()}
+                                >
+                                    <Scan className="w-4 h-4" />
+                                    {isPending ? "Processing..." : `Scan as ${scanTypeConfig[selectedScanType].label}`}
+                                </Button>
+                                <Button
+                                    type="button"
+                                    variant="outline"
+                                    onClick={handleLookup}
+                                    disabled={isPending || !barcodeInput.trim()}
+                                    className="gap-2"
+                                >
+                                    <Keyboard className="w-4 h-4" />
+                                    Lookup Only
+                                </Button>
+                            </div>
+                        </form>
 
-                    {/* Last Scan Result */}
-                    {lastScanResult && (
-                        <div className={cn(
-                            "mt-6 p-4 rounded-lg border",
-                            lastScanResult.success
-                                ? "bg-success/10 border-success/30"
-                                : "bg-destructive/10 border-destructive/30"
-                        )}>
-                            {lastScanResult.success && lastScanResult.shipment ? (
-                                <div className="space-y-2">
-                                    <div className="flex items-center justify-between">
-                                        <span className="font-mono text-lg text-foreground">
-                                            {lastScanResult.shipment.reference}
-                                        </span>
-                                        <span className={cn(
-                                            "text-sm font-medium",
-                                            statusColors[lastScanResult.shipment.status]
-                                        )}>
-                                            {lastScanResult.shipment.status.replace(/_/g, " ")}
-                                        </span>
-                                    </div>
-                                    <div className="text-sm text-muted-foreground">
-                                        {lastScanResult.shipment.consignee_name}
-                                    </div>
-                                    {lastScanResult.shipment.origin && lastScanResult.shipment.destination && (
-                                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                                            <span>{lastScanResult.shipment.origin}</span>
-                                            <ArrowRight className="w-3 h-3" />
-                                            <span>{lastScanResult.shipment.destination}</span>
+                        {/* Last Scan Result */}
+                        {lastScanResult && (
+                            <div className={cn(
+                                "mt-6 p-4 rounded-lg border",
+                                lastScanResult.success
+                                    ? "bg-success/5 border-success/20"
+                                    : "bg-destructive/5 border-destructive/20"
+                            )}>
+                                {lastScanResult.success && lastScanResult.shipment ? (
+                                    <div className="space-y-3">
+                                        <div className="flex items-center justify-between">
+                                            <span className="font-mono text-lg font-semibold tracking-tight">
+                                                {lastScanResult.shipment.reference}
+                                            </span>
+                                            <Badge variant={lastScanResult.success ? "default" : "destructive"}>
+                                                {lastScanResult.shipment.status.replace(/_/g, " ")}
+                                            </Badge>
                                         </div>
-                                    )}
-                                    <div className="text-xs text-success mt-2">
-                                        ✓ {lastScanResult.message}
+                                        <div className="text-sm text-muted-foreground font-medium">
+                                            {lastScanResult.shipment.consignee_name}
+                                        </div>
+                                        {lastScanResult.shipment.origin && lastScanResult.shipment.destination && (
+                                            <div className="flex items-center gap-2 text-xs text-muted-foreground bg-background/50 p-2 rounded border border-border/50">
+                                                <span>{lastScanResult.shipment.origin}</span>
+                                                <ArrowRight className="w-3 h-3" />
+                                                <span>{lastScanResult.shipment.destination}</span>
+                                            </div>
+                                        )}
+                                        <div className="text-sm font-medium text-success flex items-center gap-2 mt-2">
+                                            <CheckCircle className="w-4 h-4" />
+                                            {lastScanResult.message}
+                                        </div>
                                     </div>
-                                </div>
-                            ) : (
-                                <div className="flex items-center gap-3 text-destructive">
-                                    <AlertCircle className="w-5 h-5" />
-                                    <span>{lastScanResult.message}</span>
-                                </div>
-                            )}
-                        </div>
-                    )}
-                </GlassPanel>
+                                ) : (
+                                    <div className="flex items-center gap-3 text-destructive font-medium">
+                                        <AlertCircle className="w-5 h-5" />
+                                        <span>{lastScanResult.message}</span>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
             </div>
 
             {/* Recent Scans */}
-            <GlassPanel className="p-4">
-                <div className="flex items-center gap-2 mb-4">
-                    <History className="w-4 h-4 text-muted-foreground" />
-                    <h3 className="text-sm font-medium text-foreground">Recent Scans</h3>
-                </div>
-
-                <div className="space-y-2 max-h-[60vh] overflow-y-auto">
-                    {recentScans.length === 0 ? (
-                        <div className="text-xs text-muted-foreground text-center py-8">No recent scans</div>
-                    ) : (
-                        recentScans.map((scan) => (
-                            <div
-                                key={scan.id}
-                                className="p-3 rounded-lg bg-card/50 border border-border"
-                            >
-                                <div className="flex items-center justify-between mb-1">
-                                    <span className="font-mono text-xs text-foreground">
-                                        {scan.shipments?.reference || "Unknown"}
-                                    </span>
-                                    <span className="text-[10px] text-muted-foreground">
-                                        {new Date(scan.created_at).toLocaleTimeString()}
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                    <span className="text-[10px] text-muted-foreground">
-                                        {scan.shipments?.consignee_name || "—"}
-                                    </span>
-                                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-muted text-muted-foreground">
-                                        {scan.scan_type.replace(/_/g, " ")}
-                                    </span>
-                                </div>
+            <Card className="h-fit">
+                <CardHeader className="pb-3 border-b">
+                    <CardTitle className="text-base flex items-center gap-2">
+                        <History className="w-4 h-4 text-muted-foreground" />
+                        Recent Scans
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="p-0">
+                    <div className="max-h-[600px] overflow-y-auto">
+                        {recentScans.length === 0 ? (
+                            <div className="text-sm text-muted-foreground text-center py-8">No recent scans</div>
+                        ) : (
+                            <div className="divide-y divide-border">
+                                {recentScans.map((scan) => (
+                                    <div
+                                        key={scan.id}
+                                        className="p-4 hover:bg-muted/50 transition-colors"
+                                    >
+                                        <div className="flex items-center justify-between mb-1.5">
+                                            <span className="font-mono text-xs font-medium">
+                                                {scan.shipments?.reference || "Unknown"}
+                                            </span>
+                                            <span className="text-[10px] text-muted-foreground">
+                                                {new Date(scan.created_at).toLocaleTimeString()}
+                                            </span>
+                                        </div>
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-xs text-muted-foreground truncate max-w-[120px]">
+                                                {scan.shipments?.consignee_name || "—"}
+                                            </span>
+                                            <Badge variant="secondary" className="text-[10px] px-1.5 py-0 h-5 font-normal capitalize">
+                                                {scan.scan_type.replace(/_/g, " ")}
+                                            </Badge>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
-                        ))
-                    )}
-                </div>
-            </GlassPanel>
+                        )}
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

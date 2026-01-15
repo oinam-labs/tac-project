@@ -33,7 +33,7 @@ export function TrackingResultCard({ data }: { data: TrackingPayload }) {
         <CardHeader className="pb-4">
           <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
             <div>
-              <CardTitle className="font-mono text-2xl tracking-tight">
+              <CardTitle className="font-mono text-2xl font-bold">
                 {data.trackingId}
               </CardTitle>
               <CardDescription className="mt-1 flex items-center gap-2">
@@ -59,7 +59,7 @@ export function TrackingResultCard({ data }: { data: TrackingPayload }) {
 
           <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
             <div className="space-y-1">
-              <p className="text-muted-foreground text-xs tracking-wider uppercase">
+              <p className="text-muted-foreground text-xs font-medium">
                 Mode
               </p>
               <div className="flex items-center gap-2 font-medium">
@@ -72,7 +72,7 @@ export function TrackingResultCard({ data }: { data: TrackingPayload }) {
               </div>
             </div>
             <div className="space-y-1">
-              <p className="text-muted-foreground text-xs tracking-wider uppercase">
+              <p className="text-muted-foreground text-xs font-medium">
                 Weight / Pcs
               </p>
               <div className="flex items-center gap-2 font-medium">
@@ -81,7 +81,7 @@ export function TrackingResultCard({ data }: { data: TrackingPayload }) {
               </div>
             </div>
             <div className="col-span-2 space-y-1">
-              <p className="text-muted-foreground text-xs tracking-wider uppercase">
+              <p className="text-muted-foreground text-xs font-medium">
                 Estimated Arrival
               </p>
               <div className="text-primary flex items-center gap-2 font-medium">

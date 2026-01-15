@@ -87,10 +87,10 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
       <CardHeader className="border-border/30 border-b px-5 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
-            <h3 className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+            <h3 className="text-foreground text-sm font-semibold">
               Live Activity
             </h3>
-            <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+            <p className="text-muted-foreground/50 text-xs font-medium">
               Real-time operations feed
             </p>
           </div>
@@ -98,7 +98,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
             <span className="relative flex h-2 w-2">
               <span className="bg-muted-foreground/50 relative inline-flex h-2 w-2 rounded-full" />
             </span>
-            <span className="text-muted-foreground text-[9px] font-bold tracking-wide uppercase">
+            <span className="text-muted-foreground text-xs font-medium">
               Static
             </span>
           </div>
@@ -129,7 +129,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
                     {item.description}
                   </p>
                 </div>
-                <span className="text-muted-foreground/40 shrink-0 text-[9px] font-medium tracking-wide uppercase">
+                <span className="text-muted-foreground/40 shrink-0 text-xs font-medium">
                   {item.time}
                 </span>
               </div>

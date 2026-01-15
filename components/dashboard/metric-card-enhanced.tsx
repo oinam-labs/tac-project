@@ -28,17 +28,17 @@ export function MetricCardEnhanced({
 }: MetricCardEnhancedProps) {
   const colorClasses = {
     default: "text-foreground",
-    success: "text-emerald-500",
-    warning: "text-amber-500",
-    destructive: "text-red-500",
+    success: "text-success",
+    warning: "text-warning",
+    destructive: "text-destructive",
     primary: "text-primary",
   };
 
   const bgClasses = {
     default: "bg-card",
-    success: "bg-emerald-500/5 border-emerald-500/20",
-    warning: "bg-amber-500/5 border-amber-500/20",
-    destructive: "bg-red-500/5 border-red-500/20",
+    success: "bg-success/5 border-success/20",
+    warning: "bg-warning/5 border-warning/20",
+    destructive: "bg-destructive/5 border-destructive/20",
     primary: "bg-primary/5 border-primary/20",
   };
 
@@ -49,7 +49,6 @@ export function MetricCardEnhanced({
   };
 
   const TrendIcon = trend === "up" ? TrendingUp : trend === "down" ? TrendingDown : Minus;
-  const trendColor = trend === "up" ? "text-emerald-500" : trend === "down" ? "text-red-500" : "text-muted-foreground";
 
   if (loading) {
     return (
@@ -66,27 +65,32 @@ export function MetricCardEnhanced({
   return (
     <div className={cn("rounded-xl border transition-all hover:shadow-md", bgClasses[color], sizeClasses[size].card)}>
       <div className="flex items-start justify-between">
-        <span className={cn("font-medium text-muted-foreground uppercase tracking-wider", sizeClasses[size].title)}>
+        <span className={cn("font-medium text-muted-foreground", sizeClasses[size].title)}>
           {title}
         </span>
         {icon && (
-          <div className={cn("opacity-60", colorClasses[color], sizeClasses[size].icon)}>
+          <div className={cn("opacity-80", colorClasses[color], sizeClasses[size].icon)}>
             {icon}
           </div>
         )}
       </div>
       
-      <div className={cn("font-bold mt-2", colorClasses[color], sizeClasses[size].value)}>
+      <div className={cn("font-bold mt-2 tracking-tight", colorClasses[color], sizeClasses[size].value)}>
         {value}
       </div>
 
       {change !== undefined && (
-        <div className="flex items-center gap-1 mt-2">
-          <TrendIcon className={cn("w-3 h-3", trendColor)} />
-          <span className={cn("text-xs font-medium", trendColor)}>
-            {change > 0 ? "+" : ""}{change}%
-          </span>
-          <span className="text-xs text-muted-foreground ml-1">{changeLabel}</span>
+        <div className="flex items-center gap-1.5 mt-3">
+          <div className={cn(
+            "flex items-center gap-0.5 text-xs font-medium px-1.5 py-0.5 rounded-md",
+            trend === "up" ? "bg-success/10 text-success" : 
+            trend === "down" ? "bg-destructive/10 text-destructive" : 
+            "bg-muted text-muted-foreground"
+          )}>
+            <TrendIcon className="w-3 h-3" />
+            <span>{change > 0 ? "+" : ""}{change}%</span>
+          </div>
+          <span className="text-xs text-muted-foreground">{changeLabel}</span>
         </div>
       )}
     </div>

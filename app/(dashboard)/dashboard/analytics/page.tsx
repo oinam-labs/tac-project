@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { AnalyticsClient } from "./_components/analytics-client";
 
 async function getAnalyticsData() {
@@ -23,7 +22,7 @@ async function getAnalyticsData() {
 
     // Get delivery stats
     const deliveredCount = (shipments || []).filter(s => s.status === "delivered").length;
-    const failedCount = (shipments || []).filter(s => s.status === "failed").length;
+    const failedCount = (shipments || []).filter(s => s.status === "exception").length;
     const totalCount = (shipments || []).length;
 
     // Calculate totals
@@ -66,13 +65,8 @@ export default async function AnalyticsPage() {
     const data = await getAnalyticsData();
 
     return (
-        <>
-            <V2Header title="Analytics" section="Main Deck" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1600px] mx-auto pb-20">
-                    <AnalyticsClient data={data} />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <AnalyticsClient data={data} />
+        </div>
     );
 }

@@ -105,14 +105,14 @@ export function TrackingSection() {
                 <RiSearchLine className="text-muted-foreground group-focus-within:text-primary absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transition-colors" />
                 <Input
                   placeholder="ENTER AWB NUMBER (E.G. TAC-02531)"
-                  className="border-input bg-background/50 focus-visible:border-primary h-14 rounded-sm pl-10 font-mono tracking-wider uppercase transition-all focus-visible:border-2 focus-visible:ring-0"
+                  className="border-input bg-background/50 focus-visible:border-primary h-14 rounded-sm pl-10 font-mono transition-all focus-visible:border-2 focus-visible:ring-0"
                   value={trackingNumber}
                   onChange={(e) => setTrackingNumber(e.target.value)}
                 />
               </div>
               <Button
                 size="lg"
-                className="h-14 shrink-0 rounded-sm px-8 font-bold tracking-wide"
+                className="h-14 shrink-0 rounded-sm px-8 font-bold"
                 onClick={handleSearch}
                 disabled={isSearching || !trackingNumber}
                 aria-label={
@@ -129,7 +129,7 @@ export function TrackingSection() {
 
             {/* Recent Queries - Scrollable */}
             <div className="mt-8 flex flex-col gap-2">
-              <span className="text-muted-foreground px-1 font-mono text-[10px] tracking-widest uppercase">
+              <span className="text-muted-foreground px-1 font-mono text-[10px]">
                 Recent Access:
               </span>
               <div className="scrollbar-hide mask-linear-fade -mx-4 flex items-center gap-3 overflow-x-auto px-4 pb-2">
@@ -176,7 +176,7 @@ export function TrackingSection() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-success" />
               </span>
-              <span className="font-mono text-[10px] font-semibold tracking-widest text-success">
+              <span className="font-mono text-[10px] font-semibold text-success">
                 SATELLITE UPLINK ACTIVE
               </span>
             </div>

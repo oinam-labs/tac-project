@@ -207,8 +207,8 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
 
         {/* Ship To Section */}
         <div className="border-b-2 border-black pb-2 mb-2">
-          <div className="text-xs font-bold text-gray-600 mb-1">Ship To:</div>
-          <div className="font-bold text-base uppercase">{data.consigneeName}</div>
+          <p className="text-xs font-medium text-muted-foreground">Pieces</p>
+          <div className="font-bold text-base">{data.consigneeName}</div>
           <div className="text-sm leading-tight">
             {data.consigneeAddress}
             <br />
@@ -223,15 +223,15 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
         {/* Delivery Station Info - Amazon Style */}
         <div className="grid grid-cols-3 gap-0 border-b-2 border-black mb-2">
           <div className="border-2 border-black p-1 text-center">
-            <div className="text-[9px] text-gray-500 uppercase">Delivery Station</div>
+            <div className="text-[9px] text-muted-foreground">Delivery Station</div>
             <div className="font-bold text-xl">{data.destinationStation || "GAUA"}</div>
           </div>
           <div className="border-2 border-black p-1 text-center">
-            <div className="text-[9px] text-gray-500 uppercase">Sector</div>
+            <div className="text-[9px] text-muted-foreground">Sector</div>
             <div className="font-bold text-lg">{data.sector || "S-05"}</div>
           </div>
           <div className="border-2 border-black p-1 text-center">
-            <div className="text-[9px] text-gray-500 uppercase">Sortzone</div>
+            <div className="text-[9px] text-muted-foreground">Sortzone</div>
             <div className="font-bold text-xl">{data.sortCode || "GAUA"}</div>
           </div>
         </div>
@@ -239,19 +239,19 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
         {/* Ship Date, GST, Invoice ID, Date Row */}
         <div className="grid grid-cols-4 gap-1 border-b-2 border-black pb-2 mb-2 text-[10px]">
           <div>
-            <span className="text-gray-500">Ship Date:</span>{" "}
+            <span className="text-muted-foreground">Ship Date:</span>{" "}
             <span className="font-bold">{format(data.shipDate, "dd/MM/yyyy")}</span>
           </div>
           <div>
-            <span className="text-gray-500">GST#</span>{" "}
+            <span className="text-muted-foreground">GST#</span>{" "}
             <span className="font-bold">{data.shipperGSTIN || "-"}</span>
           </div>
           <div>
-            <span className="text-gray-500">INVOICE ID:</span>{" "}
+            <span className="text-muted-foreground">INVOICE ID:</span>{" "}
             <span className="font-bold">{data.invoiceNo || "-"}</span>
           </div>
           <div>
-            <span className="text-gray-500">DATE:</span>{" "}
+            <span className="text-muted-foreground">DATE:</span>{" "}
             <span className="font-bold">
               {data.invoiceDate ? format(data.invoiceDate, "MM-dd-yyyy") : "-"}
             </span>
@@ -261,8 +261,8 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
         {/* Ordered From Section with QR Code */}
         <div className="flex justify-between items-start border-b-2 border-black pb-2 mb-2">
           <div>
-            <div className="text-xs text-gray-500 mb-1">Ordered From:</div>
-            <div className="font-bold uppercase text-sm">{data.shipperName}</div>
+            <div className="text-xs text-muted-foreground mb-1">Ordered From:</div>
+            <div className="font-bold text-sm">{data.shipperName}</div>
           </div>
           <QRCodeSVG
             value={qrData}
@@ -274,15 +274,15 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
 
         {/* Ship From Section */}
         <div className="text-[10px] border-b border-black pb-2 mb-2">
-          <div className="font-bold">Ship From: {data.shipperName.toUpperCase()}</div>
-          <div className="text-[9px] leading-tight text-gray-700">
+          <div className="font-bold">Ship From: {data.shipperName}</div>
+          <div className="text-[9px] leading-tight text-foreground/80">
             Return Address: {data.shipperAddress}, {data.shipperCity}, {data.shipperState} {data.shipperPincode}
             <br />India
           </div>
         </div>
 
         {/* Disclaimer */}
-        <div className="text-[7px] text-gray-500 leading-tight mb-2 border-b border-black pb-2">
+        <div className="text-[7px] text-muted-foreground leading-tight mb-2 border-b border-black pb-2">
           Shipper declares that package does not contain any products that are prohibited or restricted by law or otherwise under the conditions of carriage. Any claims arising from or in connection with this carriage are limited by limit of liabilities set forth in the conditions of carriage published on Ship.taccargo.in
         </div>
 
@@ -300,18 +300,18 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
                 data.itemsList.map((item, idx) => (
                   <tr key={idx}>
                     <td className="py-1">{idx + 1}</td>
-                    <td className="py-1 uppercase">{item.description}</td>
+                    <td className="py-1">{item.description}</td>
                   </tr>
                 ))
               ) : data.contentDescription ? (
                 <tr>
                   <td className="py-1">1</td>
-                  <td className="py-1 uppercase">{data.contentDescription}</td>
+                  <td className="py-1">{data.contentDescription}</td>
                 </tr>
               ) : (
                 <tr>
                   <td className="py-1">1</td>
-                  <td className="py-1 uppercase">GENERAL GOODS</td>
+                  <td className="py-1">General Goods</td>
                 </tr>
               )}
             </tbody>
@@ -321,25 +321,25 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
         {/* Bottom Routing Codes - Amazon Style */}
         <div className="grid grid-cols-4 gap-0 border-2 border-black">
           <div className="border-r-2 border-black p-1 text-center">
-            <div className="text-[8px] text-gray-500 font-bold">DLIN</div>
+            <div className="text-[8px] text-muted-foreground font-bold">DLIN</div>
             <div className="font-bold flex items-center justify-center gap-0.5 text-sm">
               <span className="bg-black text-white px-1.5 py-0.5">{routingCodes.dlin?.code || "1"}</span>
               <span>{routingCodes.dlin?.subCode || "3AX"}</span>
             </div>
           </div>
           <div className="border-r-2 border-black p-1 text-center">
-            <div className="text-[8px] text-gray-500 font-bold">MDEA</div>
+            <div className="text-[8px] text-muted-foreground font-bold">MDEA</div>
             <div className="font-bold flex items-center justify-center gap-0.5 text-sm">
               <span className="bg-black text-white px-1.5 py-0.5">{routingCodes.mdea?.code || "4"}</span>
               <span>{routingCodes.mdea?.subCode || "U35"}</span>
             </div>
           </div>
           <div className="border-r-2 border-black p-1 text-center">
-            <div className="text-[8px] text-gray-500 font-bold">GAUZ</div>
+            <div className="text-[8px] text-muted-foreground font-bold">GAUZ</div>
             <div className="font-bold text-lg">{routingCodes.gauz || "GAUA"}</div>
           </div>
           <div className="p-1 text-center">
-            <div className="text-[8px] text-gray-500 font-bold">GAUA</div>
+            <div className="text-[8px] text-muted-foreground font-bold">GAUA</div>
             <div className="font-bold flex items-center justify-center gap-0.5 text-sm">
               <span className="bg-black text-white px-1.5 py-0.5">{routingCodes.gaua?.code || "A"}</span>
               <span>{routingCodes.gaua?.subCode || "X08"}</span>
@@ -349,8 +349,9 @@ export function AWBLabel({ data, className, showPrintButton = true }: AWBLabelPr
 
         {/* Footer Branding */}
         <div className="mt-3 text-right">
-          <div className="text-xl font-bold tracking-wide">
-            <span className="text-gray-800">TAC</span>{" "}
+          <span className="text-xs font-bold text-warning">Special Instructions</span>
+          <div className="text-xl font-bold">
+            <span className="text-foreground">TAC</span>{" "}
             <span className="font-normal">cargo</span>
           </div>
         </div>

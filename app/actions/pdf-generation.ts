@@ -43,7 +43,8 @@ export async function generateInvoicePDF(invoiceId: string): Promise<ActionResul
       .eq("id", user.id)
       .single();
 
-    const org = profile?.organizations as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Organization data has dynamic structure
+const org = profile?.organizations as any;
 
     // Prepare PDF data
     const pdfData: InvoicePDFData = {
@@ -82,7 +83,8 @@ export async function generateInvoicePDF(invoiceId: string): Promise<ActionResul
       chargeableWeight: invoice.chargeable_weight || 0,
       declaredValue: invoice.declared_value,
       
-      items: (invoice.invoice_items || []).map((item: any) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Invoice items have dynamic structure
+items: (invoice.invoice_items || []).map((item: any) => ({
         description: item.description || "",
         quantity: item.quantity || 1,
         weight: item.weight || 0,
@@ -182,8 +184,10 @@ export async function generateLabelPDF(invoiceId: string): Promise<ActionResult<
       .eq("id", user.id)
       .single();
 
-    const originWarehouse = invoice.origin_warehouse as any;
-    const destinationWarehouse = invoice.destination_warehouse as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Warehouse data has dynamic structure
+const originWarehouse = invoice.origin_warehouse as any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Warehouse data has dynamic structure
+const destinationWarehouse = invoice.destination_warehouse as any;
 
     // Prepare label data
     const labelData: ShippingLabelData = {

@@ -5,7 +5,7 @@ import { ShipmentData, Address, PackageItem } from "@/types/invoice-v2";
 import { generateInvoiceId, generateAWB, formatDate, calculateLedger, GENERATOR_DEFAULTS } from "@/lib/invoice/generator-v2";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Printer, RefreshCcw, Save } from "lucide-react";
+import { Printer, Save } from "lucide-react";
 import { AddressCard } from "./address-card";
 import { InventoryTable } from "./inventory-table";
 import { PricingWidget } from "./pricing-widget";
@@ -87,18 +87,18 @@ export default function InvoiceGenerator() {
             <div className="flex items-center justify-between no-print">
                 <div className="flex items-center gap-2">
                     <div className="flex items-baseline">
-                        <span className="text-2xl font-black text-slate-900 tracking-tighter">TAC</span>
-                        <span className="ml-1 w-2 h-2 rounded-full bg-orange-500"></span>
+                        <span className="text-2xl font-bold text-foreground tracking-tight">TAC</span>
+                        <span className="ml-1 w-2 h-2 rounded-full bg-warning"></span>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                     {!isGenerated ? (
-                        <Button onClick={handleGenerate} className="bg-blue-600 hover:bg-blue-700 text-white font-black uppercase tracking-wide">
+                        <Button onClick={handleGenerate} className="bg-primary hover:bg-primary/90 text-white font-bold">
                             <Save className="w-4 h-4 mr-2" /> Generate Invoice
                         </Button>
                     ) : (
-                        <Button onClick={handlePrint} variant="outline" className="border-slate-900 text-slate-900 font-black uppercase tracking-wide hover:bg-slate-900 hover:text-white transition-colors">
+                        <Button onClick={handlePrint} variant="outline" className="border-primary text-primary font-bold hover:bg-primary hover:text-primary-foreground transition-colors">
                             <Printer className="w-4 h-4 mr-2" /> Print Documents
                         </Button>
                     )}
@@ -128,31 +128,31 @@ export default function InvoiceGenerator() {
                                 />
                             </div>
 
-                            <Card className="border-slate-200 shadow-sm">
+                            <Card className="border-border shadow-sm">
                                 <CardContent className="p-6">
                                     <div className="grid grid-cols-3 gap-6 mb-6">
                                         <div className="space-y-1.5">
-                                            <Label className="text-[10px] uppercase font-bold text-slate-400">Nature of Goods</Label>
+                                            <Label className="text-xs font-medium text-muted-foreground">Nature of Goods</Label>
                                             <Input
                                                 value={data.natureOfQuantity}
                                                 onChange={(e) => setData(p => ({ ...p, natureOfQuantity: e.target.value }))}
-                                                className="font-bold border-slate-200"
+                                                className="font-semibold border-border"
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <Label className="text-[10px] uppercase font-bold text-slate-400">Declared Value</Label>
+                                            <Label className="text-xs font-medium text-muted-foreground">Declared Value</Label>
                                             <Input
                                                 value={data.declaredValue}
                                                 onChange={(e) => setData(p => ({ ...p, declaredValue: e.target.value }))}
-                                                className="font-bold border-slate-200"
+                                                className="font-semibold border-border"
                                             />
                                         </div>
                                         <div className="space-y-1.5">
-                                            <Label className="text-[10px] uppercase font-bold text-slate-400">Booking Remarks</Label>
+                                            <Label className="text-xs font-medium text-muted-foreground">Booking Remarks</Label>
                                             <Input
                                                 value={data.bookingRemarks}
                                                 onChange={(e) => setData(p => ({ ...p, bookingRemarks: e.target.value }))}
-                                                className="font-bold border-slate-200"
+                                                className="font-semibold border-border"
                                             />
                                         </div>
                                     </div>
@@ -176,11 +176,11 @@ export default function InvoiceGenerator() {
                     </div>
                 </TabsContent>
 
-                <TabsContent value="invoice" className="flex justify-center bg-slate-100/50 p-8 rounded-xl border border-dashed border-slate-300 min-h-[500px]">
+                <TabsContent value="invoice" className="flex justify-center bg-muted/50 p-8 rounded-xl border border-dashed border-border min-h-[500px]">
                     <InvoicePrint data={data} totals={totals} />
                 </TabsContent>
 
-                <TabsContent value="label" className="flex justify-center bg-slate-100/50 p-8 rounded-xl border border-dashed border-slate-300 min-h-[500px]">
+                <TabsContent value="label" className="flex justify-center bg-muted/50 p-8 rounded-xl border border-dashed border-border min-h-[500px]">
                     <LabelPrint data={data} />
                 </TabsContent>
             </Tabs>

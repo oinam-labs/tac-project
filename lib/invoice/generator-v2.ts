@@ -33,7 +33,14 @@ export const formatDate = (date: Date) => {
 };
 
 // Core Ledger Logic
-export const calculateLedger = (data: ShipmentData): FinancialTotals => {
+export const calculateLedger = (data: ShipmentData): FinancialTotals & {
+    taxBreakdown: {
+        cgst: number;
+        sgst: number;
+        igst: number;
+        type: 'intra' | 'inter';
+    }
+} => {
     const totalActual = data.items.reduce((acc, i) => acc + i.actualWeight, 0);
 
     const totalVolumetric = data.items.reduce((acc, i) => {
@@ -50,6 +57,18 @@ export const calculateLedger = (data: ShipmentData): FinancialTotals => {
         data.insuranceCharge;
 
     const taxAmount = (taxableAmount * data.gstRate) / 100;
+
+    // Determine Tax Type based on State Match (Basic Logic)
+    // Assuming standard state names. Ideally validatable via a master list.
+    const isIntraState = data.consignor?.state?.toLowerCase() === data.consignee?.state?.toLowerCase();
+
+    const taxBreakdown = {
+        cgst: isIntraState ? taxAmount / 2 : 0,
+        sgst: isIntraState ? taxAmount / 2 : 0,
+        igst: isIntraState ? 0 : taxAmount,
+        type: isIntraState ? 'intra' as const : 'inter' as const
+    };
+
     const grandTotal = taxableAmount + taxAmount;
     const balance = grandTotal - data.advancePaid;
 
@@ -61,6 +80,7 @@ export const calculateLedger = (data: ShipmentData): FinancialTotals => {
         taxableAmount,
         taxAmount,
         grandTotal,
-        balance
+        balance,
+        taxBreakdown
     };
 };

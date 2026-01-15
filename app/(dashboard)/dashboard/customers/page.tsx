@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { CustomersClient } from "./_components/customers-client";
 
 async function getCustomers() {
@@ -65,16 +64,11 @@ export default async function CustomersPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Customers" section="Management" />
-            <main className="flex-1 overflow-y-auto p-6 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1600px] mx-auto">
-                    <CustomersClient 
-                        initialCustomers={customers}
-                        stats={stats}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <CustomersClient 
+                initialCustomers={customers}
+                stats={stats}
+            />
+        </div>
     );
 }

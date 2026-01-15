@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { PaymentsClient } from "./_components/payments-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -108,17 +107,12 @@ export default async function PaymentsPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Payments" section="Finance" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1400px] mx-auto">
-                    <PaymentsClient
-                        initialPayments={payments}
-                        outstandingInvoices={outstanding}
-                        stats={stats}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1400px] mx-auto pb-20">
+            <PaymentsClient
+                initialPayments={payments}
+                outstandingInvoices={outstanding}
+                stats={stats}
+            />
+        </div>
     );
 }

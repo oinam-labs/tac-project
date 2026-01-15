@@ -36,7 +36,7 @@ export function PhoneInput({
   ...props
 }: PhoneInputProps) {
   const maxDigits = allowInternational ? 15 : 10;
-  const minDigits = allowInternational ? 7 : 10;
+  // const minDigits = allowInternational ? 7 : 10; // Reserved for validation
   
   // Extract only digits from value (in case it contains formatting)
   const rawDigits = value.replace(/\D/g, "").slice(0, maxDigits);

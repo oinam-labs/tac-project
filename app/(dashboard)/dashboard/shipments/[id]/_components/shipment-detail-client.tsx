@@ -132,17 +132,17 @@ interface ShipmentDetailClientProps {
   shipment: ShipmentWithRelations;
 }
 
-const statusConfig: Record<ShipmentStatus, { label: string; color: string }> = {
-  booked: { label: "Booked", color: "bg-primary/10 text-primary" },
-  picked_up: { label: "Picked Up", color: "bg-indigo-100 text-indigo-700" },
-  at_origin_hub: { label: "At Origin Hub", color: "bg-accent/10 text-accent" },
-  in_transit: { label: "In Transit", color: "bg-warning/10 text-warning" },
-  at_destination_hub: { label: "At Destination Hub", color: "bg-orange-100 text-orange-700" },
-  out_for_delivery: { label: "Out for Delivery", color: "bg-cyan-100 text-cyan-700" },
-  delivered: { label: "Delivered", color: "bg-primary/10 text-primary" },
-  exception: { label: "Exception", color: "bg-destructive/10 text-destructive" },
-  returned: { label: "Returned", color: "bg-muted/10 text-muted-foreground" },
-  cancelled: { label: "Cancelled", color: "bg-muted text-muted-foreground line-through" },
+const statusConfig: Record<ShipmentStatus, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className?: string }> = {
+  booked: { label: "Booked", variant: "secondary", className: "bg-muted text-muted-foreground" },
+  picked_up: { label: "Picked Up", variant: "default", className: "bg-primary/10 text-primary hover:bg-primary/20" },
+  at_origin_hub: { label: "At Origin Hub", variant: "default", className: "bg-primary/10 text-primary hover:bg-primary/20" },
+  in_transit: { label: "In Transit", variant: "default", className: "bg-primary/10 text-primary hover:bg-primary/20" },
+  at_destination_hub: { label: "At Destination Hub", variant: "default", className: "bg-primary/10 text-primary hover:bg-primary/20" },
+  out_for_delivery: { label: "Out for Delivery", variant: "secondary", className: "bg-warning/10 text-warning hover:bg-warning/20" },
+  delivered: { label: "Delivered", variant: "secondary", className: "bg-success/10 text-success hover:bg-success/20" },
+  exception: { label: "Exception", variant: "destructive", className: "bg-destructive/10 text-destructive hover:bg-destructive/20" },
+  returned: { label: "Returned", variant: "secondary", className: "bg-warning/10 text-warning hover:bg-warning/20" },
+  cancelled: { label: "Cancelled", variant: "secondary", className: "bg-muted text-muted-foreground line-through" },
 };
 
 export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
@@ -184,29 +184,31 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" asChild>
+          <Button variant="ghost" size="icon" asChild className="h-8 w-8">
             <Link href="/dashboard/shipments">
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
             </Link>
           </Button>
           <div>
             <div className="flex items-center gap-2">
-              <h1 className="text-2xl font-bold">{shipment.reference}</h1>
+              <h1 className="text-xl font-bold tracking-tight">{shipment.reference}</h1>
               <button
                 onClick={handleCopyReference}
                 className="p-1 hover:bg-muted rounded transition-colors"
               >
                 {copied ? (
-                  <Check className="w-4 h-4 text-primary" />
+                  <Check className="w-3.5 h-3.5 text-primary" />
                 ) : (
-                  <Copy className="w-4 h-4 text-muted-foreground" />
+                  <Copy className="w-3.5 h-3.5 text-muted-foreground" />
                 )}
               </button>
-              <Badge className={cn("ml-2", status.color)}>{status.label}</Badge>
+              <Badge variant={status.variant} className={cn("ml-2", status.className)}>
+                {status.label}
+              </Badge>
             </div>
             <p className="text-sm text-muted-foreground">
               Created {format(new Date(shipment.created_at), "dd MMM yyyy, HH:mm")}
@@ -215,9 +217,9 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="outline" size="sm" asChild className="h-8">
             <Link href={`/dashboard/shipments/${shipment.id}/edit`}>
-              <Edit className="w-4 h-4 mr-2" />
+              <Edit className="w-3.5 h-3.5 mr-2" />
               Edit
             </Link>
           </Button>
@@ -225,8 +227,8 @@ export function ShipmentDetailClient({ shipment }: ShipmentDetailClientProps) {
           {isHydrated && (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <MoreVertical className="w-4 h-4" />
+                <Button variant="outline" size="icon" className="h-8 w-8">
+                  <MoreVertical className="w-3.5 h-3.5" />
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">

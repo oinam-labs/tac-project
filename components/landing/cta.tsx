@@ -23,7 +23,7 @@ export function CTA() {
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-md">
             <span className="bg-success flex h-2 w-2 animate-pulse rounded-full" />
-            <span className="font-mono text-xs tracking-widest text-white/70 uppercase">
+            <span className="font-mono text-xs font-medium text-white/70">
               Limited Capacity Slots Available
             </span>
           </div>
@@ -46,7 +46,7 @@ export function CTA() {
               className="group focus-visible:ring-primary relative w-full rounded-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:w-auto"
             >
               <div className="from-primary to-accent absolute -inset-1 rounded-lg bg-gradient-to-r opacity-40 blur transition duration-200 group-hover:opacity-100" />
-              <span className="bg-background relative flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 px-8 py-4 leading-none font-bold tracking-wide text-white uppercase transition-colors hover:bg-white/5 sm:w-auto">
+              <span className="bg-background relative flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 px-8 py-4 leading-none font-bold text-white transition-colors hover:bg-white/5 sm:w-auto">
                 Start Shipping
                 <RiRocketLine
                   className="h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
@@ -59,7 +59,7 @@ export function CTA() {
               href="#services"
               className="group focus-visible:ring-primary w-full rounded-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-black focus-visible:outline-none sm:w-auto"
             >
-              <span className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-transparent px-8 py-4 leading-none font-medium tracking-wide text-white/70 uppercase transition-all hover:bg-white/5 hover:text-white sm:w-auto">
+              <span className="flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 bg-transparent px-8 py-4 leading-none font-medium text-white/70 transition-all hover:bg-white/5 hover:text-white sm:w-auto">
                 View Network
                 <RiArrowRightLine
                   className="h-5 w-5 transition-transform group-hover:translate-x-1"

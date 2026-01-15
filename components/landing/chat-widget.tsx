@@ -97,7 +97,7 @@ export function ChatWidget() {
                     <h3 className="text-foreground text-sm font-bold">
                       TAC Support
                     </h3>
-                    <p className="text-muted-foreground font-mono text-[10px] tracking-wider uppercase">
+                    <p className="text-muted-foreground font-mono text-[10px] font-medium">
                       Online • Avg 2m Reply
                     </p>
                   </div>

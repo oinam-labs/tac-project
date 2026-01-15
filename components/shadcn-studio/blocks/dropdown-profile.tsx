@@ -93,7 +93,7 @@ const ProfileDropdown = ({
             <span className="text-foreground text-lg font-semibold">
               {displayName}
             </span>
-            <span className="text-muted-foreground text-base">
+            <span className="text-muted-foreground/60 text-xs font-medium">
               {displayEmail}
             </span>
           </div>

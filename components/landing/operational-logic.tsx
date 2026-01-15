@@ -68,7 +68,7 @@ export function OperationalLogic() {
             className="mb-4 flex items-center justify-center gap-2"
           >
             <div className="bg-primary h-px w-8" />
-            <span className="text-primary font-mono text-sm tracking-widest uppercase">
+            <span className="text-primary font-mono text-sm font-medium">
               Operational Logic
             </span>
             <div className="bg-primary h-px w-8" />
@@ -144,12 +144,12 @@ function BentoGridItem({ item, className }: BentoItemProps) {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
           className={cn(
-            "group bg-primary/5 border-border relative flex h-[400px] flex-col overflow-hidden rounded-xl border p-8 shadow-sm transition-shadow hover:shadow-md md:flex-row dark:bg-neutral-900",
+            "group bg-primary/5 border-border relative flex h-[400px] flex-col overflow-hidden rounded-xl border p-8 shadow-sm transition-shadow hover:shadow-md md:flex-row dark:bg-background",
             className,
           )}
         >
           <div className="z-10 flex flex-col justify-center md:w-1/2">
-            <span className="text-primary mb-2 text-xs font-medium uppercase">
+            <span className="text-primary mb-2 text-xs font-medium">
               Operational Visibility
             </span>
             <h2 className="text-foreground mb-4 text-3xl font-bold text-balance md:text-4xl">
@@ -199,7 +199,7 @@ function BentoGridItem({ item, className }: BentoItemProps) {
           )}
         >
           <div className="z-10">
-            <span className="text-primary mb-2 flex items-center justify-center p-2 text-xs font-medium uppercase">
+            <span className="text-primary mb-2 flex items-center justify-center p-2 text-xs font-medium">
               Intelligent Dispatch
             </span>
           </div>
@@ -228,7 +228,7 @@ function BentoGridItem({ item, className }: BentoItemProps) {
           </div>
 
           <div className="z-10 mt-4">
-            <span className="text-primary text-xs font-medium uppercase">
+            <span className="text-primary text-xs font-medium">
               Integration
             </span>
             <h3 className="text-foreground mb-2 text-2xl font-bold text-balance">
@@ -292,7 +292,7 @@ function LogisticsIcons() {
           <span className="text-2xl opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0">
             {item.icon}
           </span>
-          <span className="text-muted-foreground text-[10px] font-medium tracking-wider uppercase">
+          <span className="text-muted-foreground text-[10px] font-medium">
             {item.name}
           </span>
         </div>
@@ -305,9 +305,9 @@ function LogisticsIcons() {
 export function ChatMessaging() {
   return (
     <div className="relative flex h-full w-full items-center justify-center">
-      <div className="relative h-[500px] w-[280px] overflow-hidden rounded-[36px] border-4 border-neutral-700 bg-neutral-800 p-3 shadow-2xl">
-        <div className="absolute top-0 left-1/2 z-10 h-6 w-1/3 -translate-x-1/2 transform rounded-b-xl bg-neutral-700" />
-        <div className="flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-neutral-900 p-4">
+      <div className="relative h-[500px] w-[280px] overflow-hidden rounded-[36px] border-4 border-border bg-card p-3 shadow-2xl">
+        <div className="absolute top-0 left-1/2 z-10 h-6 w-1/3 -translate-x-1/2 transform rounded-b-xl bg-muted" />
+        <div className="flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-background p-4">
           <div className="mb-6 flex items-center pt-2">
             <Avatar className="mr-3 h-8 w-8">
               <AvatarFallback className="bg-primary text-primary-foreground text-xs">
@@ -316,7 +316,7 @@ export function ChatMessaging() {
             </Avatar>
             <div>
               <div className="text-xs font-medium text-white">Assistant</div>
-              <div className="text-[10px] text-neutral-400">Online</div>
+              <div className="text-[10px] text-muted-foreground">Online</div>
             </div>
           </div>
 
@@ -326,7 +326,7 @@ export function ChatMessaging() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="max-w-[85%] rounded-2xl rounded-tl-none bg-neutral-800 p-3 text-[11px] text-neutral-200"
+              className="max-w-[85%] rounded-2xl rounded-tl-none bg-muted p-3 text-[11px] text-foreground/90"
             >
               How can I help you today?
             </motion.div>
@@ -346,7 +346,7 @@ export function ChatMessaging() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="max-w-[85%] rounded-2xl rounded-tl-none bg-neutral-800 p-3 text-[11px] text-neutral-200"
+              className="max-w-[85%] rounded-2xl rounded-tl-none bg-muted p-3 text-[11px] text-foreground/90"
             >
               We use partner flight services. If a compatible schedule exists,
               we can definitely help. What are you shipping?
@@ -364,7 +364,7 @@ export function ChatMessaging() {
           </div>
 
           {/* Mock Input Area */}
-          <div className="mt-2 h-10 w-full rounded-full bg-neutral-800 opacity-50" />
+          <div className="mt-2 h-10 w-full rounded-full bg-muted opacity-50" />
         </div>
       </div>
     </div>

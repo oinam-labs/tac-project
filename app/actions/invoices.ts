@@ -90,6 +90,7 @@ export async function generateLabelInvoice(
     const { data, error: dbError } = await supabase
       .from("invoices")
       .insert({
+        reference: invoiceNo,
         invoice_no: invoiceNo,
         type: "label",
         status: "pending",
@@ -209,6 +210,7 @@ export async function generateCustomerInvoice(
     const { data: invoice, error: invoiceError } = await supabase
       .from("invoices")
       .insert({
+        reference: invoiceNo,
         invoice_no: invoiceNo,
         type: "customer",
         status: "pending",

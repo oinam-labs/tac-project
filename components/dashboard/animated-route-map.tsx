@@ -86,10 +86,10 @@ export function AnimatedRouteMap({
           {/* Origin point */}
           <div className="flex flex-col items-center z-10">
             <div className="relative">
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 border-2 border-emerald-500 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                <MapPin className="w-6 h-6 text-emerald-500" />
+              <div className="w-16 h-16 rounded-full bg-success/20 border-2 border-success flex items-center justify-center shadow-lg shadow-success/30">
+                <MapPin className="w-6 h-6 text-success" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 flex items-center justify-center text-[8px] font-bold text-white">
+              <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-success flex items-center justify-center text-[8px] font-bold text-white">
                 ✓
               </div>
             </div>
@@ -106,7 +106,7 @@ export function AnimatedRouteMap({
             
             {/* Progress track */}
             <div
-              className="absolute top-0 left-0 h-1 bg-gradient-to-r from-emerald-500 via-primary to-primary rounded-full transition-all duration-300"
+              className="absolute top-0 left-0 h-1 bg-gradient-to-r from-success via-primary to-primary rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
 
@@ -133,7 +133,7 @@ export function AnimatedRouteMap({
               <div className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center shadow-lg",
                 vehicle?.status === "delayed"
-                  ? "bg-amber-500 shadow-amber-500/30"
+                  ? "bg-warning shadow-warning/30"
                   : "bg-primary shadow-primary/30",
                 vehicle?.status === "moving" && "animate-pulse"
               )}>
@@ -143,7 +143,7 @@ export function AnimatedRouteMap({
               {/* Glow effect */}
               <div className={cn(
                 "absolute inset-0 rounded-full blur-md -z-10",
-                vehicle?.status === "delayed" ? "bg-amber-500/50" : "bg-primary/50"
+                vehicle?.status === "delayed" ? "bg-warning/50" : "bg-primary/50"
               )} />
             </div>
 
@@ -160,12 +160,12 @@ export function AnimatedRouteMap({
             <div className={cn(
               "w-16 h-16 rounded-full border-2 flex items-center justify-center transition-all",
               progress >= 100
-                ? "bg-emerald-500/20 border-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                ? "bg-success/20 border-success shadow-lg shadow-success/30"
                 : "bg-muted border-border"
             )}>
               <MapPin className={cn(
                 "w-6 h-6",
-                progress >= 100 ? "text-emerald-500" : "text-muted-foreground"
+                progress >= 100 ? "text-success" : "text-muted-foreground"
               )} />
             </div>
             <div className="mt-3 text-center">
@@ -188,13 +188,13 @@ export function AnimatedRouteMap({
             "px-4 py-2 rounded-full text-xs font-medium flex items-center gap-2",
             vehicle.status === "moving" && "bg-primary/10 text-primary",
             vehicle.status === "stopped" && "bg-muted text-muted-foreground",
-            vehicle.status === "delayed" && "bg-amber-500/10 text-amber-500"
+            vehicle.status === "delayed" && "bg-warning/10 text-warning"
           )}>
             <div className={cn(
               "w-2 h-2 rounded-full",
               vehicle.status === "moving" && "bg-primary animate-pulse",
               vehicle.status === "stopped" && "bg-muted-foreground",
-              vehicle.status === "delayed" && "bg-amber-500 animate-pulse"
+              vehicle.status === "delayed" && "bg-warning animate-pulse"
             )} />
             {vehicle.status === "moving" && "In Transit"}
             {vehicle.status === "stopped" && "Stopped"}

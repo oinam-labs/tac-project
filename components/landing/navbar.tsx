@@ -53,7 +53,7 @@ export function Navbar() {
             <span className="text-foreground text-base font-bold tracking-tight">
               TAC
             </span>
-            <span className="text-muted-foreground group-hover:text-primary font-mono text-[10px] tracking-[0.2em] uppercase transition-colors">
+            <span className="text-muted-foreground group-hover:text-primary font-mono text-[10px] font-bold transition-colors">
               Infrastructure
             </span>
           </div>
@@ -66,7 +66,7 @@ export function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary rounded-full px-4 py-1.5 text-xs font-medium transition-all hover:bg-white/5 hover:shadow-[0_0_10px_rgba(255,255,255,0.1)] focus-visible:ring-2 focus-visible:outline-none"
+                className="text-muted-foreground hover:text-foreground focus-visible:ring-primary rounded-full px-4 py-1.5 text-xs font-medium transition-all hover:bg-white/5 hover:shadow-sm focus-visible:ring-2 focus-visible:outline-none"
               >
                 {link.name}
               </Link>
@@ -81,13 +81,13 @@ export function Navbar() {
           <div className="hidden items-center gap-4 sm:flex">
             <Link
               href="/login"
-              className="text-muted-foreground hover:text-primary focus-visible:ring-primary rounded font-mono text-xs tracking-wider uppercase underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              className="text-muted-foreground hover:text-primary focus-visible:ring-primary rounded font-mono text-xs font-medium underline-offset-4 transition-colors hover:underline focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               Sign In
             </Link>
             <Link
               href="#tracking"
-              className="btn-primary shadow-primary/20 hover:shadow-primary/40 flex h-9 items-center rounded-lg px-5 text-xs font-bold tracking-wider uppercase shadow-lg transition-all"
+              className="btn-primary shadow-primary/20 hover:shadow-primary/40 flex h-9 items-center rounded-lg px-5 text-xs font-bold shadow-lg transition-all"
             >
               Start Shipping
             </Link>
@@ -137,12 +137,12 @@ export function Navbar() {
                   <div className="space-y-4 border-t border-white/5 bg-white/5 p-6">
                     <Link
                       href="/dashboard"
-                      className="bg-background hover:border-primary/50 focus-visible:ring-primary flex w-full items-center justify-center rounded-xl border border-white/10 py-3 font-mono text-xs tracking-wider uppercase transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+                      className="bg-background hover:border-primary/50 focus-visible:ring-primary flex w-full items-center justify-center rounded-xl border border-white/10 py-3 font-mono text-xs font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       Portal Login
                     </Link>
                     <Button
-                      className="h-12 w-full rounded-xl text-xs font-bold tracking-wider uppercase"
+                      className="h-12 w-full rounded-xl text-xs font-bold"
                       asChild
                     >
                       <Link href="#tracking">Start Shipping</Link>

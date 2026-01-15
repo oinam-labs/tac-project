@@ -120,12 +120,12 @@ export function StatsWidget({
                 className={cn(
                   "group-hover/bar:bg-primary w-full rounded-t-sm transition-all duration-500 ease-out",
                   height === 90
-                    ? "bg-primary shadow-[0_0_15px_rgba(var(--primary),0.4)]"
+                    ? "bg-primary shadow-md shadow-primary/40"
                     : "bg-primary/20",
                 )}
                 style={{ height: `${height}%` }}
               />
-              <span className="text-muted-foreground text-[9px] font-bold tracking-wider uppercase">
+              <span className="text-muted-foreground text-[9px] font-bold">
                 {["M", "T", "W", "T", "F"][i]}
               </span>
             </div>

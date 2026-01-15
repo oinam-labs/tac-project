@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { ScannerClient } from "./_components/scanner-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -45,16 +44,11 @@ export default async function ScanningPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Scanner" section="Operations" />
-            <main className="flex-1 overflow-y-auto p-8 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1200px] mx-auto">
-                    <ScannerClient 
-                        warehouses={warehouses}
-                        initialRecentScans={recentScans}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1200px] mx-auto pb-20">
+            <ScannerClient 
+                warehouses={warehouses}
+                initialRecentScans={recentScans}
+            />
+        </div>
     );
 }

@@ -20,7 +20,7 @@ export function About() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <span className="text-primary/80 mb-6 block font-mono text-xs tracking-widest uppercase">
+          <span className="text-primary/80 mb-6 block font-mono text-xs font-bold">
             Our Philosophy
           </span>
           <h2 className="text-foreground mb-8 text-4xl leading-tight font-bold tracking-tighter sm:text-5xl md:text-6xl">
@@ -60,7 +60,7 @@ export function About() {
               <div className="text-foreground mb-2 text-3xl font-bold tracking-tight">
                 {stat.value}
               </div>
-              <div className="text-muted-foreground font-mono text-xs tracking-widest uppercase">
+              <div className="text-muted-foreground font-mono text-xs font-medium">
                 {stat.label}
               </div>
             </div>

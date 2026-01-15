@@ -605,7 +605,7 @@ function Step4Review({
 
             <div className="space-y-4">
                 <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
+                    <h4 className="font-medium text-sm text-muted-foreground">
                         Consignee
                     </h4>
                     <div className="grid grid-cols-2 gap-2 text-sm">
@@ -627,7 +627,7 @@ function Step4Review({
                 </div>
 
                 <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
+                    <h4 className="font-medium text-sm text-muted-foreground">
                         Delivery Address
                     </h4>
                     <div className="text-sm">
@@ -640,7 +640,7 @@ function Step4Review({
                 </div>
 
                 <div className="bg-muted/50 rounded-lg p-4 space-y-3">
-                    <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
+                    <h4 className="font-medium text-sm text-muted-foreground">
                         Shipment Details
                     </h4>
                     <div className="grid grid-cols-2 gap-2 text-sm">

@@ -76,91 +76,71 @@ export function NavUser({
     );
   }
 
-  return (
+    return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-primary/5 border-border/10 hover:bg-muted/30 h-12 rounded-none border-t transition-all duration-300"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <div className="relative">
-                <Avatar className="h-8 w-8 rounded-md border border-white/10">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="bg-secondary rounded-md text-[10px]">
-                    AD
-                  </AvatarFallback>
-                </Avatar>
-                <div className="border-background bg-success absolute -right-0.5 -bottom-0.5 size-2 rounded-full border-2" />
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              </Avatar>
+              <div className="grid flex-1 text-left text-sm leading-tight">
+                <span className="truncate font-semibold">{user.name}</span>
+                <span className="truncate text-xs">{user.email}</span>
               </div>
-              <div className="ml-1 grid flex-1 text-left">
-                <span className="text-foreground truncate text-xs font-bold tracking-tight uppercase">
-                  {user.name}
-                </span>
-                <span className="text-muted-foreground/60 truncate text-[10px] font-medium tracking-tighter uppercase">
-                  {user.email}
-                </span>
-              </div>
-              <ChevronsUpDown className="ml-auto size-3 opacity-40" />
+              <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="glass-card noise-overlay border-border/20 shadow-glow-primary/10 w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-md"
+            className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-3 px-3 py-3 text-left">
-                <Avatar className="h-8 w-8 rounded-md border border-white/10">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="bg-secondary rounded-md text-[10px]">
-                    AD
-                  </AvatarFallback>
+                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
-                <div className="grid flex-1 text-left">
-                  <span className="text-foreground truncate text-xs font-bold tracking-tight uppercase">
-                    {user.name}
-                  </span>
-                  <span className="text-muted-foreground/60 truncate text-[10px] font-medium tracking-tighter uppercase">
-                    {user.email}
-                  </span>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">{user.name}</span>
+                  <span className="truncate text-xs">{user.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator className="bg-border/10" />
-            <DropdownMenuGroup className="p-1">
-              <DropdownMenuItem className="focus:bg-primary/10 focus:text-primary cursor-pointer px-3 py-2 text-[11px] font-bold tracking-widest uppercase transition-colors">
-                <Sparkles className="text-primary mr-2 size-3.5" />
-                Management Console
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <Sparkles className="mr-2 size-4" />
+                Upgrade to Pro
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator className="bg-border/10" />
-            <DropdownMenuGroup className="p-1">
-              <DropdownMenuItem className="focus:bg-primary/10 cursor-pointer px-3 py-2 text-[11px] font-bold tracking-widest uppercase transition-colors">
-                <BadgeCheck className="mr-2 size-3.5 opacity-60" />
-                Profile Settings
+            <DropdownMenuSeparator />
+            <DropdownMenuGroup>
+              <DropdownMenuItem>
+                <BadgeCheck className="mr-2 size-4" />
+                Account
               </DropdownMenuItem>
-              <DropdownMenuItem className="focus:bg-primary/10 cursor-pointer px-3 py-2 text-[11px] font-bold tracking-widest uppercase transition-colors">
-                <CreditCard className="mr-2 size-3.5 opacity-60" />
-                Access Keys
+              <DropdownMenuItem>
+                <CreditCard className="mr-2 size-4" />
+                Billing
               </DropdownMenuItem>
-              <DropdownMenuItem className="focus:bg-primary/10 cursor-pointer px-3 py-2 text-[11px] font-bold tracking-widest uppercase transition-colors">
-                <Bell className="mr-2 size-3.5 opacity-60" />
-                Alert Logs
+              <DropdownMenuItem>
+                <Bell className="mr-2 size-4" />
+                Notifications
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator className="bg-border/10" />
-            <div className="p-1">
-              <DropdownMenuItem
-                onClick={handleSignOut}
-                className="text-destructive focus:bg-destructive/10 focus:text-destructive cursor-pointer px-3 py-2 text-[11px] font-bold tracking-widest uppercase transition-colors"
-              >
-                <LogOut className="mr-2 size-3.5" />
-                Terminate Session
-              </DropdownMenuItem>
-            </div>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={handleSignOut}>
+              <LogOut className="mr-2 size-4" />
+              Log out
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

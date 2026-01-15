@@ -2,6 +2,7 @@
  * PDF Generation Service using Puppeteer MCP
  * Generates invoices, labels, and manifests as PDFs
  */
+/* eslint-disable @typescript-eslint/no-explicit-any -- PDF data structures are dynamic */
 
 import { createClient } from "@/lib/supabase/server";
 
@@ -608,7 +609,8 @@ export async function storePDFInStorage(
   
   const filePath = `${organizationId}/${path}`;
   
-  const { data, error } = await supabase.storage
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Upload response not needed
+const { data: uploadData, error } = await supabase.storage
     .from('documents')
     .upload(filePath, pdfBuffer, {
       contentType: 'application/pdf',

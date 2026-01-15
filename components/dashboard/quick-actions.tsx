@@ -34,7 +34,7 @@ const defaultActions: QuickAction[] = [
     description: "Scan barcode to update",
     icon: Scan,
     href: "/dashboard/scanning",
-    color: "bg-blue-500/10 text-blue-500 hover:bg-blue-500/20",
+    color: "bg-info/10 text-info hover:bg-info/20",
   },
   {
     id: "print-labels",
@@ -42,7 +42,7 @@ const defaultActions: QuickAction[] = [
     description: "Batch print shipping labels",
     icon: Printer,
     href: "/dashboard/shipments?action=print",
-    color: "bg-amber-500/10 text-amber-500 hover:bg-amber-500/20",
+    color: "bg-warning/10 text-warning hover:bg-warning/20",
   },
   {
     id: "manifest",
@@ -50,7 +50,7 @@ const defaultActions: QuickAction[] = [
     description: "Create delivery manifest",
     icon: Package,
     href: "/dashboard/manifests?action=create",
-    color: "bg-purple-500/10 text-purple-500 hover:bg-purple-500/20",
+    color: "bg-accent text-accent-foreground hover:bg-accent/80",
   },
   {
     id: "invoice",
@@ -58,7 +58,7 @@ const defaultActions: QuickAction[] = [
     description: "Create customer invoice",
     icon: FileText,
     href: "/dashboard/invoices?action=create",
-    color: "bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20",
+    color: "bg-success/10 text-success hover:bg-success/20",
   },
   {
     id: "notify",
@@ -66,7 +66,7 @@ const defaultActions: QuickAction[] = [
     description: "Bulk notify customers",
     icon: Bell,
     href: "/dashboard/settings?tab=notifications",
-    color: "bg-rose-500/10 text-rose-500 hover:bg-rose-500/20",
+    color: "bg-destructive/10 text-destructive hover:bg-destructive/20",
   },
 ];
 

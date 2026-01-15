@@ -112,7 +112,7 @@ export default function RequestAccessPage() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="name"
-                      className="text-xs font-bold tracking-wider uppercase"
+                      className="text-xs font-bold"
                     >
                       Full Name *
                     </Label>
@@ -133,7 +133,7 @@ export default function RequestAccessPage() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="email"
-                      className="text-xs font-bold tracking-wider uppercase"
+                      className="text-xs font-bold"
                     >
                       Email Address *
                     </Label>
@@ -157,7 +157,7 @@ export default function RequestAccessPage() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="company"
-                      className="text-xs font-bold tracking-wider uppercase"
+                      className="text-xs font-bold"
                     >
                       Company Name *
                     </Label>
@@ -178,7 +178,7 @@ export default function RequestAccessPage() {
                   <div className="space-y-2">
                     <Label
                       htmlFor="phone"
-                      className="text-xs font-bold tracking-wider uppercase"
+                      className="text-xs font-bold"
                     >
                       Phone Number *
                     </Label>
@@ -201,7 +201,7 @@ export default function RequestAccessPage() {
                 <div className="space-y-2">
                   <Label
                     htmlFor="message"
-                    className="text-xs font-bold tracking-wider uppercase"
+                    className="text-xs font-bold"
                   >
                     Tell us about your needs
                   </Label>

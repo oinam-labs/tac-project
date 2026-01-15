@@ -1,4 +1,5 @@
 "use server";
+/* eslint-disable @typescript-eslint/no-explicit-any -- MCP client handles dynamic database responses */
 
 /**
  * Supabase MCP Client
@@ -70,7 +71,8 @@ export async function applyMigration(
     }
     
     return { success: true };
-  } catch (error: any) {
+   
+} catch (error: any) {
     console.error('Supabase MCP migration error:', error);
     return { success: false, error: error.message };
   }
@@ -121,7 +123,8 @@ export async function generateTypes(
       types: '// TypeScript types will be generated here',
       error: undefined 
     };
-  } catch (error: any) {
+   
+} catch (error: any) {
     console.error('Supabase MCP type generation error:', error);
     return { types: '', error: error.message };
   }

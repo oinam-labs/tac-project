@@ -51,12 +51,12 @@ export function RouteInfoCard({
               <span className="text-muted-foreground/50">→</span>
               <span>{destination}</span>
             </div>
-            <p className="text-muted-foreground/50 mt-0.5 text-[9px] font-medium tracking-widest uppercase">
+            <p className="text-muted-foreground/50 mt-0.5 text-xs font-medium">
               Active Route
             </p>
           </div>
           <div className="bg-success/10 border-success/20 rounded-full border px-2.5 py-1">
-            <span className="text-success flex items-center gap-1.5 text-[9px] font-bold tracking-wide uppercase">
+            <span className="text-success flex items-center gap-1.5 text-xs font-medium">
               <span className="bg-success size-1.5 animate-pulse rounded-full" />
               Live
             </span>
@@ -95,7 +95,7 @@ export function RouteInfoCard({
         <div className="border-border/30 mt-4 flex items-center justify-between border-t pt-4">
           <div className="text-muted-foreground flex items-center gap-2">
             <RiSpeedLine className="size-4" />
-            <span className="text-[10px] font-medium tracking-wide uppercase">
+            <span className="text-xs font-medium">
               Avg Speed
             </span>
           </div>
@@ -123,7 +123,7 @@ function MetricItem({
         <Icon className="size-4" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="text-muted-foreground/60 text-[9px] font-medium tracking-wide uppercase">
+        <p className="text-muted-foreground/60 text-xs font-medium">
           {label}
         </p>
         <p className="text-foreground mt-0.5 truncate text-sm font-bold">

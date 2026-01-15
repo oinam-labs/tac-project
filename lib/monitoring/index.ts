@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/client";
+// import { createClient } from "@/lib/supabase/client"; // Reserved for monitoring
 
 export interface MetricData {
   name: string;
@@ -45,8 +45,11 @@ export function trackEvent(name: string, data?: Record<string, unknown>): void {
 }
 
 export function setUserContext(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   userId: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   email?: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   organizationId?: string,
 ): void {
   // No-op for now unless we add another monitoring service

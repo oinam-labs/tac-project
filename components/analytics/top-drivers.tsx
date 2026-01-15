@@ -39,13 +39,13 @@ export function TopDrivers() {
   return (
     <section className="bg-card/50 flex-1 rounded-[24px] border border-border p-6 backdrop-blur-xl text-card-foreground">
       <div className="mb-6 flex items-center justify-between">
-        <h3 className="flex items-center gap-2 text-sm font-bold tracking-wider text-foreground uppercase">
+        <h3 className="flex items-center gap-2 text-sm font-semibold text-foreground">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-warning" />{" "}
           Top Drivers
         </h3>
         <RiTrophyLine
           size={16}
-          className="text-warning drop-shadow-[0_0_8px_var(--warning)]"
+          className="text-warning drop-shadow-sm"
         />
       </div>
 
@@ -69,7 +69,7 @@ export function TopDrivers() {
                 className={cn(
                   "border-card absolute -right-1 -bottom-1 flex h-4 w-4 items-center justify-center rounded-full border text-[9px] font-bold shadow-lg",
                   driver.rank === 1
-                    ? "bg-warning text-warning-foreground shadow-[0_0_8px_var(--warning)]"
+                    ? "bg-warning text-warning-foreground shadow-md shadow-warning/50"
                     : "bg-muted text-muted-foreground",
                 )}
               >
@@ -77,7 +77,7 @@ export function TopDrivers() {
               </div>
             </div>
             <div className="flex-1">
-              <div className="group-hover:text-primary text-xs font-bold tracking-wide text-foreground uppercase transition-colors">
+              <div className="group-hover:text-primary text-xs font-medium text-foreground transition-colors">
                 {driver.name}
               </div>
               {driver.onTime} On-time

@@ -5,9 +5,9 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { createClient } from "@/lib/supabase/server";
-import { fileURLToPath } from "node:url";
-import path from "node:path";
+import { createClient } from "../../lib/supabase/server";
+import { fileURLToPath } from "url";
+import path from "path";
 import { z } from "zod";
 import type { CallToolResult } from "@modelcontextprotocol/sdk/types.js";
 

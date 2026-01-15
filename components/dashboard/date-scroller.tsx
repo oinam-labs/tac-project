@@ -52,7 +52,7 @@ export function DateScroller() {
             className={cn(
               "flex h-[72px] min-w-[64px] flex-col items-center justify-center rounded-2xl transition-all duration-300",
               activeDate === item.date
-                ? "bg-primary text-primary-foreground scale-105 shadow-[0_0_20px_rgba(var(--primary),0.3)]"
+                ? "bg-primary text-primary-foreground scale-105 shadow-lg shadow-primary/30"
                 : "bg-card border-border/50 text-muted-foreground hover:border-primary/20 hover:text-foreground border",
             )}
           >
@@ -64,7 +64,7 @@ export function DateScroller() {
             >
               {item.date < 10 ? `0${item.date}` : item.date}
             </span>
-            <span className="text-[10px] font-medium tracking-wide uppercase opacity-80">
+            <span className="text-[10px] font-medium opacity-80">
               {item.day}
             </span>
           </button>

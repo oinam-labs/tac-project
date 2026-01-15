@@ -20,7 +20,7 @@ export function LiveIndicator({ className }: { className?: string }) {
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75"></span>
         <span className="relative inline-flex h-2 w-2 rounded-full bg-success"></span>
       </span>
-      <span className="text-[10px] font-bold tracking-wider text-success uppercase">
+      <span className="text-[10px] font-bold text-success">
         Live Updates
       </span>
     </div>

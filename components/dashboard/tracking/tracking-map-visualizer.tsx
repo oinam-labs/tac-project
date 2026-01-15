@@ -10,14 +10,14 @@ export function TrackingMapVisualizer() {
       <div className="absolute top-5 left-5 z-10 flex items-center gap-3">
         <div className="bg-card/90 border-border/60 flex items-center gap-3 rounded-lg border px-4 py-2 shadow-sm backdrop-blur">
           <div className="flex flex-col">
-            <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+            <span className="text-muted-foreground text-[10px] font-semibold">
               Origin
             </span>
             <span className="text-foreground text-xs font-bold">New Delhi</span>
           </div>
           <ArrowRight className="text-muted-foreground size-3.5" />
           <div className="flex flex-col">
-            <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+            <span className="text-muted-foreground text-[10px] font-semibold">
               Destination
             </span>
             <span className="text-foreground text-xs font-bold">Imphal</span>

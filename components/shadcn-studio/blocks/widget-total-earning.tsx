@@ -49,16 +49,16 @@ const TotalEarningCard = ({
   return (
     <Card
       className={cn(
-        "glass-card noise-overlay relative overflow-hidden border-none shadow-none",
+        "bg-card relative overflow-hidden border-none shadow-none",
         className,
       )}
     >
       <CardHeader className="border-border/10 flex flex-row items-center justify-between border-b pb-4">
         <div className="flex flex-col gap-0.5">
-          <span className="text-foreground text-xs font-bold tracking-widest uppercase">
+          <span className="text-foreground text-sm font-semibold">
             {title}
           </span>
-          <span className="text-muted-foreground text-[10px] font-medium tracking-widest uppercase opacity-60">
+          <span className="text-muted-foreground text-xs font-medium opacity-60">
             Revenue Overview
           </span>
         </div>
@@ -75,13 +75,13 @@ const TotalEarningCard = ({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="glass-intense noise-overlay border-white/10"
+            className="glass-intense border-white/10"
           >
             <DropdownMenuGroup>
               {listItems.map((item, index) => (
                 <DropdownMenuItem
                   key={index}
-                  className="focus:bg-primary/10 text-[10px] font-bold tracking-widest uppercase transition-colors"
+                  className="focus:bg-primary/10 text-xs font-medium transition-colors"
                 >
                   {item}
                 </DropdownMenuItem>
@@ -93,12 +93,12 @@ const TotalEarningCard = ({
       <CardContent className="flex flex-1 flex-col gap-8 pt-6">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-3">
-            <span className="text-kpi text-foreground text-4xl font-black tracking-tighter">
+            <span className="text-kpi text-foreground text-4xl font-bold tracking-tight">
               ₹{earning.toLocaleString()}
             </span>
             <span
               className={cn(
-                "flex items-center gap-1 rounded border border-white/10 px-2 py-0.5 text-[10px] font-black",
+                "flex items-center gap-1 rounded border border-white/10 px-2 py-0.5 text-[10px] font-bold",
                 trend === "up"
                   ? "text-success bg-success/10"
                   : "text-destructive bg-destructive/10",
@@ -112,7 +112,7 @@ const TotalEarningCard = ({
               <span>{percentage}%</span>
             </span>
           </div>
-          <span className="text-muted-foreground/60 text-[10px] font-bold tracking-widest uppercase">
+          <span className="text-muted-foreground/60 text-xs font-medium">
             {comparisonText}
           </span>
         </div>
@@ -138,10 +138,10 @@ const TotalEarningCard = ({
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col gap-1">
-                  <span className="text-foreground text-xs font-bold tracking-tight uppercase">
+                  <span className="text-foreground text-xs font-semibold">
                     {earning.platform}
                   </span>
-                  <span className="text-muted-foreground/50 text-[9px] font-bold tracking-[0.15em] uppercase">
+                  <span className="text-muted-foreground/50 text-[10px] font-medium">
                     {earning.technologies}
                   </span>
                 </div>

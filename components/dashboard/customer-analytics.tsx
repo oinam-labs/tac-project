@@ -61,11 +61,11 @@ export function CustomerAnalytics({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-emerald-500/10">
-                <TrendingUp className="w-4 h-4 text-emerald-500" />
+              <div className="p-2 rounded-lg bg-success/10">
+                <TrendingUp className="w-4 h-4 text-success" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-emerald-500">{metrics.activeCustomers}</div>
+                <div className="text-2xl font-bold text-success">{metrics.activeCustomers}</div>
                 <div className="text-xs text-muted-foreground">Active (30 days)</div>
               </div>
             </div>
@@ -75,11 +75,11 @@ export function CustomerAnalytics({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-blue-500/10">
-                <Star className="w-4 h-4 text-blue-500" />
+              <div className="p-2 rounded-lg bg-primary/10">
+                <Star className="w-4 h-4 text-primary" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-blue-500">+{metrics.newThisMonth}</div>
+                <div className="text-2xl font-bold text-primary">+{metrics.newThisMonth}</div>
                 <div className="text-xs text-muted-foreground">New This Month</div>
               </div>
             </div>
@@ -89,11 +89,11 @@ export function CustomerAnalytics({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-amber-500/10">
-                <DollarSign className="w-4 h-4 text-amber-500" />
+              <div className="p-2 rounded-lg bg-warning/10">
+                <DollarSign className="w-4 h-4 text-warning" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-amber-500">
+                <div className="text-2xl font-bold text-warning">
                   ₹{(metrics.avgOrderValue / 1000).toFixed(1)}K
                 </div>
                 <div className="text-xs text-muted-foreground">Avg Order Value</div>
@@ -105,11 +105,11 @@ export function CustomerAnalytics({
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-purple-500/10">
-                <Award className="w-4 h-4 text-purple-500" />
+              <div className="p-2 rounded-lg bg-accent/10">
+                <Award className="w-4 h-4 text-accent-foreground" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-purple-500">{metrics.repeatRate}%</div>
+                <div className="text-2xl font-bold text-accent-foreground">{metrics.repeatRate}%</div>
                 <div className="text-xs text-muted-foreground">Repeat Rate</div>
               </div>
             </div>
@@ -185,9 +185,9 @@ export function CustomerAnalytics({
                       <div
                         className={cn(
                           "w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white",
-                          i === 0 && "bg-amber-500",
-                          i === 1 && "bg-slate-400",
-                          i === 2 && "bg-amber-700",
+                          i === 0 && "bg-warning",
+                          i === 1 && "bg-muted-foreground",
+                          i === 2 && "bg-warning/70",
                           i > 2 && "bg-muted-foreground"
                         )}
                       >
@@ -201,7 +201,7 @@ export function CustomerAnalytics({
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-sm font-bold text-emerald-500">
+                      <div className="text-sm font-bold text-success">
                         ₹{(customer.revenue / 1000).toFixed(1)}K
                       </div>
                       <div className="text-xs text-muted-foreground">revenue</div>

@@ -1,93 +1,92 @@
 "use client";
 
-import { cn } from "@/lib/utils";
-import Link from "next/link";
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { RiArrowRightLine } from "@remixicon/react";
+import { ArrowRight, Package, TrendingUp } from "lucide-react";
 
-interface HeroBannerProps {
-  title: string;
-  subtitle: string;
-  ctaText?: string;
-  ctaLink?: string;
-  className?: string;
-}
-
-export function HeroBanner({
-  title,
-  subtitle,
-  ctaText = "View Global Map",
-  ctaLink = "#",
-  className,
-}: HeroBannerProps) {
+export function HeroBanner() {
   return (
-    <div
-      className={cn(
-        "group relative flex min-h-[320px] w-full flex-col justify-center overflow-hidden rounded-2xl p-8 md:p-12",
-        "shadow-primary/10 border-primary/10 border shadow-2xl",
-        "bg-card" /* Ensure background color for contrast in light mode */,
-        className,
-      )}
-    >
-      {/* Background Image Layer with Blur and Overlay */}
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-overlay transition-transform duration-[20s] hover:scale-110"
-        style={{ backgroundImage: "url(/assets/hero-logistics.png)" }}
-      />
-
-      {/* Background Layer: Animated Gradient Mesh */}
-      <div className="bg-background/60 absolute inset-0 z-0 backdrop-blur-[2px]" />
-
-      {/* Mesh Gradients - Layered Color Temperatures */}
-      <div className="bg-gradient-radial from-primary/20 animate-mesh-rotate absolute top-[-50%] left-[-20%] h-[800px] w-[800px] rounded-full to-transparent opacity-50 blur-[120px]" />
-      <div className="bg-gradient-radial from-accent/20 absolute right-[-10%] bottom-[-20%] h-[600px] w-[600px] animate-pulse rounded-full to-transparent opacity-40 blur-[100px]" />
-
-      {/* Noise Overlay for Industrial Texture */}
-      <div className="noise-overlay absolute inset-0 z-0 opacity-[0.4] mix-blend-overlay" />
-
-      {/* Decorative Grid Lines */}
-      <div className="absolute inset-0 z-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] [mask-image:radial-gradient(ellipse_at_center,black_40%,transparent_100%)] bg-[size:40px_40px]" />
-
-      {/* Content Container */}
-      <div className="relative z-10 max-w-2xl space-y-6">
-        <div className="bg-primary/10 border-primary/20 inline-flex items-center gap-2 rounded-full border px-3 py-1 backdrop-blur-md">
-          <span className="bg-success h-1.5 w-1.5 animate-pulse rounded-full shadow-[0_0_8px_rgba(var(--success),0.5)]" />
-          <span className="text-foreground/80 font-body text-[10px] font-bold tracking-[0.2em] uppercase">
-            System Operational
-          </span>
-        </div>
-
-        <h1 className="font-display text-foreground text-4xl leading-[1.1] font-bold tracking-tight drop-shadow-sm md:text-5xl lg:text-6xl">
-          {title.split(" <br/> ").map((line, i) => (
-            <span key={i} className="block">
-              {line}
-            </span>
-          ))}
-        </h1>
-
-        <div className="from-primary via-accent h-1 w-24 rounded-full bg-gradient-to-r to-transparent" />
-
-        <p className="text-muted-foreground font-body max-w-lg text-lg leading-relaxed">
-          {subtitle}
-        </p>
-
-        <div className="pt-4">
-          <Link href={ctaLink}>
-            <Button className="group/btn bg-primary text-primary-foreground hover:bg-primary/90 animate-orbit-glow relative overflow-hidden rounded-full border-none px-8 py-6 font-bold tracking-wide">
-              <span className="relative z-10 flex items-center gap-3">
-                {ctaText}
-                <span className="bg-background text-foreground flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-300 group-hover/btn:translate-x-1">
-                  <RiArrowRightLine size={18} />
-                </span>
-              </span>
-            </Button>
-          </Link>
-        </div>
+    <div className="relative w-full overflow-hidden rounded-xl bg-card border border-border/50 text-card-foreground shadow-xl dark:shadow-primary/20 min-h-[300px] flex items-center">
+      {/* Full Width Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/images/banner-dashboard.png"
+          alt="Logistics Network"
+          fill
+          className="object-cover object-right"
+          priority
+        />
+        {/* Gradient Overlay for Text Readability - Stronger on left */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/50 to-transparent" />
       </div>
 
-      {/* Abstract Shapes */}
-      <div className="border-primary/10 absolute top-1/2 right-12 h-64 w-64 -translate-y-1/2 rotate-12 transform rounded-full border opacity-20 blur-[1px]" />
-      <div className="border-primary/5 absolute top-1/2 right-24 h-48 w-48 -translate-y-1/2 -rotate-12 transform rounded-full border opacity-30 blur-[0.5px]" />
+      <div className="relative z-10 w-full p-8 md:p-12">
+        <div className="flex flex-col justify-center space-y-6 max-w-2xl">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="mb-4 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-sm font-medium backdrop-blur-sm border border-primary/20 text-primary">
+              <span className="mr-2 flex h-2 w-2 items-center justify-center">
+                <span className="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-primary opacity-75"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-primary"></span>
+              </span>
+              System Operational
+            </div>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl text-white mb-4">
+              Good morning, Team!
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-lg leading-relaxed">
+              Your logistics hub is active. You have <span className="font-semibold text-foreground">142 active shipments</span> and <span className="font-semibold text-primary">3 urgent alerts</span> requiring attention.
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-wrap gap-4"
+          >
+            <Button size="lg" className="h-12 px-6 shadow-lg shadow-primary/20 border-0 text-base">
+              <Package className="mr-2 h-5 w-5" />
+              New Shipment
+            </Button>
+            <Button size="lg" variant="outline" className="h-12 px-6 border-white/10 bg-white/5 text-white hover:bg-white/10 hover:text-white backdrop-blur-md text-base">
+              View Analytics
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex items-center gap-8 pt-2"
+          >
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
+                <TrendingUp className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">98.5%</p>
+                <p className="text-xs text-primary font-medium">On-time Rate</p>
+              </div>
+            </div>
+            <div className="h-12 w-px bg-white/10" />
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-full bg-primary/10 text-primary">
+                <Package className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-2xl font-bold text-white">+12%</p>
+                <p className="text-xs text-primary font-medium">Volume Growth</p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
     </div>
   );
 }

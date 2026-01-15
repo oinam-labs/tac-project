@@ -10,7 +10,7 @@ export function RegionalPerformance() {
 
   return (
     <section className="bg-card/50 rounded-[24px] border border-border p-6 backdrop-blur-xl text-card-foreground">
-      <h3 className="mb-6 flex items-center gap-2 text-sm font-bold tracking-wider text-foreground uppercase">
+      <h3 className="mb-6 flex items-center gap-2 text-sm font-semibold text-foreground">
         <span className="bg-accent h-1.5 w-1.5 animate-pulse rounded-full" />{" "}
         Regional Traffic
       </h3>
@@ -28,7 +28,7 @@ export function RegionalPerformance() {
             </div>
             <div className="h-1.5 w-full overflow-hidden rounded-full border border-border bg-muted/20">
               <div
-                className="bg-primary h-1.5 rounded-full transition-all duration-1000 group-hover:shadow-[0_0_10px_var(--primary)]"
+                className="bg-primary h-1.5 rounded-full transition-all duration-1000 group-hover:shadow-md group-hover:shadow-primary/50"
                 style={{ width: `${region.value}%`, opacity: region.opacity }}
               />
             </div>

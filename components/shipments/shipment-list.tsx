@@ -184,7 +184,7 @@ export function ShipmentList() {
                     <div className="text-xs font-bold text-foreground">
                       {shipment.customer}
                     </div>
-                    <div className="text-muted-foreground text-[10px] tracking-wide uppercase">
+                    <div className="text-muted-foreground text-[10px]">
                       {shipment.type} • {shipment.weight}
                     </div>
                   </div>
@@ -243,7 +243,7 @@ export function ShipmentList() {
                 >
                   {shipment.eta}
                 </div>
-                <div className="text-muted-foreground text-[10px] font-medium uppercase">
+                <div className="text-muted-foreground text-[10px]">
                   {shipment.timeInfo}
                 </div>
               </TableCell>

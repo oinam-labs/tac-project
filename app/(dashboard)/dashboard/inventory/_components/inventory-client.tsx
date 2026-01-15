@@ -1,20 +1,35 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import React, { useState } from "react";
 import {
-    Search,
     Package,
     MapPin,
     ArrowRight,
-    Truck,
-    Clock
+    Clock,
+    MoreHorizontal,
+    Box,
+    AlertTriangle,
 } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { searchInventory } from "@/app/actions/inventory";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
+import { PageShell } from "@/components/dashboard/page-shell";
+import { DataTable } from "@/components/dashboard/data-table-premium";
 import type { ShipmentStatus } from "@/types/database";
+
+// --- Types ---
 
 interface Warehouse {
     id: string;
@@ -42,239 +57,230 @@ interface InventoryClientProps {
     initialInventory: InventoryItem[];
 }
 
-const statusColors: Record<ShipmentStatus, string> = {
-    booked: "text-muted-foreground bg-muted",
-    picked_up: "text-primary bg-primary/10",
-    at_origin_hub: "text-primary bg-primary/10",
-    in_transit: "text-primary bg-primary/10",
-    at_destination_hub: "text-primary bg-primary/10",
-    out_for_delivery: "text-warning bg-warning/10",
-    delivered: "text-success bg-success/10",
-    exception: "text-destructive bg-destructive/10",
-    returned: "text-warning bg-warning/10",
-    cancelled: "text-muted-foreground bg-muted",
+// --- Configuration ---
+
+const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className?: string }> = {
+    booked: { label: "Booked", variant: "secondary", className: "bg-muted text-muted-foreground border-border" },
+    picked_up: { label: "Picked Up", variant: "default", className: "bg-primary/10 text-primary border-primary/20" },
+    at_origin_hub: { label: "At Origin Hub", variant: "default", className: "bg-primary/20 text-primary border-primary/20" },
+    in_transit: { label: "In Transit", variant: "default", className: "bg-info/10 text-info border-info/20" },
+    at_destination_hub: { label: "At Dest Hub", variant: "default", className: "bg-primary/20 text-primary border-primary/20" },
+    out_for_delivery: { label: "Out for Delivery", variant: "default", className: "bg-warning/10 text-warning border-warning/20" },
+    delivered: { label: "Delivered", variant: "default", className: "bg-success/10 text-success border-success/20" },
+    exception: { label: "Exception", variant: "destructive", className: "bg-destructive/10 text-destructive border-destructive/20" },
+    returned: { label: "Returned", variant: "destructive", className: "bg-warning/10 text-warning border-warning/20" },
+    cancelled: { label: "Cancelled", variant: "secondary", className: "text-muted-foreground" },
 };
 
+// --- Main Component ---
+
 export function InventoryClient({ warehouses, initialInventory }: InventoryClientProps) {
-    const [inventory] = useState(initialInventory);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [selectedWarehouse, setSelectedWarehouse] = useState<string>("all");
-    const [, startTransition] = useTransition();
+    const [inventory] = useState<InventoryItem[]>(initialInventory);
 
-    // Group inventory by warehouse
-    const warehouseGroups = warehouses.map((warehouse) => {
-        const items = inventory.filter(
-            (item) =>
-                item.origin_warehouse?.id === warehouse.id ||
-                item.destination_warehouse?.id === warehouse.id
-        );
-        return { warehouse, items };
-    });
 
-    const filteredInventory = inventory.filter((item) => {
-        const matchesSearch =
-            item.reference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.consignee_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            item.consignee_city?.toLowerCase().includes(searchQuery.toLowerCase());
+    // -- Columns --
 
-        const matchesWarehouse =
-            selectedWarehouse === "all" ||
-            item.origin_warehouse?.id === selectedWarehouse ||
-            item.destination_warehouse?.id === selectedWarehouse;
-
-        return matchesSearch && matchesWarehouse;
-    });
-
-    const handleSearch = async () => {
-        if (!searchQuery.trim()) return;
-
-        startTransition(async () => {
-            const result = await searchInventory(searchQuery);
-            if (result.success) {
-                toast.success(`Found ${result.data.length} items`);
-            } else {
-                toast.error(result.error);
-            }
-        });
-    };
-
-    // Stats
-    const totalPieces = filteredInventory.reduce((sum, item) => sum + (item.pieces || 0), 0);
-    const inManifest = filteredInventory.filter((item) => item.manifest_id).length;
-    const notInManifest = filteredInventory.filter((item) => !item.manifest_id).length;
-
-    return (
-        <div className="space-y-6">
-            {/* Search Bar */}
-            <GlassPanel className="p-4">
-                <div className="flex gap-4">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                            type="text"
-                            placeholder="Search by tracking ID, customer, or location..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
-                            className="pl-10"
-                        />
-                    </div>
-                    <select
-                        value={selectedWarehouse}
-                        onChange={(e) => setSelectedWarehouse(e.target.value)}
-                        className="bg-card border border-border rounded px-4 py-2 text-sm text-foreground"
-                    >
-                        <option value="all">All Warehouses</option>
-                        {warehouses.map((w) => (
-                            <option key={w.id} value={w.id}>{w.name} ({w.code})</option>
-                        ))}
-                    </select>
+    const columns: ColumnDef<InventoryItem>[] = [
+        {
+            accessorKey: "reference",
+            header: "Control ID",
+            cell: ({ row }) => (
+                <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">{row.getValue("reference")}</span>
+                    {row.original.manifests ? (
+                        <span className="text-[10px] text-primary bg-primary/10 px-1 rounded w-fit mt-0.5">
+                            {row.original.manifests.manifest_number}
+                        </span>
+                    ) : (
+                        <span className="text-[10px] text-muted-foreground mt-0.5">No Manifest</span>
+                    )}
                 </div>
-            </GlassPanel>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <StatCard
-                    icon={Package}
-                    label="Total Items"
-                    value={filteredInventory.length}
-                    color="text-foreground"
-                />
-                <StatCard
-                    icon={Package}
-                    label="Total Pieces"
-                    value={totalPieces}
-                    color="text-primary"
-                />
-                <StatCard
-                    icon={Truck}
-                    label="In Manifest"
-                    value={inManifest}
-                    color="text-success"
-                />
-                <StatCard
-                    icon={Clock}
-                    label="Not in Manifest"
-                    value={notInManifest}
-                    color="text-warning"
-                    highlight={notInManifest > 0}
-                />
-            </div>
-
-            {/* Inventory Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-                {filteredInventory.length === 0 ? (
-                    <GlassPanel className="col-span-full p-12 text-center">
-                        <Package className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                        <div className="text-muted-foreground">No items found</div>
-                    </GlassPanel>
-                ) : (
-                    filteredInventory.map((item) => (
-                        <InventoryCard key={item.id} item={item} />
-                    ))
-                )}
-            </div>
-
-            {/* Warehouse Summary */}
-            <div className="mt-8">
-                <h2 className="text-sm font-medium text-foreground mb-4">Warehouse Summary</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {warehouseGroups.map(({ warehouse, items }) => (
-                        <GlassPanel key={warehouse.id} className="p-4">
-                            <div className="flex items-center gap-3 mb-3">
-                                <div className="p-2 rounded-lg bg-primary/10">
-                                    <MapPin className="w-4 h-4 text-primary" />
-                                </div>
-                                <div>
-                                    <div className="text-sm font-medium text-foreground">{warehouse.name}</div>
-                                    <div className="text-xs text-muted-foreground">{warehouse.code}</div>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-2 gap-2 text-xs">
-                                <div className="p-2 rounded bg-muted/50">
-                                    <div className="text-muted-foreground">Items</div>
-                                    <div className="text-foreground font-medium">{items.length}</div>
-                                </div>
-                                <div className="p-2 rounded bg-muted/50">
-                                    <div className="text-muted-foreground">Pieces</div>
-                                    <div className="text-foreground font-medium">
-                                        {items.reduce((sum, i) => sum + (i.pieces || 0), 0)}
-                                    </div>
-                                </div>
-                            </div>
-                        </GlassPanel>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function InventoryCard({ item }: { item: InventoryItem }) {
-    return (
-        <GlassPanel className="p-4 hover:border-primary/30 transition-colors">
-            <div className="flex items-start justify-between mb-3">
-                <div>
-                    <div className="font-mono text-sm text-foreground">{item.reference}</div>
-                    <div className="text-xs text-muted-foreground mt-0.5">{item.consignee_name || "—"}</div>
-                </div>
-                <span className={cn(
-                    "text-[10px] px-2 py-1 rounded capitalize",
-                    statusColors[item.status]
-                )}>
-                    {item.status.replace(/_/g, " ")}
-                </span>
-            </div>
-
-            <div className="flex items-center gap-2 text-xs text-muted-foreground mb-3">
-                <span>{item.origin_warehouse?.code || "—"}</span>
-                <ArrowRight className="w-3 h-3 text-muted-foreground" />
-                <span>{item.destination_warehouse?.code || "—"}</span>
-            </div>
-
-            <div className="flex items-center justify-between text-xs border-t border-border pt-3">
-                <div className="text-muted-foreground">
-                    {item.pieces || 0} pcs • {item.weight_kg || 0} kg
-                </div>
-                {item.manifests ? (
-                    <span className="text-primary text-[10px]">
-                        {item.manifests.manifest_number}
+            ),
+        },
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({ row }) => {
+                const status = row.getValue("status") as string;
+                const config = statusConfig[status] || statusConfig.booked;
+                return (
+                    <Badge variant="outline" className={cn("rounded-md", config.className)}>
+                        {config.label}
+                    </Badge>
+                );
+            },
+        },
+        {
+            header: "Route",
+            cell: ({ row }) => (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="font-mono text-xs font-medium bg-muted px-1.5 py-0.5 rounded text-foreground">
+                        {row.original.origin_warehouse?.code}
                     </span>
-                ) : (
-                    <span className="text-warning text-[10px]">Not in manifest</span>
-                )}
-            </div>
-        </GlassPanel>
-    );
-}
+                    <ArrowRight className="w-3 h-3 text-muted-foreground/50" />
+                    <span className="font-mono text-xs font-medium bg-muted px-1.5 py-0.5 rounded text-foreground">
+                        {row.original.destination_warehouse?.code}
+                    </span>
+                </div>
+            )
+        },
+        {
+            header: "Consignee",
+            cell: ({ row }) => (
+                <div className="flex flex-col text-sm max-w-[150px]">
+                    <span className="truncate text-foreground font-medium">{row.original.consignee_name || "—"}</span>
+                    <span className="truncate text-xs text-muted-foreground">{row.original.consignee_city}</span>
+                </div>
+            )
+        },
+        {
+            header: "Dimensions",
+            cell: ({ row }) => (
+                <div className="flex gap-3 text-xs text-muted-foreground">
+                    <span>{row.original.pieces} pcs</span>
+                    <span className="text-muted-foreground/30">|</span>
+                    <span>{row.original.weight_kg} kg</span>
+                </div>
+            )
+        },
+        {
+            id: "actions",
+            cell: () => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>View Details</DropdownMenuItem>
+                            <DropdownMenuItem>Update Status</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-destructive">Mark as Lost</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            ),
+        }
+    ];
 
-function StatCard({
-    icon: Icon,
-    label,
-    value,
-    color,
-    highlight
-}: {
-    icon: React.ElementType;
-    label: string;
-    value: number;
-    color: string;
-    highlight?: boolean;
-}) {
+    // -- Stats --
+    const totalPieces = inventory.reduce((sum, item) => sum + (item.pieces || 0), 0);
+    const unmanifested = inventory.filter(i => !i.manifest_id).length;
+    const exceptions = inventory.filter(i => i.status === 'exception').length;
+
+    // -- Render --
+
     return (
-        <GlassPanel className={cn(
-            "p-4",
-            highlight && "border-warning/30 bg-warning/5"
-        )}>
-            <div className="flex items-center gap-3">
-                <div className={cn("p-2 rounded-lg", highlight ? "bg-warning/10" : "bg-muted")}>
-                    <Icon className={cn("w-4 h-4", color)} />
+        <PageShell
+            title="Inventory"
+            description="Track items across the network, manage stock levels, and monitor holding times."
+            breadcrumb={["Dashboard", "Operations", "Inventory"]}
+            action={
+                <Button
+                    className="rounded-full shadow-lg shadow-primary/20"
+                    onClick={() => window.location.href = '/dashboard/shipments?action=create'}
+                >
+                    <Box className="w-4 h-4 mr-2" />
+                    Add Item
+                </Button>
+            }
+        >
+            {/* Stats Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Total Items</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">{inventory.length}</span>
+                        <Package className="w-5 h-5 text-muted-foreground" />
+                    </div>
                 </div>
-                <div>
-                    <div className={cn("text-xl font-bold", color)}>{value}</div>
-                    <div className="text-[10px] text-muted-foreground uppercase tracking-wider">{label}</div>
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Total Pieces</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">{totalPieces}</span>
+                        <Box className="w-5 h-5 text-primary" />
+                    </div>
+                </div>
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Unmanifested</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">{unmanifested}</span>
+                        <Clock className="w-5 h-5 text-warning" />
+                    </div>
+                </div>
+                <div className="bg-destructive/10 rounded-xl p-4 border border-destructive/20 shadow-sm flex flex-col">
+                    <span className="text-destructive text-xs font-medium uppercase tracking-wider mb-1">Exceptions</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-destructive">{exceptions}</span>
+                        <AlertTriangle className="w-5 h-5 text-destructive" />
+                    </div>
                 </div>
             </div>
-        </GlassPanel>
+
+            <Tabs defaultValue="list" className="space-y-4">
+                <TabsList>
+                    <TabsTrigger value="list">Inventory List</TabsTrigger>
+                    <TabsTrigger value="warehouses">Warehouse Summary</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="list" className="space-y-4">
+                    <DataTable
+                        columns={columns}
+                        data={inventory}
+                        filterColumn="reference"
+                        filterPlaceholder="Search inventory by reference..."
+                    />
+                </TabsContent>
+
+                <TabsContent value="warehouses">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        {warehouses.map((warehouse) => {
+                            const items = inventory.filter(
+                                (item) =>
+                                    item.origin_warehouse?.id === warehouse.id ||
+                                    item.destination_warehouse?.id === warehouse.id
+                            );
+
+                            if (items.length === 0) return null;
+
+                            return (
+                                <Card key={warehouse.id} className="hover:shadow-md transition-all">
+                                    <CardHeader className="pb-3">
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-3">
+                                                <div className="p-2 rounded-lg bg-muted text-muted-foreground">
+                                                    <MapPin className="w-4 h-4" />
+                                                </div>
+                                                <div>
+                                                    <CardTitle className="text-base font-semibold">{warehouse.name}</CardTitle>
+                                                    <p className="text-xs text-muted-foreground font-mono">{warehouse.code}</p>
+                                                </div>
+                                            </div>
+                                            <Badge variant="secondary">{items.length} items</Badge>
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="grid grid-cols-2 gap-3 text-sm">
+                                            <div className="p-3 bg-muted/50 rounded-lg border border-border">
+                                                <div className="text-xs text-muted-foreground mb-1">Total Pcs</div>
+                                                <div className="font-semibold text-foreground">{items.reduce((acc, i) => acc + (i.pieces || 0), 0)}</div>
+                                            </div>
+                                            <div className="p-3 bg-muted/50 rounded-lg border border-border">
+                                                <div className="text-xs text-muted-foreground mb-1">Total Weight</div>
+                                                <div className="font-semibold text-foreground">{items.reduce((acc, i) => acc + (i.weight_kg || 0), 0)} kg</div>
+                                            </div>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            );
+                        })}
+                    </div>
+                </TabsContent>
+            </Tabs>
+        </PageShell>
     );
 }

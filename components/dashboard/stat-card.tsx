@@ -84,14 +84,14 @@ function StatCardHero({
         </div>
 
         <div className="space-y-2">
-          <p className="text-muted-foreground/60 text-[10px] font-bold tracking-[0.25em] uppercase">
+          <p className="text-muted-foreground/60 text-xs font-medium">
             {title}
           </p>
-          <p className="text-kpi text-foreground text-5xl font-black tracking-tighter">
+          <p className="text-kpi text-foreground text-5xl font-bold tracking-tighter">
             {value}
           </p>
           {subtitle && (
-            <p className="text-muted-foreground/50 pt-1 text-[10px] font-medium tracking-wide uppercase">
+            <p className="text-muted-foreground/50 pt-1 text-xs font-medium">
               {subtitle}
             </p>
           )}
@@ -131,14 +131,14 @@ function StatCardCompact({
           <Icon className="size-4" />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-muted-foreground/50 truncate text-[9px] font-bold tracking-[0.2em] uppercase">
+          <p className="text-muted-foreground/50 truncate text-xs font-medium">
             {title}
           </p>
           <p className="text-kpi text-foreground text-xl font-bold tracking-tight">
             {value}
           </p>
           {subtitle && (
-            <p className="text-muted-foreground/40 truncate text-[8px] font-medium tracking-wide uppercase">
+            <p className="text-muted-foreground/40 truncate text-[10px] font-medium">
               {subtitle}
             </p>
           )}
@@ -183,7 +183,7 @@ function StatCardDefault({
 
       <CardContent className="px-5 pt-5 pb-4">
         <div className="mb-4 flex items-start justify-between">
-          <p className="text-muted-foreground/60 text-[9px] font-bold tracking-[0.2em] uppercase">
+          <p className="text-muted-foreground/60 text-xs font-medium">
             {title}
           </p>
           <div
@@ -219,7 +219,7 @@ function StatCardDefault({
                 )}
                 {Math.abs(trend.value)}%
               </span>
-              <span className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+              <span className="text-muted-foreground/50 text-[10px] font-medium">
                 vs prev
               </span>
             </div>

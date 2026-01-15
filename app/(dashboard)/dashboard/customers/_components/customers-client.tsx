@@ -2,46 +2,46 @@
 
 import React, { useState, useTransition } from "react";
 import {
-    Search,
     Plus,
+    MoreHorizontal,
+    FileText,
     Phone,
     Mail,
     MapPin,
-    User,
     Building2,
-    Crown
+    Crown,
+    Users,
+    User
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
+import { ColumnDef } from "@tanstack/react-table";
+import { formatCurrency } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { createCustomer } from "@/app/actions/customers";
-import type { CustomerType } from "@/types/database";
 
-interface Customer {
-    id: string;
-    name: string;
-    email: string | null;
-    phone: string;
-    address: string | null;
-    city: string | null;
-    state: string | null;
-    pincode: string | null;
-    gst_number: string | null;
-    customer_type: CustomerType;
-    credit_limit: number;
-    created_at: string;
-}
+import { PageShell } from "@/components/dashboard/page-shell";
+import { DataTable } from "@/components/dashboard/data-table-premium";
+import { type Customer } from "./columns"; // reusing type definition if suitable, or redefining
+
+// --- Types ---
 
 interface CustomerStats {
     total: number;
@@ -55,178 +55,201 @@ interface CustomersClientProps {
     stats: CustomerStats;
 }
 
-const typeConfig: Record<CustomerType, { label: string; color: string; icon: React.ElementType; gradient: string }> = {
-    regular: { label: "Regular", color: "text-muted-foreground", icon: User, gradient: "from-zinc-500 to-zinc-600" },
-    corporate: { label: "Corporate", color: "text-primary", icon: Building2, gradient: "from-primary to-primary/60" },
-    vip: { label: "VIP", color: "text-warning", icon: Crown, gradient: "from-warning to-warning/60" },
+// --- Configuration ---
+
+const customerTypeConfig: Record<string, { label: string; variant: "default" | "secondary" | "outline"; icon: React.ElementType; className?: string }> = {
+    vip: { label: "VIP", variant: "default", icon: Crown, className: "bg-warning/10 text-warning border-warning/20" },
+    corporate: { label: "Corporate", variant: "secondary", icon: Building2, className: "bg-primary/10 text-primary border-primary/20" },
+    regular: { label: "Regular", variant: "outline", icon: User, className: "text-muted-foreground" },
 };
 
 export function CustomersClient({ initialCustomers, stats }: CustomersClientProps) {
     const [customers, setCustomers] = useState(initialCustomers);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [typeFilter, setTypeFilter] = useState<CustomerType | "all">("all");
     const [isCreateOpen, setIsCreateOpen] = useState(false);
 
-
-    const filteredCustomers = customers.filter((c) => {
-        const matchesSearch =
-            c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            c.phone.includes(searchQuery) ||
-            c.email?.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesType = typeFilter === "all" || c.customer_type === typeFilter;
-        return matchesSearch && matchesType;
-    });
-
-    const getInitials = (name: string) => {
-        return name
-            .split(" ")
-            .map((n) => n[0])
-            .join("")
-            .toUpperCase()
-            .slice(0, 2);
-    };
-
-    return (
-        <div className="space-y-6">
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <StatCard label="Total Customers" value={stats.total} color="text-foreground" />
-                <StatCard label="VIP" value={stats.vip} color="text-warning" />
-                <StatCard label="Corporate" value={stats.corporate} color="text-primary" />
-                <StatCard label="Regular" value={stats.regular} color="text-muted-foreground" />
-            </div>
-
-            {/* Search & Actions */}
-            <GlassPanel className="p-4">
-                <div className="flex gap-4">
-                    <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                        <Input
-                            type="text"
-                            placeholder="Search customers..."
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            className="pl-10"
-                        />
+    // --- Columns ---
+    const columns: ColumnDef<Customer>[] = [
+        {
+            accessorKey: "name",
+            header: "Customer",
+            cell: ({ row }) => (
+                <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">{row.getValue("name")}</span>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5">
+                        <Mail className="w-3 h-3" />
+                        {row.original.email}
                     </div>
-                    <select
-                        value={typeFilter}
-                        onChange={(e) => setTypeFilter(e.target.value as CustomerType | "all")}
-                        className="bg-card border border-border rounded px-4 py-2 text-sm text-foreground"
-                    >
-                        <option value="all">All Types</option>
-                        {Object.entries(typeConfig).map(([key, { label }]) => (
-                            <option key={key} value={key}>{label}</option>
-                        ))}
-                    </select>
-                    <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                        <DialogTrigger asChild>
-                            <Button className="gap-2">
-                                <Plus className="w-4 h-4" />
-                                Add Customer
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent className="max-w-lg">
-                            <DialogHeader>
-                                <DialogTitle>Add Customer</DialogTitle>
-                                <DialogDescription>Fill in the details below to add a new customer.</DialogDescription>
-                            </DialogHeader>
-                            <CreateCustomerForm
-                                onSuccess={(newCustomer) => {
-                                    setCustomers(prev => [newCustomer as Customer, ...prev]);
-                                    setIsCreateOpen(false);
-                                    toast.success("Customer added");
-                                }}
-                            />
-                        </DialogContent>
-                    </Dialog>
                 </div>
-            </GlassPanel>
-
-            {/* Customer Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                {filteredCustomers.length === 0 ? (
-                    <GlassPanel className="col-span-full p-12 text-center">
-                        <User className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-                        <div className="text-muted-foreground">No customers found</div>
-                    </GlassPanel>
+            ),
+        },
+        {
+            header: "Contact",
+            cell: ({ row }) => (
+                <div className="flex flex-col text-sm">
+                    <span className="text-foreground font-medium">{row.original.name}</span>
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground mt-0.5">
+                        <Phone className="w-3 h-3" />
+                        {row.original.phone}
+                    </div>
+                </div>
+            )
+        },
+        {
+            accessorKey: "customer_type",
+            header: "Type",
+            cell: ({ row }) => {
+                const type = row.getValue("customer_type") as string;
+                const config = customerTypeConfig[type] || customerTypeConfig.regular;
+                const Icon = config.icon;
+                return (
+                    <Badge variant="outline" className={config.className}>
+                        <Icon className="w-3 h-3 mr-1.5" />
+                        <span className="capitalize">{config.label}</span>
+                    </Badge>
+                );
+            }
+        },
+        {
+            header: "Location",
+            cell: ({ row }) => (
+                <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    <MapPin className="w-3.5 h-3.5 text-muted-foreground" />
+                    <span>{row.original.city}, {row.original.state}</span>
+                </div>
+            )
+        },
+        {
+            accessorKey: "credit_limit",
+            header: "Credit Limit",
+            cell: ({ row }) => {
+                const limit = row.getValue("credit_limit") as number;
+                return limit > 0 ? (
+                    <span className="font-medium text-foreground">{formatCurrency(limit)}</span>
                 ) : (
-                    filteredCustomers.map((customer) => {
-                        const type = typeConfig[customer.customer_type] || typeConfig.regular;
-                        const TypeIcon = type.icon;
+                    <span className="text-muted-foreground italic text-xs">No limit</span>
+                );
+            }
+        },
+        {
+            id: "actions",
+            cell: () => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>
+                                <FileText className="mr-2 h-4 w-4" /> View Invoices
+                            </DropdownMenuItem>
+                            <DropdownMenuItem>Edit Details</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-destructive">Delete Customer</DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            ),
+        }
+    ];
 
-                        return (
-                            <div
-                                key={customer.id}
-                                className="group bg-card/40 border border-border rounded-xl p-6 flex flex-col items-center text-center hover:bg-card/60 hover:border-primary/30 transition-all shadow-lg hover:shadow-primary/5 hover:-translate-y-1"
-                            >
-                                <div className={cn(
-                                    "w-16 h-16 rounded-full mb-4 p-[2px] shadow-lg transition-shadow",
-                                    `bg-gradient-to-tr ${type.gradient}`
-                                )}>
-                                    <div className="w-full h-full rounded-full bg-card flex items-center justify-center text-xl font-bold text-foreground">
-                                        {getInitials(customer.name)}
-                                    </div>
-                                </div>
-
-                                <h3 className="text-sm font-bold text-foreground mb-1 truncate w-full">
-                                    {customer.name}
-                                </h3>
-                                <div className="flex items-center gap-1 mb-4">
-                                    <TypeIcon className={cn("w-3 h-3", type.color)} />
-                                    <span className={cn("text-xs", type.color)}>{type.label}</span>
-                                </div>
-
-                                <div className="w-full space-y-2 text-xs text-muted-foreground mb-4">
-                                    <div className="flex items-center gap-2">
-                                        <Phone className="w-3 h-3" />
-                                        <span className="truncate">{customer.phone}</span>
-                                    </div>
-                                    {customer.email && (
-                                        <div className="flex items-center gap-2">
-                                            <Mail className="w-3 h-3" />
-                                            <span className="truncate">{customer.email}</span>
-                                        </div>
-                                    )}
-                                    {customer.city && (
-                                        <div className="flex items-center gap-2">
-                                            <MapPin className="w-3 h-3" />
-                                            <span className="truncate">{customer.city}, {customer.state}</span>
-                                        </div>
-                                    )}
-                                </div>
-
-                                <div className="flex gap-2 w-full mt-auto">
-                                    <a
-                                        href={`tel:${customer.phone}`}
-                                        className="flex-1 py-2 rounded-lg bg-foreground text-background text-xs font-bold hover:opacity-90 transition-colors text-center"
-                                    >
-                                        Call
-                                    </a>
-                                    {customer.email && (
-                                        <a
-                                            href={`mailto:${customer.email}`}
-                                            className="flex-1 py-2 rounded-lg border border-border text-muted-foreground text-xs font-bold hover:bg-muted/50 transition-colors text-center"
-                                        >
-                                            Email
-                                        </a>
-                                    )}
-                                </div>
-                            </div>
-                        );
-                    })
-                )}
-            </div>
-        </div>
-    );
-}
-
-function StatCard({ label, value, color }: { label: string; value: number; color: string }) {
     return (
-        <GlassPanel className="p-4 text-center">
-            <div className={cn("text-2xl font-bold", color)}>{value}</div>
-            <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">{label}</div>
-        </GlassPanel>
+        <PageShell
+            title="Customers"
+            description="Manage client relationships, contact details, and credit profiles."
+            breadcrumb={["Dashboard", "Finance", "Customers"]}
+            action={
+                <Button onClick={() => setIsCreateOpen(true)} className="rounded-full shadow-lg shadow-primary/20 bg-primary hover:bg-primary/90">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Add Customer
+                </Button>
+            }
+        >
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
+                        <div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Total</p>
+                            <h3 className="text-3xl font-bold text-foreground">
+                                {stats.total}
+                            </h3>
+                        </div>
+                        <div className="p-3 bg-muted rounded-xl text-muted-foreground">
+                            <Users className="w-6 h-6" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
+                        <div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">VIP</p>
+                            <h3 className="text-3xl font-bold text-warning">
+                                {stats.vip}
+                            </h3>
+                        </div>
+                        <div className="p-3 bg-warning/10 rounded-xl text-warning">
+                            <Crown className="w-6 h-6" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
+                        <div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Corporate</p>
+                            <h3 className="text-3xl font-bold text-primary">
+                                {stats.corporate}
+                            </h3>
+                        </div>
+                        <div className="p-3 bg-primary/10 rounded-xl text-primary">
+                            <Building2 className="w-6 h-6" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
+                        <div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Regular</p>
+                            <h3 className="text-3xl font-bold text-muted-foreground">
+                                {stats.regular}
+                            </h3>
+                        </div>
+                        <div className="p-3 bg-muted/50 rounded-xl text-muted-foreground">
+                            <User className="w-6 h-6" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <DataTable
+                columns={columns}
+                data={customers}
+                filterColumn="name"
+                filterPlaceholder="Search customers..."
+            />
+
+            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+                <DialogContent className="max-w-lg">
+                    <DialogHeader>
+                        <DialogTitle>Add Customer</DialogTitle>
+                        <DialogDescription>Fill in the details below to add a new customer.</DialogDescription>
+                    </DialogHeader>
+                    <CreateCustomerForm
+                        onSuccess={(newCustomer) => {
+                            setCustomers(prev => [newCustomer as Customer, ...prev]);
+                            setIsCreateOpen(false);
+                            toast.success("Customer added");
+                        }}
+                    />
+                </DialogContent>
+            </Dialog>
+        </PageShell>
     );
 }
 
@@ -347,7 +370,7 @@ function CreateCustomerForm({ onSuccess }: { onSuccess: (customer: unknown) => v
             </div>
 
             <div className="flex justify-end pt-4">
-                <Button type="submit" disabled={isPending}>
+                <Button type="submit" disabled={isPending} className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
                     {isPending ? "Adding..." : "Add Customer"}
                 </Button>
             </div>

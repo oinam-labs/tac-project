@@ -3,7 +3,7 @@
 export function RecentUpdates() {
   return (
     <div className="bg-card/50 flex-1 rounded-[24px] border border-border p-6 backdrop-blur-xl transition-colors hover:border-border/80">
-      <h3 className="mb-6 flex items-center gap-2 text-xs font-bold tracking-widest text-foreground uppercase">
+      <h3 className="mb-6 flex items-center gap-2 text-xs font-bold text-foreground">
         <span className="bg-primary h-1.5 w-1.5 animate-pulse rounded-full" />{" "}
         Log Stream
       </h3>
@@ -14,7 +14,7 @@ export function RecentUpdates() {
 
         {/* Item 1 */}
         <div className="group relative flex gap-4">
-          <div className="relative z-10 mt-1.5 h-2 w-2 rounded-full bg-success shadow-[0_0_10px_color-mix(in_oklch,var(--success)_50%,transparent)] ring-4 ring-black/40"></div>
+          <div className="relative z-10 mt-1.5 h-2 w-2 rounded-full bg-success shadow-sm shadow-success/50 ring-4 ring-black/40"></div>
           <div className="flex-1">
             <div className="text-xs text-foreground/90">
               Shipment{" "}
@@ -31,7 +31,7 @@ export function RecentUpdates() {
 
         {/* Item 2 */}
         <div className="group relative flex gap-4">
-          <div className="bg-warning relative z-10 mt-1.5 h-2 w-2 rounded-full shadow-[0_0_10px_rgba(var(--warning),0.5)] ring-4 ring-black/40"></div>
+          <div className="bg-warning relative z-10 mt-1.5 h-2 w-2 rounded-full shadow-sm shadow-warning/50 ring-4 ring-black/40"></div>
           <div className="flex-1">
             <div className="text-xs text-foreground/90">
               Delay reported for{" "}
@@ -45,7 +45,7 @@ export function RecentUpdates() {
 
         {/* Item 3 */}
         <div className="group relative flex gap-4">
-          <div className="bg-primary relative z-10 mt-1.5 h-2 w-2 rounded-full shadow-[0_0_10px_rgba(var(--primary),0.5)] ring-4 ring-black/40"></div>
+          <div className="bg-primary relative z-10 mt-1.5 h-2 w-2 rounded-full shadow-sm shadow-primary/50 ring-4 ring-black/40"></div>
           <div className="flex-1">
             <div className="text-xs text-foreground/90">
               New route assigned to{" "}

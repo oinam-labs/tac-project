@@ -103,7 +103,7 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
   return (
     <Card
       className={cn(
-        "glass-card noise-overlay relative overflow-hidden border-none shadow-none",
+        "bg-card relative overflow-hidden border-none shadow-none",
         className,
       )}
     >
@@ -111,10 +111,10 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
         <div className="grid gap-8 lg:grid-cols-5">
           <div className="flex flex-col gap-8 lg:col-span-3">
             <div className="flex flex-col gap-1">
-              <span className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+              <span className="text-foreground text-sm font-semibold">
                 Revenue Metrics
               </span>
-              <span className="text-muted-foreground text-[10px] font-medium uppercase opacity-60">
+              <span className="text-muted-foreground text-xs">
                 Operational Efficiency Stats
               </span>
             </div>
@@ -124,10 +124,10 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                 <ChartNoAxesCombinedIcon className="size-7" />
               </div>
               <div className="flex flex-col gap-0.5">
-                <span className="text-foreground text-sm font-black tracking-tighter uppercase">
+                <span className="text-foreground text-sm font-semibold">
                   TAC Cargo
                 </span>
-                <span className="text-muted-foreground/60 text-[11px] font-medium tracking-widest uppercase">
+                <span className="text-muted-foreground/60 text-xs font-medium">
                   admin_control@sys.local
                 </span>
               </div>
@@ -143,7 +143,7 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                     {metric.icon}
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="text-muted-foreground/50 text-[9px] font-bold tracking-[0.2em] uppercase">
+                    <span className="text-muted-foreground/50 text-xs font-medium">
                       {metric.title}
                     </span>
                     <span className="text-kpi text-foreground text-lg font-bold">
@@ -155,9 +155,9 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
             </div>
           </div>
 
-          <Card className="bg-card/80 border-border/40 noise-overlay gap-4 overflow-hidden border py-4 shadow-inner lg:col-span-2">
+          <Card className="bg-card/80 border-border/40 gap-4 overflow-hidden border py-4 shadow-inner lg:col-span-2">
             <CardHeader className="gap-1 p-0 px-6 pb-2">
-              <CardTitle className="text-muted-foreground/70 text-[10px] font-bold tracking-[0.2em] uppercase">
+              <CardTitle className="text-muted-foreground/70 text-sm font-semibold">
                 Revenue Distribution
               </CardTitle>
             </CardHeader>
@@ -173,7 +173,7 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                     content={
                       <ChartTooltipContent
                         hideLabel
-                        className="glass-intense noise-overlay border-white/10"
+                        className="glass-intense border-white/10"
                       />
                     }
                   />
@@ -201,14 +201,14 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                               <tspan
                                 x={viewBox.cx}
                                 y={(viewBox.cy || 0) - 10}
-                                className="fill-foreground text-kpi text-2xl font-black"
+                                className="fill-foreground text-kpi text-2xl font-bold"
                               >
                                 ₹25.6L
                               </tspan>
                               <tspan
                                 x={viewBox.cx}
                                 y={(viewBox.cy || 0) + 20}
-                                className="fill-muted-foreground/50 text-[9px] font-black tracking-widest uppercase"
+                                className="fill-muted-foreground/50 text-xs font-medium"
                               >
                                 NET PROFIT
                               </tspan>
@@ -223,10 +223,10 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
             </CardContent>
 
             <CardFooter className="justify-between px-6">
-              <span className="text-muted-foreground/60 text-[10px] font-bold tracking-widest uppercase">
+              <span className="text-muted-foreground/60 text-xs font-medium">
                 Target Variance
               </span>
-              <span className="text-kpi text-success shadow-glow-primary/20 text-2xl font-black">
+              <span className="text-kpi text-success shadow-glow-primary/20 text-2xl font-bold">
                 +56%
               </span>
             </CardFooter>
@@ -234,26 +234,26 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
         </div>
 
         <Card className="bg-muted/50 border-border/40 relative overflow-hidden rounded-lg border shadow-none">
-          <div className="noise-overlay absolute inset-0 opacity-20" />
+          <div className="absolute inset-0 opacity-20" />
           <CardContent className="relative z-10 grid gap-8 p-8 lg:grid-cols-5">
             <div className="flex flex-col justify-center gap-4">
-              <span className="text-muted-foreground/70 text-[10px] font-bold tracking-[0.2em] uppercase">
+              <span className="text-muted-foreground/70 text-xs font-medium">
                 Sales Plan
               </span>
-              <span className="text-kpi text-primary text-6xl font-black drop-shadow-[0_0_20px_rgba(var(--primary),0.3)]">
+              <span className="text-kpi text-primary text-6xl font-bold drop-shadow-lg">
                 {salesPlanPercentage}%
               </span>
-              <span className="text-muted-foreground/40 text-[9px] leading-relaxed font-medium tracking-widest uppercase">
+              <span className="text-muted-foreground/40 text-xs leading-relaxed font-medium">
                 Margin yield across aggregate volume
               </span>
             </div>
             <div className="flex flex-col gap-8 text-lg md:col-span-4">
               <div className="flex items-start justify-between">
                 <div>
-                  <span className="text-foreground mb-2 block text-xs font-bold tracking-widest uppercase">
+                  <span className="text-foreground mb-2 block text-sm font-semibold">
                     Performance Indicators
                   </span>
-                  <span className="text-muted-foreground/60 block max-w-lg text-[10px] leading-relaxed font-medium tracking-tighter uppercase">
+                  <span className="text-muted-foreground/60 block max-w-lg text-xs leading-relaxed font-medium">
                     Detailed analysis of regional shipment vectors and hub-level
                     revenue generation cycles.
                   </span>
@@ -265,7 +265,7 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                   <div className="bg-secondary border-border/30 text-accent/60 group-hover:text-accent rounded-md border p-2 transition-colors">
                     <ChartNoAxesCombinedIcon className="size-4" />
                   </div>
-                  <span className="text-muted-foreground/80 group-hover:text-foreground text-[10px] font-bold tracking-widest uppercase transition-colors">
+                  <span className="text-muted-foreground/80 group-hover:text-foreground text-xs font-medium transition-colors">
                     Volume Analytics
                   </span>
                 </div>
@@ -273,7 +273,7 @@ const SalesMetricsCard = ({ className }: { className?: string }) => {
                   <div className="bg-secondary border-border/30 text-success/60 group-hover:text-success rounded-md border p-2 transition-colors">
                     <CirclePercentIcon className="size-4" />
                   </div>
-                  <span className="text-muted-foreground/80 group-hover:text-foreground text-[10px] font-bold tracking-widest uppercase transition-colors">
+                  <span className="text-muted-foreground/80 group-hover:text-foreground text-xs font-medium transition-colors">
                     Growth Trajectory
                   </span>
                 </div>

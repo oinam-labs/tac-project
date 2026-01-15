@@ -40,20 +40,13 @@ export function NavSecondary({
                   className={cn(
                     "h-8 px-3 transition-colors",
                     isActive
-                      ? "text-primary font-bold"
-                      : "text-muted-foreground/60 hover:text-foreground",
+                      ? "text-primary font-medium"
+                      : "text-muted-foreground hover:text-foreground",
                   )}
                 >
                   <Link href={item.url} className="flex items-center gap-3">
-                    <item.icon className="size-3.5 opacity-60" />
-                    <span
-                      className={cn(
-                        "text-[11px] font-medium tracking-tight",
-                        isActive ? "text-primary" : "text-muted-foreground",
-                      )}
-                    >
-                      {item.title}
-                    </span>
+                    <item.icon className="size-4" />
+                    <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

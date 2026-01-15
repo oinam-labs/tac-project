@@ -15,7 +15,7 @@ export function CommandCenterHeader() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-success opacity-75"></span>
               <span className="relative inline-flex h-full w-full rounded-full bg-success"></span>
             </span>
-            <span className="text-[10px] font-medium tracking-wide text-success uppercase">
+            <span className="text-[10px] font-medium text-success">
               Live Monitoring
             </span>
           </span>

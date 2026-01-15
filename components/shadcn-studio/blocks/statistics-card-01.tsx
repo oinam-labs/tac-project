@@ -42,7 +42,7 @@ const StatisticsCard = ({
         </span>
       </CardHeader>
       <CardContent className="relative z-10 flex flex-col gap-2">
-        <span className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
+        <span className="text-muted-foreground text-xs font-medium">
           {title}
         </span>
         <p className="flex items-center gap-2">

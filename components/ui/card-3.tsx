@@ -106,7 +106,7 @@ export const PaymentSummaryCard = React.forwardRef<
                     ))}
                     {moreCount && moreCount > 0 && (
                         <div
-                            className="ml-[-12px] flex h-10 w-10 items-center justify-center rounded-full border-2 border-background bg-primary text-sm font-semibold text-primary-foreground"
+                            className="-ml-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-background bg-primary text-sm font-semibold text-primary-foreground"
                         >
                             +{moreCount}
                         </div>

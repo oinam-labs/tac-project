@@ -82,7 +82,7 @@ export const columns: ColumnDef<Item>[] = [
           <span className="text-foreground text-xs font-bold tracking-tight">
             {row.getValue("name")}
           </span>
-          <span className="text-muted-foreground text-[10px] tracking-widest uppercase opacity-60">
+          <span className="text-muted-foreground text-xs opacity-70">
             {row.original.email}
           </span>
         </div>
@@ -120,7 +120,7 @@ export const columns: ColumnDef<Item>[] = [
       return (
         <Badge
           className={cn(
-            "rounded border-none px-2 py-0.5 text-[10px] font-bold tracking-wider uppercase shadow-none",
+            "rounded border-none px-2 py-0.5 text-xs font-medium shadow-none",
             statusClass,
           )}
         >
@@ -132,7 +132,7 @@ export const columns: ColumnDef<Item>[] = [
   {
     accessorKey: "paidBy",
     header: () => (
-      <span className="text-[10px] tracking-widest uppercase">Gateway</span>
+      <span className="text-xs font-medium">Gateway</span>
     ),
     cell: ({ row }) => (
       <div className="flex items-center gap-2 opacity-80">
@@ -147,7 +147,7 @@ export const columns: ColumnDef<Item>[] = [
           height={14}
           className="h-3.5 w-auto brightness-200 grayscale invert"
         />
-        <span className="text-muted-foreground text-[10px] font-medium uppercase">
+        <span className="text-muted-foreground text-xs font-medium">
           {row.getValue("paidBy")}
         </span>
       </div>
@@ -203,7 +203,7 @@ const TransactionDatatable = ({ data }: { data: Item[] }) => {
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className="text-muted-foreground/70 h-10 py-0 text-[10px] font-bold tracking-[0.2em] uppercase"
+                    className="text-muted-foreground/70 h-10 py-0 text-xs font-semibold"
                   >
                     {header.isPlaceholder
                       ? null
@@ -252,7 +252,7 @@ const TransactionDatatable = ({ data }: { data: Item[] }) => {
 
       <div className="border-border/10 flex items-center justify-between gap-3 border-t px-6 py-4">
         <p
-          className="text-muted-foreground/50 text-[10px] font-bold tracking-widest uppercase"
+          className="text-muted-foreground/50 text-xs font-medium"
           aria-live="polite"
         >
           SYSTEM_LOG:{" "}
@@ -281,7 +281,7 @@ const TransactionDatatable = ({ data }: { data: Item[] }) => {
             <PaginationItem>
               <Button
                 size="sm"
-                className="hover:bg-primary/10 hover:text-primary h-7 border-none text-[10px] font-bold uppercase transition-all"
+                className="hover:bg-primary/10 hover:text-primary h-7 border-none text-xs font-medium transition-all"
                 variant={"ghost"}
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
@@ -300,7 +300,7 @@ const TransactionDatatable = ({ data }: { data: Item[] }) => {
                   <Button
                     size="icon"
                     className={cn(
-                      "size-7 border-none text-[10px] font-bold transition-all",
+                      "size-7 border-none text-xs font-medium transition-all",
                       isActive
                         ? "bg-primary text-primary-foreground shadow-glow-primary"
                         : "text-muted-foreground hover:bg-muted bg-transparent",
@@ -316,7 +316,7 @@ const TransactionDatatable = ({ data }: { data: Item[] }) => {
             <PaginationItem>
               <Button
                 size="sm"
-                className="hover:bg-primary/10 hover:text-primary h-7 border-none text-[10px] font-bold uppercase transition-all"
+                className="hover:bg-primary/10 hover:text-primary h-7 border-none text-xs font-medium transition-all"
                 variant={"ghost"}
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}

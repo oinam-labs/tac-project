@@ -84,16 +84,16 @@ export function RouteTimeline({ className }: RouteTimelineProps) {
       <CardHeader className="border-border/30 border-b px-5 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex flex-col gap-0.5">
-            <h3 className="text-foreground text-xs font-bold tracking-[0.2em] uppercase">
+            <h3 className="text-foreground text-sm font-semibold">
               Route Timeline
             </h3>
-            <p className="text-muted-foreground/50 text-[9px] font-medium tracking-wide uppercase">
+            <p className="text-muted-foreground/50 text-xs font-medium">
               Delhi → Imphal via NH27
             </p>
           </div>
           <div className="bg-warning/10 border-warning/20 flex items-center gap-1.5 rounded-full border px-2.5 py-1">
             <RiTimeLine className="text-warning size-3" />
-            <span className="text-warning text-[9px] font-bold tracking-wide uppercase">
+            <span className="text-warning text-xs font-medium">
               36h 15m remaining
             </span>
           </div>

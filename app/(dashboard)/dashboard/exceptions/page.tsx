@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { ExceptionsClient } from "./_components/exceptions-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -38,7 +37,7 @@ async function getExceptions() {
             origin_warehouse:warehouses!origin_warehouse_id(name, code),
             destination_warehouse:warehouses!destination_warehouse_id(name, code)
         `)
-        .eq("status", "failed")
+        .eq("status", "exception")
         .order("updated_at", { ascending: false })
         .limit(20);
 
@@ -88,16 +87,11 @@ export default async function ExceptionsPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Exceptions" section="Ops Control" />
-            <main className="flex-1 overflow-y-auto p-6 scroll-smooth" id="main-scroll">
-                <div className="max-w-6xl mx-auto">
-                    <ExceptionsClient 
-                        initialExceptions={exceptions} 
-                        availableShipments={availableShipments}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-6xl mx-auto pb-20">
+            <ExceptionsClient 
+                initialExceptions={exceptions} 
+                availableShipments={availableShipments}
+            />
+        </div>
     );
 }

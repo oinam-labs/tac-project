@@ -63,19 +63,19 @@ export function ShippingLabelPreview({
       {/* Header with AWB and Mode */}
       <div className="flex items-stretch border-b-2 border-black">
         <div className="flex-1 border-r-2 border-black p-2">
-          <div className="text-muted-foreground text-[8px] tracking-wider uppercase">
+          <div className="text-muted-foreground text-[8px] font-medium">
             AWB
           </div>
-          <div className="font-mono text-sm font-bold tracking-wide">
+          <div className="font-mono text-sm font-bold">
             {awb || "TAC0000000"}
           </div>
         </div>
         <div className="flex min-w-[70px] flex-col items-center justify-center gap-1 p-2">
-          <div className="text-[10px] font-bold uppercase">
-            {transportMode.toUpperCase()}
+          <div className="text-[10px] font-bold">
+            {transportMode}
           </div>
           <div className="font-mono text-[10px]">{weight.toFixed(2)} kgs</div>
-          <div className="bg-black px-2 py-0.5 text-[10px] font-bold text-white uppercase">
+          <div className="bg-black px-2 py-0.5 text-[10px] font-bold text-white">
             {pieces > 1 ? "LARGE" : "SMALL"}
           </div>
         </div>
@@ -86,7 +86,7 @@ export function ShippingLabelPreview({
 
       {/* Ship To Section */}
       <div className="border-b border-black p-2">
-        <div className="text-muted-foreground text-[8px] font-bold uppercase">
+        <div className="text-muted-foreground text-[8px] font-bold">
           Ship To:
         </div>
         <div className="mt-0.5 text-sm font-bold">
@@ -104,7 +104,7 @@ export function ShippingLabelPreview({
       {/* Delivery Date & Payment */}
       <div className="flex border-b border-black">
         <div className="flex-1 border-r border-black p-2 text-center">
-          <div className="text-muted-foreground text-[8px] uppercase">
+          <div className="text-muted-foreground text-[8px] font-medium">
             Delivery
           </div>
           <div className="font-mono text-lg font-bold">
@@ -112,10 +112,10 @@ export function ShippingLabelPreview({
           </div>
         </div>
         <div className="flex-1 p-2 text-center">
-          <div className="text-muted-foreground text-[8px] uppercase">
+          <div className="text-muted-foreground text-[8px] font-medium">
             Payment
           </div>
-          <div className="mt-0.5 inline-block bg-black px-2 py-0.5 text-sm font-bold text-white uppercase">
+          <div className="mt-0.5 inline-block bg-black px-2 py-0.5 text-sm font-bold text-white">
             {paymentMode.replace("_", " ")}
           </div>
         </div>
@@ -124,15 +124,15 @@ export function ShippingLabelPreview({
       {/* Zone Info */}
       <div className="flex border-b border-black text-center">
         <div className="flex-1 border-r border-black p-1">
-          <div className="text-muted-foreground text-[7px] uppercase">
+          <div className="text-muted-foreground text-[7px] font-medium">
             Delivery Station
           </div>
           <div className="text-sm font-bold">
-            {shipTo.city?.substring(0, 4).toUpperCase() || "CITY"}
+            {shipTo.city?.substring(0, 4) || "CITY"}
           </div>
         </div>
         <div className="flex-1 border-r border-black p-1">
-          <div className="text-muted-foreground text-[7px] uppercase">
+          <div className="text-muted-foreground text-[7px] font-medium">
             Sector
           </div>
           <div className="text-sm font-bold">
@@ -140,11 +140,11 @@ export function ShippingLabelPreview({
           </div>
         </div>
         <div className="flex-1 p-1">
-          <div className="text-muted-foreground text-[7px] uppercase">
+          <div className="text-muted-foreground text-[7px] font-medium">
             Sortzone
           </div>
           <div className="text-sm font-bold">
-            {shipTo.state?.substring(0, 4).toUpperCase() || "ZONE"}
+            {shipTo.state?.substring(0, 4) || "ZONE"}
           </div>
         </div>
       </div>
@@ -176,7 +176,7 @@ export function ShippingLabelPreview({
 
       {/* Ship From */}
       <div className="border-b border-black p-2">
-        <div className="text-muted-foreground text-[8px] font-bold uppercase">
+        <div className="text-muted-foreground text-[8px] font-bold">
           Ordered From:
         </div>
         <div className="text-sm font-bold">
@@ -187,7 +187,7 @@ export function ShippingLabelPreview({
       {/* Barcode Placeholder */}
       <div className="flex justify-center bg-white p-3">
         <div className="text-center">
-          <div className="font-mono text-3xl font-bold tracking-[0.3em]">
+          <div className="font-mono text-3xl font-bold">
             |||||||||||||||
           </div>
           <div className="mt-1 font-mono text-[8px]">{awb || "TAC0000000"}</div>
@@ -195,7 +195,7 @@ export function ShippingLabelPreview({
       </div>
 
       {/* Return Address */}
-      <div className="border-t border-black bg-gray-50 p-1.5 text-[8px]">
+      <div className="border-t border-black bg-muted/50 p-1.5 text-[8px]">
         <span className="font-bold">Ship From:</span>{" "}
         {shipFrom.name || "TAC CARGO SERVICE"}
         <br />
@@ -216,7 +216,7 @@ export function ShippingLabelPreview({
             <tbody>
               <tr>
                 <td className="border-r border-black p-1">1</td>
-                <td className="p-1 uppercase">{contentDescription}</td>
+                <td className="p-1">{contentDescription}</td>
               </tr>
             </tbody>
           </table>
@@ -250,7 +250,7 @@ export function ShippingLabelPreview({
 
       {/* Brand Footer */}
       <div className="border-t-2 border-black p-2 text-right">
-        <span className="text-lg font-bold tracking-tight">tac</span>
+        <span className="text-lg font-bold">tac</span>
         <span className="text-lg font-light"> cargo</span>
       </div>
     </div>

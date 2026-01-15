@@ -139,11 +139,11 @@ Track: ${trackingUrl}
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem onClick={handleWhatsAppShare}>
-            <MessageCircle className="w-4 h-4 mr-2 text-green-500" />
+            <MessageCircle className="w-4 h-4 mr-2 text-success" />
             WhatsApp
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => setShowEmailDialog(true)}>
-            <Mail className="w-4 h-4 mr-2 text-blue-500" />
+            <Mail className="w-4 h-4 mr-2 text-primary" />
             Email
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleCopyLink}>
@@ -167,7 +167,7 @@ Track: ${trackingUrl}
           size="sm"
           onClick={handleWhatsAppShare}
           disabled={isLoading || !recipientPhone}
-          className="text-green-600 hover:text-green-700 hover:bg-green-50"
+          className="text-success hover:text-success/80 hover:bg-success/10"
         >
           {isLoading ? (
             <Loader2 className="w-4 h-4 mr-2 animate-spin" />
@@ -181,7 +181,7 @@ Track: ${trackingUrl}
           variant="outline"
           size="sm"
           onClick={() => setShowEmailDialog(true)}
-          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+          className="text-primary hover:text-primary/80 hover:bg-primary/10"
         >
           <Mail className="w-4 h-4 mr-2" />
           Email
@@ -193,7 +193,7 @@ Track: ${trackingUrl}
           onClick={handleCopyLink}
         >
           {copied ? (
-            <Check className="w-4 h-4 mr-2 text-green-500" />
+            <Check className="w-4 h-4 mr-2 text-success" />
           ) : (
             <Copy className="w-4 h-4 mr-2" />
           )}

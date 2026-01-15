@@ -32,7 +32,7 @@ export const GlassmorphismCard = forwardRef<HTMLDivElement, GlassmorphismCardPro
           "relative rounded-xl border transition-all duration-300",
           blurClasses[blur],
           variantClasses[variant],
-          glow && "shadow-[0_0_30px_-5px_var(--glow-color,hsl(var(--primary)/0.3))]",
+          glow && "shadow-lg shadow-primary/20",
           className
         )}
         style={glowColor ? { "--glow-color": glowColor } as React.CSSProperties : undefined}
@@ -108,8 +108,8 @@ export function GlassmorphismStat({
           <div className={cn(
             "text-xs font-medium px-2 py-1 rounded-full",
             trend.value >= 0
-              ? "bg-emerald-500/10 text-emerald-500"
-              : "bg-red-500/10 text-red-500"
+              ? "bg-success/10 text-success"
+              : "bg-destructive/10 text-destructive"
           )}>
             {trend.value >= 0 ? "+" : ""}{trend.value}%
           </div>
@@ -148,10 +148,10 @@ export function GlassmorphismBadge({
 }: GlassmorphismBadgeProps) {
   const variantClasses = {
     default: "bg-muted/80 text-muted-foreground border-border/50",
-    success: "bg-emerald-500/10 text-emerald-500 border-emerald-500/20",
-    warning: "bg-amber-500/10 text-amber-500 border-amber-500/20",
-    danger: "bg-red-500/10 text-red-500 border-red-500/20",
-    info: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+    success: "bg-success/10 text-success border-success/20",
+    warning: "bg-warning/10 text-warning border-warning/20",
+    danger: "bg-destructive/10 text-destructive border-destructive/20",
+    info: "bg-info/10 text-info border-info/20",
   };
 
   const sizeClasses = {
@@ -170,10 +170,10 @@ export function GlassmorphismBadge({
       {pulse && (
         <span className={cn(
           "w-1.5 h-1.5 rounded-full animate-pulse",
-          variant === "success" && "bg-emerald-500",
-          variant === "warning" && "bg-amber-500",
-          variant === "danger" && "bg-red-500",
-          variant === "info" && "bg-blue-500",
+          variant === "success" && "bg-success",
+          variant === "warning" && "bg-warning",
+          variant === "danger" && "bg-destructive",
+          variant === "info" && "bg-info",
           variant === "default" && "bg-muted-foreground"
         )} />
       )}

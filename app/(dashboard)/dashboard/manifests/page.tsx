@@ -1,6 +1,5 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { ManifestsClient } from "./_components/manifests-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
@@ -59,7 +58,7 @@ async function getUnassignedShipments() {
             destination_warehouse:warehouses!destination_warehouse_id(name, code)
         `)
         .is("manifest_id", null)
-        .in("status", ["pending", "picked_up"])
+        .in("status", ["booked", "picked_up"])
         .order("created_at", { ascending: false })
         .limit(50);
 
@@ -90,15 +89,12 @@ export default async function ManifestsPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Manifests" section="Ops Control" />
-            <main className="flex-1 overflow-x-auto overflow-y-auto p-6" id="main-scroll">
-                <ManifestsClient
-                    initialManifests={manifests}
-                    unassignedShipments={unassignedShipments}
-                    warehouses={warehouses}
-                />
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <ManifestsClient
+                initialManifests={manifests}
+                unassignedShipments={unassignedShipments}
+                warehouses={warehouses}
+            />
+        </div>
     );
 }

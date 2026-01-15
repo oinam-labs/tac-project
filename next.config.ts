@@ -5,7 +5,7 @@
 
 import type { NextConfig } from "next";
 
-// Bundle analyzer for performance optimization
+// eslint-disable-next-line @typescript-eslint/no-require-imports -- Bundle analyzer requires CommonJS
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
@@ -14,6 +14,25 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
  * Security headers for production deployment
  * Following OWASP recommendations
  */
+/**
+ * Content Security Policy configuration
+ * Adjust as needed for your deployment environment
+ */
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' https://cdn.vercel-insights.com https://vercel.live;
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' blob: data: https:;
+  font-src 'self' data:;
+  connect-src 'self' https://*.supabase.co wss://*.supabase.co https://cdn.vercel-insights.com https://vercel.live;
+  media-src 'self';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  frame-ancestors 'self';
+  upgrade-insecure-requests;
+`;
+
 const securityHeaders = [
   {
     key: "X-DNS-Prefetch-Control",
@@ -42,6 +61,10 @@ const securityHeaders = [
   {
     key: "X-XSS-Protection",
     value: "1; mode=block",
+  },
+  {
+    key: "Content-Security-Policy",
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, " ").trim(),
   },
 ];
 
@@ -178,6 +201,16 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ["@supabase/supabase-js"],
 
   /**
+   * Transpile packages that need to be processed by Next.js
+   */
+  transpilePackages: [
+    "@crayonai/react-ui",
+    "@crayonai/react-core",
+    "@crayonai/stream",
+    "@thesysai/genui-sdk",
+  ],
+
+  /**
    * Experimental features for performance optimization
    */
   experimental: {
@@ -256,6 +289,7 @@ const nextConfig: NextConfig = {
     if (!isServer) {
       config.resolve.alias = {
         ...config.resolve.alias,
+        // eslint-disable-next-line @typescript-eslint/no-require-imports -- Path resolution requires CommonJS
         "@": require("path").resolve(__dirname),
       };
     }

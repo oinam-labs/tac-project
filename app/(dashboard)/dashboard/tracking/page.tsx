@@ -1,13 +1,12 @@
 import React from "react";
 import { createClient } from "@/lib/supabase/server";
-import { V2Header } from "../_components/v2-header";
 import { TrackingClient } from "./_components/tracking-client";
 import { normalizeJoinSingle } from "@/lib/utils";
 
 async function getTrackingStats() {
     const supabase = await createClient();
     
-    const statuses = ["pending", "picked_up", "in_transit", "out_for_delivery", "delivered", "failed"] as const;
+    const statuses = ["booked", "picked_up", "in_transit", "out_for_delivery", "delivered", "exception"] as const;
     const counts: Record<string, number> = {};
 
     for (const status of statuses) {
@@ -54,7 +53,7 @@ async function getShipmentsByStatus(status?: string) {
             updated_at,
             origin_warehouse:warehouses!origin_warehouse_id(name, code),
             destination_warehouse:warehouses!destination_warehouse_id(name, code),
-            manifests(manifest_number)
+            manifest:manifests!manifest_id(manifest_number)
         `)
         .order("updated_at", { ascending: false })
         .limit(50);
@@ -68,7 +67,7 @@ async function getShipmentsByStatus(status?: string) {
         ...s,
         origin_warehouse: normalizeJoinSingle(s.origin_warehouse),
         destination_warehouse: normalizeJoinSingle(s.destination_warehouse),
-        manifests: normalizeJoinSingle(s.manifests),
+        manifest: normalizeJoinSingle(s.manifest),
     }));
 }
 
@@ -79,16 +78,11 @@ export default async function TrackingPage() {
     ]);
 
     return (
-        <>
-            <V2Header title="Tracking" section="Ops Control" />
-            <main className="flex-1 overflow-y-auto p-6 scroll-smooth" id="main-scroll">
-                <div className="max-w-[1400px] mx-auto">
-                    <TrackingClient 
-                        stats={stats}
-                        initialShipments={shipments}
-                    />
-                </div>
-            </main>
-        </>
+        <div className="max-w-[1600px] mx-auto pb-20">
+            <TrackingClient 
+                stats={stats}
+                initialShipments={shipments}
+            />
+        </div>
     );
 }

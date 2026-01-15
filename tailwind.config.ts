@@ -7,6 +7,7 @@ const config: Config = {
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  darkMode: "class",
   theme: {
     container: {
       center: true,
@@ -19,101 +20,93 @@ const config: Config = {
       },
     },
     extend: {
-      // OKLCH Design System Colors - Semantic Tokens
       colors: {
-        // Base semantic colors (mapped from CSS variables)
-        background: "var(--color-background)",
-        foreground: "var(--color-foreground)",
-        card: "var(--color-card)",
-        "card-foreground": "var(--color-card-foreground)",
-        popover: "var(--color-popover)",
-        "popover-foreground": "var(--color-popover-foreground)",
-        primary: "var(--color-primary)",
-        "primary-foreground": "var(--color-primary-foreground)",
-        secondary: "var(--color-secondary)",
-        "secondary-foreground": "var(--color-secondary-foreground)",
-        muted: "var(--color-muted)",
-        "muted-foreground": "var(--color-muted-foreground)",
-        accent: "var(--color-accent)",
-        "accent-foreground": "var(--color-accent-foreground)",
-        destructive: "var(--color-destructive)",
-        "destructive-foreground": "var(--color-destructive-foreground)",
-        success: "var(--color-success)",
-        "success-foreground": "var(--color-success-foreground)",
-        warning: "var(--color-warning)",
-        "warning-foreground": "var(--color-warning-foreground)",
-        info: "var(--color-info)",
-        "info-foreground": "var(--color-info-foreground)",
-        border: "var(--color-border)",
-        input: "var(--color-input)",
-        ring: "var(--color-ring)",
-        
-        // Chart colors
-        "chart-1": "var(--color-chart-1)",
-        "chart-2": "var(--color-chart-2)",
-        "chart-3": "var(--color-chart-3)",
-        "chart-4": "var(--color-chart-4)",
-        "chart-5": "var(--color-chart-5)",
-        
-        // Sidebar colors
-        sidebar: "var(--color-sidebar)",
-        "sidebar-foreground": "var(--color-sidebar-foreground)",
-        "sidebar-primary": "var(--color-sidebar-primary)",
-        "sidebar-primary-foreground": "var(--color-sidebar-primary-foreground)",
-        "sidebar-accent": "var(--color-sidebar-accent)",
-        "sidebar-accent-foreground": "var(--color-sidebar-accent-foreground)",
-        "sidebar-border": "var(--color-sidebar-border)",
-        "sidebar-ring": "var(--color-sidebar-ring)",
+        border: "var(--border)",
+        input: "var(--input)",
+        ring: "var(--ring)",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+        primary: {
+          DEFAULT: "var(--primary)",
+          foreground: "var(--primary-foreground)",
+        },
+        secondary: {
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
+        },
+        destructive: {
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        muted: {
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
+        },
+        accent: {
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
+        },
+        popover: {
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
+        },
+        card: {
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
+        },
+        warning: {
+          DEFAULT: "var(--warning)",
+          foreground: "var(--warning-foreground)",
+        },
+        info: {
+          DEFAULT: "var(--info)",
+          foreground: "var(--info-foreground)",
+        },
+        sidebar: {
+          DEFAULT: "var(--sidebar)",
+          foreground: "var(--sidebar-foreground)",
+          primary: "var(--sidebar-primary)",
+          "primary-foreground": "var(--sidebar-primary-foreground)",
+          accent: "var(--sidebar-accent)",
+          "accent-foreground": "var(--sidebar-accent-foreground)",
+          border: "var(--sidebar-border)",
+          ring: "var(--sidebar-ring)",
+        },
+        chart: {
+          "1": "var(--chart-1)",
+          "2": "var(--chart-2)",
+          "3": "var(--chart-3)",
+          "4": "var(--chart-4)",
+          "5": "var(--chart-5)",
+        },
       },
-      
-      // Elevation System (Enterprise-grade shadows)
-      boxShadow: {
-        "elevation-1": "var(--shadow-xs)",
-        "elevation-2": "var(--shadow-sm)",
-        "elevation-3": "var(--shadow-md)",
-        "elevation-4": "var(--shadow-lg)",
-        "elevation-5": "var(--shadow-xl)",
-        "elevation-6": "var(--shadow-2xl)",
-      },
-      
-      // Semantic Border Radius
       borderRadius: {
-        sm: "var(--radius-sm)",
-        md: "var(--radius-md)",
-        lg: "var(--radius-lg)",
-        xl: "var(--radius-xl)",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
-      
-      // Typography System
-      fontFamily: {
-        sans: "var(--font-sans)",
-        serif: "var(--font-serif)",
-        mono: "var(--font-mono)",
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        shimmer: {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(100%)" },
+        },
       },
-      
-      // Layout System
-      maxWidth: {
-        "form": "var(--max-width-form)",
-        "form-min": "var(--max-width-form-min)",
-        "summary": "var(--max-width-summary)",
-      },
-      
-      // Semantic Spacing System
-      spacing: {
-        "section": "var(--spacing-section)",
-        "group": "var(--spacing-group)",
-        "field": "var(--spacing-field)",
-      },
-      
-      // Grid System
-      gridTemplateColumns: {
-        "12": "repeat(12, minmax(0, 1fr))",
-      },
-      
-      // Semantic Gaps
-      gap: {
-        "x": "var(--spacing-group)",
-        "y": "var(--spacing-section)",
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        shimmer: "shimmer 2s infinite",
       },
     },
   },

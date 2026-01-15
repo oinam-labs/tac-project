@@ -165,7 +165,7 @@ function CompetencyCard({
               : "-translate-x-1/2 -translate-y-1/2 -rotate-90 opacity-100",
           )}
         >
-          <span className="text-xl font-bold tracking-widest text-white/90 uppercase drop-shadow-md">
+          <span className="text-xl font-bold text-white/90 drop-shadow-md">
             {item.title}
           </span>
         </div>

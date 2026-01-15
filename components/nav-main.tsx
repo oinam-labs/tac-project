@@ -51,9 +51,7 @@ export function NavMain({
   if (!mounted) {
     return (
       <SidebarGroup>
-        <SidebarGroupLabel className="text-muted-foreground/50 mb-2 text-[10px] font-bold tracking-[0.15em] uppercase">
-          {label}
-        </SidebarGroupLabel>
+        <SidebarGroupLabel>{label}</SidebarGroupLabel>
         <SidebarMenu>
           {items.map((item) => (
             <SidebarMenuItem key={item.title}>
@@ -67,76 +65,52 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel className="text-muted-foreground/50 mb-2 text-[10px] font-bold tracking-[0.15em] uppercase">
-        {label}
-      </SidebarGroupLabel>
-      <SidebarMenu className="gap-0.5">
+      <SidebarGroupLabel>{label}</SidebarGroupLabel>
+      <SidebarMenu>
         {items.map((item) => {
-          const isActive = item.isActive ?? pathname === item.url;
+          // Check if item is active or any of its children are active
           const isSubItemActive = item.items?.some(
             (subItem) => pathname === subItem.url,
           );
+          const isActive = item.isActive ?? (pathname === item.url || isSubItemActive);
 
           return (
             <Collapsible
               key={item.title}
               asChild
-              defaultOpen={isActive || isSubItemActive}
+              defaultOpen={isActive}
+              className="group/collapsible"
             >
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   tooltip={item.title}
-                  isActive={isActive}
+                  isActive={isActive && !isSubItemActive} // Only highlight main if no child is active (or if it has no children)
                   className={cn(
-                    "group/nav-item h-9 rounded-lg px-3 transition-all duration-200",
-                    isActive
-                      ? "from-primary/15 via-primary/10 text-primary border-primary border-l-[3px] bg-gradient-to-r to-transparent shadow-[inset_6px_0_20px_-6px_var(--glow-primary)]"
-                      : "hover:bg-muted/50 text-muted-foreground border-l-[3px] border-transparent hover:translate-x-1",
+                    "transition-all duration-200",
+                    isActive && !isSubItemActive && "font-medium"
                   )}
                 >
-                  <Link href={item.url} className="flex items-center gap-3">
-                    <item.icon
-                      className={cn(
-                        "size-4 transition-all duration-200",
-                        isActive
-                          ? "text-primary"
-                          : "text-muted-foreground/50 group-hover/nav-item:text-primary/70 group-hover/nav-item:scale-110",
-                      )}
-                    />
-                    <span
-                      className={cn(
-                        "text-xs font-medium tracking-tight transition-colors",
-                        isActive
-                          ? "text-foreground font-semibold"
-                          : "text-muted-foreground/80 group-hover/nav-item:text-foreground",
-                      )}
-                    >
-                      {item.title}
-                    </span>
+                  <Link href={item.url}>
+                    <item.icon className="size-4" />
+                    <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
                 {item.items?.length ? (
                   <>
                     <CollapsibleTrigger asChild>
-                      <SidebarMenuAction className="transition-transform duration-200 data-[state=open]:rotate-90">
+                      <SidebarMenuAction className="data-[state=open]:rotate-90">
                         <ChevronRight className="size-4" />
                         <span className="sr-only">Toggle</span>
                       </SidebarMenuAction>
                     </CollapsibleTrigger>
                     <CollapsibleContent>
-                      <SidebarMenuSub className="border-border/10 ml-4 space-y-0.5 border-l py-1">
+                      <SidebarMenuSub>
                         {item.items?.map((subItem) => (
                           <SidebarMenuSubItem key={subItem.title}>
                             <SidebarMenuSubButton
                               asChild
                               isActive={pathname === subItem.url}
-                              className={cn(
-                                "h-8 text-[11px] transition-colors",
-                                pathname === subItem.url
-                                  ? "text-primary font-bold"
-                                  : "text-muted-foreground/60 hover:text-foreground",
-                              )}
                             >
                               <Link href={subItem.url}>
                                 <span>{subItem.title}</span>

@@ -9,9 +9,15 @@ import {
     ArrowRight,
     CheckCircle,
     FileText,
-    MoreHorizontal
+    MoreHorizontal,
+    Calendar,
+    User,
+    Weight,
+    Layers,
+    MapPin,
+    AlertCircle
 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ColumnDef } from "@tanstack/react-table";
 import {
     Dialog,
     DialogContent,
@@ -24,12 +30,20 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
+
+import { PageShell } from "@/components/dashboard/page-shell";
+import { DataTable } from "@/components/dashboard/data-table-premium";
 import {
     createManifest,
     lockManifest,
@@ -37,6 +51,8 @@ import {
     addShipmentToManifest
 } from "@/app/actions/manifests";
 import type { ManifestStatus } from "@/types/database";
+
+// --- Types ---
 
 interface Manifest {
     id: string;
@@ -77,83 +93,264 @@ interface ManifestsClientProps {
     warehouses: Warehouse[];
 }
 
-const statusConfig: Record<ManifestStatus, { label: string; color: string; icon: React.ElementType }> = {
-    draft: { label: "Draft", color: "bg-muted text-muted-foreground border-border", icon: FileText },
-    finalized: { label: "Finalized", color: "bg-warning/10 text-warning border-warning/20", icon: Lock },
-    dispatched: { label: "Dispatched", color: "bg-primary/10 text-primary border-primary/20", icon: Truck },
-    in_transit: { label: "In Transit", color: "bg-primary/10 text-primary border-primary/20", icon: Truck },
-    arrived: { label: "Arrived", color: "bg-primary/10 text-primary border-primary/20", icon: Package },
-    completed: { label: "Completed", color: "bg-success/10 text-success border-success/20", icon: CheckCircle },
+// --- Configuration ---
+
+const statusConfig: Record<string, { label: string; variant: "default" | "secondary" | "destructive" | "outline"; className?: string; icon: React.ElementType }> = {
+    draft: { label: "Draft", variant: "secondary", className: "bg-muted text-muted-foreground border-border", icon: FileText },
+    finalized: { label: "Finalized", variant: "default", className: "bg-warning/10 text-warning border-warning/20", icon: Lock },
+    dispatched: { label: "Dispatched", variant: "default", className: "bg-primary/20 text-primary border-primary/20", icon: Truck },
+    in_transit: { label: "In Transit", variant: "default", className: "bg-primary/10 text-primary border-primary/20", icon: Truck },
+    arrived: { label: "Arrived", variant: "default", className: "bg-primary/20 text-primary border-primary/20", icon: MapPin },
+    completed: { label: "Completed", variant: "secondary", className: "bg-primary/10 text-primary border-primary/20", icon: CheckCircle },
 };
+
+// --- Main Component ---
 
 export function ManifestsClient({
     initialManifests,
     unassignedShipments: initialUnassigned,
     warehouses
-}: Readonly<ManifestsClientProps>) {
-    const [manifests, setManifests] = useState(initialManifests);
-    const [unassigned, setUnassigned] = useState(initialUnassigned);
+}: ManifestsClientProps) {
+    const [manifests, setManifests] = useState<Manifest[]>(initialManifests);
+    const [unassigned, setUnassigned] = useState<Shipment[]>(initialUnassigned);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [isPending, startTransition] = useTransition();
+
 
     const draftManifests = manifests.filter(m => m.status === "draft");
-    const finalizedManifests = manifests.filter(m => m.status === "finalized");
-    const dispatchedManifests = manifests.filter(m => m.status === "dispatched" || m.status === "in_transit" || m.status === "arrived" || m.status === "completed");
+
+    // -- Actions --
 
     const handleLock = async (manifestId: string) => {
-        startTransition(async () => {
-            const result = await lockManifest(manifestId);
-            if (result.success) {
-                setManifests(prev =>
-                    prev.map(m => m.id === manifestId ? { ...m, status: "finalized" as ManifestStatus } : m)
-                );
-                toast.success("Manifest locked");
-            } else {
-                toast.error(result.error);
-            }
-        });
+        const result = await lockManifest(manifestId);
+        if (result.success) {
+            setManifests(prev => prev.map(m => m.id === manifestId ? { ...m, status: "finalized" as ManifestStatus } : m));
+            toast.success("Manifest locked successfully");
+        } else {
+            toast.error(result.error);
+        }
     };
 
     const handleDispatch = async (manifestId: string) => {
-        startTransition(async () => {
-            const result = await dispatchManifest(manifestId);
-            if (result.success) {
-                setManifests(prev =>
-                    prev.map(m => m.id === manifestId ? { ...m, status: "dispatched" as ManifestStatus } : m)
-                );
-                toast.success("Manifest dispatched");
-            } else {
-                toast.error(result.error);
-            }
-        });
+        const result = await dispatchManifest(manifestId);
+        if (result.success) {
+            setManifests(prev => prev.map(m => m.id === manifestId ? { ...m, status: "dispatched" as ManifestStatus } : m));
+            toast.success("Manifest dispatched successfully");
+        } else {
+            toast.error(result.error);
+        }
     };
 
-    const handleAddShipment = async (manifestId: string, shipmentRef: string) => {
-        startTransition(async () => {
-            const result = await addShipmentToManifest(manifestId, shipmentRef);
-            if (result.success) {
-                setUnassigned(prev => prev.filter(s => s.reference !== shipmentRef));
-                toast.success("Shipment added to manifest");
-            } else {
-                toast.error(result.error);
-            }
-        });
+    const handleAddToManifest = async (manifestId: string, shipmentRef: string) => {
+        const result = await addShipmentToManifest(manifestId, shipmentRef);
+        if (result.success) {
+            setUnassigned(prev => prev.filter(s => s.reference !== shipmentRef));
+            toast.success("Shipment added to manifest");
+        } else {
+            toast.error(result.error);
+        }
     };
 
-    return (
-        <div className="space-y-6">
-            {/* Header */}
-            <div className="flex justify-between items-center">
-                <div className="flex items-center gap-4">
-                    <span className="text-sm text-muted-foreground">
-                        {manifests.length} manifests • {unassigned.length} unassigned shipments
+    // -- Columns: Manifests --
+
+    const manifestColumns: ColumnDef<Manifest>[] = [
+        {
+            accessorKey: "manifest_number",
+            header: "Manifest ID",
+            cell: ({ row }) => (
+                <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">{row.getValue("manifest_number")}</span>
+                    <span className="text-xs text-muted-foreground flex items-center gap-1">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(row.original.created_at).toLocaleDateString()}
                     </span>
                 </div>
+            ),
+        },
+        {
+            accessorKey: "status",
+            header: "Status",
+            cell: ({ row }) => {
+                const status = row.getValue("status") as string;
+                const config = statusConfig[status] || statusConfig.draft;
+                const Icon = config.icon;
+                return (
+                    <Badge variant="outline" className={config.className}>
+                        <Icon className="w-3 h-3 mr-1.5" />
+                        {config.label}
+                    </Badge>
+                )
+            },
+        },
+        {
+            accessorKey: "route",
+            header: "Route",
+            cell: ({ row }) => (
+                <div className="flex items-center gap-2 text-sm text-foreground">
+                    <div className="flex flex-col items-center">
+                        <span className="font-mono text-xs font-medium bg-muted px-1.5 py-0.5 rounded text-foreground">
+                            {row.original.origin_warehouse?.code || "N/A"}
+                        </span>
+                    </div>
+                    <ArrowRight className="w-3 h-3 text-muted-foreground/50" />
+                    <div className="flex flex-col items-center">
+                        <span className="font-mono text-xs font-medium bg-muted px-1.5 py-0.5 rounded text-muted-foreground">
+                            {row.original.destination_warehouse?.code || "N/A"}
+                        </span>
+                    </div>
+                </div>
+            )
+        },
+        {
+            header: "Driver & Vehicle",
+            cell: ({ row }) => (
+                <div className="flex flex-col text-sm">
+                    {row.original.driver_name ? (
+                        <>
+                            <span className="flex items-center gap-1 text-foreground">
+                                <User className="w-3 h-3 text-muted-foreground" /> {row.original.driver_name}
+                            </span>
+                            <span className="flex items-center gap-1 text-xs text-muted-foreground">
+                                <Truck className="w-3 h-3 text-muted-foreground" /> {row.original.vehicle_number}
+                            </span>
+                        </>
+                    ) : (
+                        <span className="text-muted-foreground/50 italic text-xs">Unassigned</span>
+                    )}
+                </div>
+            )
+        },
+        {
+            header: "Load",
+            cell: ({ row }) => (
+                <div className="flex flex-col gap-1 text-xs">
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                        <Layers className="w-3 h-3" /> {row.original.total_pieces || 0} pcs
+                    </span>
+                    <span className="flex items-center gap-1 text-muted-foreground">
+                        <Weight className="w-3 h-3" /> {row.original.total_weight || 0} kg
+                    </span>
+                </div>
+            )
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {row.original.status === 'draft' && (
+                                <DropdownMenuItem onClick={() => handleLock(row.original.id)}>
+                                    <Lock className="mr-2 h-4 w-4" /> Lock Manifest
+                                </DropdownMenuItem>
+                            )}
+                            {row.original.status === 'finalized' && (
+                                <DropdownMenuItem onClick={() => handleDispatch(row.original.id)}>
+                                    <Truck className="mr-2 h-4 w-4" /> Dispatch
+                                </DropdownMenuItem>
+                            )}
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            ),
+        }
+    ];
+
+    // -- Columns: Unassigned Shipments --
+
+    const shipmentColumns: ColumnDef<Shipment>[] = [
+        {
+            id: "select",
+            header: ({ table }) => (
+                <Checkbox
+                    checked={table.getIsAllPageRowsSelected()}
+                    onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+                    aria-label="Select all"
+                    className="translate-y-[2px]"
+                />
+            ),
+            cell: ({ row }) => (
+                <Checkbox
+                    checked={row.getIsSelected()}
+                    onCheckedChange={(value) => row.toggleSelected(!!value)}
+                    aria-label="Select row"
+                    className="translate-y-[2px]"
+                />
+            ),
+            enableSorting: false,
+            enableHiding: false,
+        },
+        {
+            accessorKey: "reference",
+            header: "Reference",
+            cell: ({ row }) => <span className="font-medium">{row.getValue("reference")}</span>
+        },
+        {
+            accessorKey: "route",
+            header: "Route",
+            cell: ({ row }) => (
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <span className="bg-muted px-1.5 rounded text-foreground">{row.original.origin_warehouse?.code}</span>
+                    <ArrowRight className="w-3 h-3 text-muted-foreground/30" />
+                    <span className="bg-muted px-1.5 rounded text-foreground">{row.original.destination_warehouse?.code}</span>
+                </div>
+            )
+        },
+        {
+            accessorKey: "details",
+            header: "Details",
+            cell: ({ row }) => (
+                <div className="text-xs text-muted-foreground">
+                    {row.original.pieces} pcs • {row.original.weight_kg} kg
+                </div>
+            )
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => (
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="ghost" size="sm" className="h-7 text-xs">
+                            Actions
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>Add to Manifest</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        {draftManifests.length > 0 ? (
+                            draftManifests.map(m => (
+                                <DropdownMenuItem key={m.id} onClick={() => handleAddToManifest(m.id, row.original.reference)}>
+                                    {m.manifest_number} ({m.destination_warehouse?.code})
+                                </DropdownMenuItem>
+                            ))
+                        ) : (
+                            <DropdownMenuItem disabled>No draft manifests</DropdownMenuItem>
+                        )}
+                    </DropdownMenuContent>
+                </DropdownMenu>
+            )
+        }
+    ];
+
+
+    return (
+        <PageShell
+            title="Manifests"
+            description="Consolidate shipments, assign drivers, and manage linehaul transport."
+            breadcrumb={["Dashboard", "Operations", "Manifests"]}
+            action={
                 <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
                     <DialogTrigger asChild>
-                        <Button size="sm" className="gap-1">
-                            <Plus className="w-4 h-4" />
-                            Create Manifest
+                        <Button className="rounded-full shadow-lg shadow-primary/20">
+                            <Plus className="w-4 h-4 mr-2" />
+                            New Manifest
                         </Button>
                     </DialogTrigger>
                     <DialogContent>
@@ -168,259 +365,80 @@ export function ManifestsClient({
                             onSuccess={(newManifest) => {
                                 setManifests(prev => [newManifest as Manifest, ...prev]);
                                 setIsCreateOpen(false);
-                                toast.success("Manifest created");
+                                toast.success("Manifest created successfully");
                             }}
                         />
                     </DialogContent>
                 </Dialog>
-            </div>
-
-            {/* Kanban Board */}
-            <div className="flex gap-6 overflow-x-auto pb-4">
-                {/* Unassigned Shipments */}
-                <div className="w-80 flex-shrink-0 flex flex-col gap-4 bg-card/50 rounded-xl p-4 border border-dashed border-border">
-                    <div className="flex items-center justify-between px-1 mb-2">
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Unassigned</span>
-                        <span className="text-[10px] font-mono bg-muted px-2 py-0.5 rounded text-muted-foreground">
-                            {unassigned.length}
-                        </span>
+            }
+        >
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Open Drafts</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">{draftManifests.length}</span>
+                        <FileText className="w-5 h-5 text-muted-foreground" />
                     </div>
-
-                    {unassigned.length === 0 ? (
-                        <div className="h-32 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                            <span className="text-xs text-muted-foreground">No unassigned shipments</span>
-                        </div>
-                    ) : (
-                        <div className="space-y-3 max-h-[60vh] overflow-y-auto">
-                            {unassigned.map((shipment) => (
-                                <ShipmentCard
-                                    key={shipment.id}
-                                    shipment={shipment}
-                                    manifests={draftManifests}
-                                    onAddToManifest={handleAddShipment}
-                                    isPending={isPending}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
-
-                {/* Draft/Open Manifests */}
-                <div className="w-80 flex-shrink-0 flex flex-col gap-4 bg-card/50 rounded-xl p-4 border border-dashed border-border">
-                    <div className="flex items-center justify-between px-1 mb-2">
-                        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">Open</span>
-                        <span className="text-[10px] font-mono bg-muted px-2 py-0.5 rounded text-muted-foreground">
-                            {draftManifests.length}
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">In Transit</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">
+                            {manifests.filter(m => ['dispatched', 'in_transit'].includes(m.status)).length}
                         </span>
+                        <Truck className="w-5 h-5 text-primary" />
                     </div>
-
-                    {draftManifests.length === 0 ? (
-                        <div className="h-32 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                            <span className="text-xs text-muted-foreground">No open manifests</span>
-                        </div>
-                    ) : (
-                        <div className="space-y-3 max-h-[60vh] overflow-y-auto">
-                            {draftManifests.map((manifest) => (
-                                <ManifestCard
-                                    key={manifest.id}
-                                    manifest={manifest}
-                                    onLock={handleLock}
-                                    onDispatch={handleDispatch}
-                                    isPending={isPending}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
-
-                {/* Locked Manifests */}
-                <div className="w-80 flex-shrink-0 flex flex-col gap-4 bg-card/50 rounded-xl p-4 border border-dashed border-warning/20">
-                    <div className="flex items-center justify-between px-1 mb-2">
-                        <span className="text-xs font-bold text-warning uppercase tracking-widest">Locked</span>
-                        <span className="text-[10px] font-mono bg-warning/10 px-2 py-0.5 rounded text-warning">
-                            {finalizedManifests.length}
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Arrived</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">
+                            {manifests.filter(m => m.status === 'arrived').length}
                         </span>
+                        <Package className="w-5 h-5 text-primary" />
                     </div>
-
-                    {finalizedManifests.length === 0 ? (
-                        <div className="h-32 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                            <span className="text-xs text-muted-foreground">No locked manifests</span>
-                        </div>
-                    ) : (
-                        <div className="space-y-3 max-h-[60vh] overflow-y-auto">
-                            {finalizedManifests.map((manifest) => (
-                                <ManifestCard
-                                    key={manifest.id}
-                                    manifest={manifest}
-                                    onLock={handleLock}
-                                    onDispatch={handleDispatch}
-                                    isPending={isPending}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
-
-                {/* Dispatched Manifests */}
-                <div className="w-80 flex-shrink-0 flex flex-col gap-4 bg-card/50 rounded-xl p-4 border border-dashed border-primary/20">
-                    <div className="flex items-center justify-between px-1 mb-2">
-                        <span className="text-xs font-bold text-primary/70 uppercase tracking-widest">Dispatched</span>
-                        <span className="text-[10px] font-mono bg-primary/10 px-2 py-0.5 rounded text-primary">
-                            {dispatchedManifests.length}
-                        </span>
+                <div className="bg-warning/10 rounded-xl p-4 border border-warning/20 shadow-sm flex flex-col">
+                    <span className="text-warning text-xs font-medium uppercase tracking-wider mb-1">Queue</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-warning">{unassigned.length}</span>
+                        <AlertCircle className="w-5 h-5 text-warning" />
                     </div>
-
-                    {dispatchedManifests.length === 0 ? (
-                        <div className="h-32 flex items-center justify-center border-2 border-dashed border-border rounded-lg">
-                            <span className="text-xs text-muted-foreground">No dispatched manifests</span>
-                        </div>
-                    ) : (
-                        <div className="space-y-3 max-h-[60vh] overflow-y-auto">
-                            {dispatchedManifests.map((manifest) => (
-                                <ManifestCard
-                                    key={manifest.id}
-                                    manifest={manifest}
-                                    onLock={handleLock}
-                                    onDispatch={handleDispatch}
-                                    isPending={isPending}
-                                />
-                            ))}
-                        </div>
-                    )}
                 </div>
             </div>
-        </div>
+
+            <Tabs defaultValue="all" className="w-full">
+                <div className="flex items-center justify-between mb-4">
+                    <TabsList>
+                        <TabsTrigger value="all">All Manifests</TabsTrigger>
+                        <TabsTrigger value="queue">Unassigned Queue ({unassigned.length})</TabsTrigger>
+                    </TabsList>
+                </div>
+
+                <TabsContent value="all" className="mt-0">
+                    <DataTable
+                        columns={manifestColumns}
+                        data={manifests}
+                        filterColumn="manifest_number"
+                        filterPlaceholder="Search manifests..."
+                    />
+                </TabsContent>
+
+                <TabsContent value="queue" className="mt-0">
+                    <DataTable
+                        columns={shipmentColumns}
+                        data={unassigned}
+                        filterColumn="reference"
+                        filterPlaceholder="Search reference..."
+                    />
+                </TabsContent>
+            </Tabs>
+        </PageShell>
     );
 }
 
-function ManifestCard({
-    manifest,
-    onLock,
-    onDispatch,
-    isPending
-}: {
-    manifest: Manifest;
-    onLock: (id: string) => void;
-    onDispatch: (id: string) => void;
-    isPending: boolean;
-}) {
-    const status = statusConfig[manifest.status] || statusConfig.draft;
-    const StatusIcon = status.icon;
-
-    return (
-        <div className={cn(
-            "p-4 bg-card border rounded-lg transition-all",
-            manifest.status === "finalized" ? "border-warning/20" :
-                manifest.status === "dispatched" ? "border-primary/20" :
-                    "border-border hover:border-primary/50"
-        )}>
-            <div className="flex justify-between mb-3">
-                <span className={cn(
-                    "font-mono text-[10px] px-1.5 py-0.5 rounded border",
-                    status.color
-                )}>
-                    {manifest.manifest_number}
-                </span>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <button className="text-muted-foreground hover:text-foreground" disabled={isPending}>
-                            <MoreHorizontal className="w-4 h-4" />
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {manifest.status === "draft" ? (
-                            <DropdownMenuItem onClick={() => onLock(manifest.id)}>
-                                <Lock className="w-4 h-4 mr-2" />
-                                Lock Manifest
-                            </DropdownMenuItem>
-                        ) : null}
-                        {manifest.status === "finalized" && (
-                            <DropdownMenuItem onClick={() => onDispatch(manifest.id)}>
-                                <Truck className="w-4 h-4 mr-2" />
-                                Dispatch
-                            </DropdownMenuItem>
-                        )}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-
-            <div className="flex items-center gap-2 text-sm text-foreground mb-2">
-                <span>{manifest.origin_warehouse?.code || "—"}</span>
-                <ArrowRight className="w-3 h-3 text-muted-foreground" />
-                <span>{manifest.destination_warehouse?.code || "—"}</span>
-            </div>
-
-            <div className="flex gap-3 text-[10px] text-muted-foreground border-t border-border pt-2 mt-2">
-                <span>{manifest.total_pieces || 0} pcs</span>
-                <span className="w-px h-3 bg-border"></span>
-                <span>{manifest.total_weight || 0} kg</span>
-                {manifest.driver_name && (
-                    <>
-                        <span className="w-px h-3 bg-border"></span>
-                        <span>{manifest.driver_name}</span>
-                    </>
-                )}
-            </div>
-
-            <div className="flex items-center gap-1 mt-2">
-                <StatusIcon className="w-3 h-3 text-muted-foreground" />
-                <span className="text-[10px] text-muted-foreground">{status.label}</span>
-            </div>
-        </div>
-    );
-}
-
-function ShipmentCard({
-    shipment,
-    manifests,
-    onAddToManifest,
-    isPending
-}: {
-    shipment: Shipment;
-    manifests: Manifest[];
-    onAddToManifest: (manifestId: string, shipmentRef: string) => void;
-    isPending: boolean;
-}) {
-    return (
-        <div className="p-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-all">
-            <div className="flex justify-between mb-2">
-                <span className="font-mono text-[10px] text-muted-foreground bg-muted px-1.5 py-0.5 rounded border border-border">
-                    {shipment.reference}
-                </span>
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <button className="text-muted-foreground hover:text-foreground" disabled={isPending}>
-                            <Plus className="w-4 h-4" />
-                        </button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        {manifests.length === 0 ? (
-                            <DropdownMenuItem disabled>No open manifests</DropdownMenuItem>
-                        ) : (
-                            manifests.map((m) => (
-                                <DropdownMenuItem
-                                    key={m.id}
-                                    onClick={() => onAddToManifest(m.id, shipment.reference)}
-                                >
-                                    Add to {m.manifest_number}
-                                </DropdownMenuItem>
-                            ))
-                        )}
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            </div>
-
-            <div className="text-xs text-foreground mb-1">{shipment.consignee_name || "—"}</div>
-            <div className="text-[10px] text-muted-foreground">{shipment.consignee_city || "—"}</div>
-
-            <div className="flex gap-3 text-[10px] text-muted-foreground border-t border-border pt-2 mt-2">
-                <span>{shipment.pieces || 0} pcs</span>
-                <span className="w-px h-3 bg-border"></span>
-                <span>{shipment.weight_kg || 0} kg</span>
-            </div>
-        </div>
-    );
-}
+// --- Forms ---
 
 interface CreateManifestFormProps {
     warehouses: Warehouse[];
@@ -474,7 +492,7 @@ function CreateManifestForm({ warehouses, onSuccess }: CreateManifestFormProps) 
                     <select
                         value={formData.transport_mode}
                         onChange={(e) => setFormData(prev => ({ ...prev, transport_mode: e.target.value as "air" | "surface" | "express" | "economy" }))}
-                        className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                         <option value="air">Air</option>
                         <option value="surface">Surface</option>
@@ -489,7 +507,7 @@ function CreateManifestForm({ warehouses, onSuccess }: CreateManifestFormProps) 
                     <select
                         value={formData.origin_warehouse_id}
                         onChange={(e) => setFormData(prev => ({ ...prev, origin_warehouse_id: e.target.value }))}
-                        className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         required
                     >
                         <option value="">Select origin</option>
@@ -503,7 +521,7 @@ function CreateManifestForm({ warehouses, onSuccess }: CreateManifestFormProps) 
                     <select
                         value={formData.destination_warehouse_id}
                         onChange={(e) => setFormData(prev => ({ ...prev, destination_warehouse_id: e.target.value }))}
-                        className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground"
+                        className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                         required
                     >
                         <option value="">Select destination</option>

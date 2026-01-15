@@ -3,8 +3,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
-import { ArrowRight, Sparkles, X } from "lucide-react";
+import { ArrowRight, X } from "lucide-react";
 import { useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
 interface WelcomeBannerProps {
   userName?: string;
@@ -48,117 +50,93 @@ export function WelcomeBanner({
   };
 
   return (
-    <div
+    <Card
       className={cn(
-        "relative overflow-hidden rounded-2xl",
-        "bg-gradient-to-br from-primary/10 via-primary/5 to-transparent",
-        "border border-primary/20",
+        "relative overflow-hidden border-primary/10 bg-gradient-to-r from-primary/5 via-background to-background",
         className
       )}
     >
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 80% 20%, hsl(var(--primary) / 0.2) 0%, transparent 50%)`,
-          }}
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `
-              linear-gradient(90deg, transparent 0%, transparent 50%, hsl(var(--primary) / 0.03) 50%, hsl(var(--primary) / 0.03) 100%),
-              linear-gradient(transparent 0%, transparent 50%, hsl(var(--primary) / 0.03) 50%, hsl(var(--primary) / 0.03) 100%)
-            `,
-            backgroundSize: "20px 20px",
-          }}
-        />
-      </div>
-
-      <div className="relative flex items-center justify-between p-6">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-primary animate-pulse" />
-            <span className="text-xs font-medium text-primary uppercase tracking-wider">
-              Dashboard
-            </span>
-          </div>
-          
-          <h1 className="text-2xl font-bold text-foreground mb-1">
-            {displayGreeting}, {userName}!
-          </h1>
-          
-          <p className="text-sm text-muted-foreground mb-4">
-            Here&apos;s what&apos;s happening with your logistics operations today.
-          </p>
-
-          {showQuickStats && stats && (
-            <div className="flex items-center gap-6">
-              {stats.todayShipments !== undefined && (
-                <div>
-                  <div className="text-xl font-bold text-foreground">
-                    {stats.todayShipments}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Today&apos;s Shipments
-                  </div>
-                </div>
-              )}
-              {stats.pendingTasks !== undefined && (
-                <div>
-                  <div className="text-xl font-bold text-amber-500">
-                    {stats.pendingTasks}
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Pending Tasks
-                  </div>
-                </div>
-              )}
-              {stats.revenue !== undefined && (
-                <div>
-                  <div className="text-xl font-bold text-emerald-500">
-                    ₹{(stats.revenue / 1000).toFixed(1)}K
-                  </div>
-                  <div className="text-xs text-muted-foreground">
-                    Today&apos;s Revenue
-                  </div>
-                </div>
-              )}
+      <CardContent className="p-6">
+        <div className="flex items-center justify-between gap-6">
+          <div className="flex-1 space-y-4">
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tight text-foreground">
+                {displayGreeting}, {userName}!
+              </h1>
+              <p className="text-muted-foreground text-sm leading-relaxed max-w-xl">
+                Here&apos;s what&apos;s happening with your logistics operations today. You have pending tasks that require your attention.
+              </p>
             </div>
+
+            {showQuickStats && stats && (
+              <div className="flex flex-wrap items-center gap-8 py-2">
+                {stats.todayShipments !== undefined && (
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold tabular-nums text-foreground">
+                      {stats.todayShipments}
+                    </div>
+                    <div className="text-xs font-medium text-muted-foreground">
+                      Today&apos;s Shipments
+                    </div>
+                  </div>
+                )}
+                {stats.pendingTasks !== undefined && (
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold tabular-nums text-warning">
+                      {stats.pendingTasks}
+                    </div>
+                    <div className="text-xs font-medium text-muted-foreground">
+                      Pending Tasks
+                    </div>
+                  </div>
+                )}
+                {stats.revenue !== undefined && (
+                  <div className="space-y-1">
+                    <div className="text-2xl font-bold tabular-nums text-success">
+                      ₹{(stats.revenue / 1000).toFixed(1)}K
+                    </div>
+                    <div className="text-xs font-medium text-muted-foreground">
+                      Today&apos;s Revenue
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <Button asChild size="default" className="mt-2">
+              <Link href="/dashboard/shipments?action=create">
+                Create Shipment
+                <ArrowRight className="ml-2 size-4" />
+              </Link>
+            </Button>
+          </div>
+
+          {/* Illustration */}
+          <div className="hidden lg:block relative w-64 h-48 flex-shrink-0">
+            <Image
+              src="/images/dashboard-welcome.png"
+              alt="Dashboard Welcome"
+              fill
+              sizes="(max-width: 768px) 100vw, 300px"
+              className="object-contain object-right"
+              priority
+            />
+          </div>
+
+          {/* Dismiss button */}
+          {dismissible && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute top-2 right-2 text-muted-foreground hover:text-foreground"
+              onClick={handleDismiss}
+            >
+              <X className="size-4" />
+              <span className="sr-only">Dismiss</span>
+            </Button>
           )}
-
-          <Link
-            href="/dashboard/shipments?action=create"
-            className="inline-flex items-center gap-2 mt-4 px-4 py-2 rounded-lg bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-          >
-            Create Shipment
-            <ArrowRight className="w-4 h-4" />
-          </Link>
         </div>
-
-        {/* Illustration */}
-        <div className="hidden lg:block relative w-48 h-48 flex-shrink-0">
-          <Image
-            src="/images/dashboard-welcome.png"
-            alt="Dashboard Welcome"
-            fill
-            sizes="192px"
-            className="object-contain"
-            priority
-          />
-        </div>
-
-        {/* Dismiss button */}
-        {dismissible && (
-          <button
-            onClick={handleDismiss}
-            className="absolute top-4 right-4 p-1.5 rounded-lg hover:bg-muted/50 transition-colors"
-          >
-            <X className="w-4 h-4 text-muted-foreground" />
-          </button>
-        )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }

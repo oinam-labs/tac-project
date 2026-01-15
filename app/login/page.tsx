@@ -114,7 +114,7 @@ export default function LoginPage() {
               <div className="text-2xl font-bold tracking-tight text-foreground">
                 TAC
               </div>
-              <div className="font-mono text-xs tracking-[0.2em] text-muted-foreground/60">
+              <div className="font-mono text-xs text-muted-foreground/60">
                 INFRASTRUCTURE
               </div>
             </div>
@@ -213,9 +213,9 @@ export default function LoginPage() {
               <div className="space-y-1.5">
                 <label
                   htmlFor="operative-id"
-                  className="text-muted-foreground font-mono text-[10px] tracking-widest uppercase"
+                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
-                  Operative ID
+                  Email Address
                 </label>
                 <div className="group relative">
                   <RiMailLine className="text-muted-foreground group-focus-within:text-primary absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 transition-colors" />
@@ -227,7 +227,7 @@ export default function LoginPage() {
                     placeholder="name@organization.com"
                     autoComplete="email"
                     required
-                    className="bg-secondary/30 border-border focus:border-primary/50 focus:bg-secondary/50 focus:ring-primary/10 text-foreground placeholder:text-muted-foreground/40 w-full rounded-xl border py-3.5 pr-4 pl-12 font-medium transition-all outline-none focus:ring-4"
+                    className="bg-background border-input focus:border-primary focus:ring-primary/10 text-foreground placeholder:text-muted-foreground w-full rounded-md border py-3 pr-4 pl-12 text-sm transition-all outline-none focus:ring-2"
                   />
                 </div>
               </div>
@@ -237,15 +237,15 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between">
                   <label
                     htmlFor="security-key"
-                    className="text-muted-foreground font-mono text-[10px] tracking-widest uppercase"
+                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                   >
-                    Security Key
+                    Password
                   </label>
                   <Link
                     href="#"
                     className="text-primary text-xs hover:underline"
                   >
-                    Lost access?
+                    Forgot password?
                   </Link>
                 </div>
                 <div className="group relative">
@@ -258,7 +258,7 @@ export default function LoginPage() {
                     placeholder="••••••••••••"
                     autoComplete="current-password"
                     required
-                    className="bg-secondary/30 border-border focus:border-primary/50 focus:bg-secondary/50 focus:ring-primary/10 text-foreground placeholder:text-muted-foreground/40 w-full rounded-xl border py-3.5 pr-12 pl-12 font-medium transition-all outline-none focus:ring-4"
+                    className="bg-background border-input focus:border-primary focus:ring-primary/10 text-foreground placeholder:text-muted-foreground w-full rounded-md border py-3 pr-12 pl-12 text-sm transition-all outline-none focus:ring-2"
                   />
                   <button
                     type="button"
@@ -279,19 +279,18 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="group bg-primary text-primary-foreground shadow-primary/20 hover:shadow-primary/40 relative h-14 w-full overflow-hidden rounded-xl font-bold tracking-wide shadow-lg transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
+                className="group bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 relative h-11 w-full overflow-hidden rounded-md font-medium transition-all active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
               >
-                <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[100%]" />
                 <span className="relative flex items-center justify-center gap-2">
                   {isLoading ? (
                     <>
                       <div className="h-4 w-4 animate-spin rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground" />
-                      AUTHENTICATING...
+                      Signing in...
                     </>
                   ) : (
                     <>
-                      INITIATE SESSION
-                      <RiArrowRightLine className="h-5 w-5" />
+                      Sign In
+                      <RiArrowRightLine className="h-4 w-4" />
                     </>
                   )}
                 </span>
@@ -302,18 +301,18 @@ export default function LoginPage() {
           {/* Footer */}
           <motion.div variants={itemVariants} className="space-y-4 text-center">
             <p className="text-muted-foreground text-sm">
-              New to the network?{" "}
+              Don&apos;t have an account?{" "}
               <Link
                 href="/request-access"
-                className="text-primary hover:text-primary-hover font-medium transition-colors"
+                className="text-primary hover:underline font-medium transition-colors"
               >
-                Request Clearance
+                Request Access
               </Link>
             </p>
 
-            <div className="text-muted-foreground/60 flex items-center justify-center gap-2 font-mono text-[10px] tracking-widest uppercase">
+            <div className="text-muted-foreground/60 flex items-center justify-center gap-2 text-xs">
               <RiShieldCheckLine className="h-3 w-3" />
-              <span>End-to-End Encrypted</span>
+              <span>Secure Connection</span>
             </div>
           </motion.div>
         </motion.div>

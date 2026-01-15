@@ -8,9 +8,13 @@ import {
     ArrowRight,
     Plus,
     Search,
+    MoreHorizontal,
+    CheckCircle,
+    Repeat
 } from "lucide-react";
+import { ColumnDef } from "@tanstack/react-table";
 import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -21,6 +25,7 @@ import {
     DialogHeader,
     DialogTitle,
     DialogDescription,
+    DialogTrigger,
 } from "@/components/ui/dialog";
 import {
     Select,
@@ -29,10 +34,22 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { toast } from "sonner";
+
+import { PageShell } from "@/components/dashboard/page-shell";
+import { DataTable } from "@/components/dashboard/data-table-premium";
 import { updateShipmentStatus } from "@/app/actions/shipments";
-import { IllustratedEmptyState } from "@/components/dashboard/illustrated-empty-state";
 import type { ShipmentStatus } from "@/types/database";
+
+// --- Types ---
 
 type ExceptionType = "failed" | "delayed";
 
@@ -61,27 +78,29 @@ interface ExceptionsClientProps {
     availableShipments?: Shipment[];
 }
 
-const exceptionConfig: Record<ExceptionType, { label: string; color: string; bgColor: string; icon: React.ElementType }> = {
-    failed: { label: "Failed Delivery", color: "text-destructive", bgColor: "bg-destructive/10", icon: AlertOctagon },
-    delayed: { label: "Delayed", color: "text-warning", bgColor: "bg-warning/10", icon: Clock },
+// --- Configuration ---
+
+const exceptionConfig: Record<ExceptionType, { label: string; variant: "destructive" | "warning"; icon: React.ElementType, className: string }> = {
+    failed: { label: "Failed Delivery", variant: "destructive", icon: AlertOctagon, className: "bg-destructive/10 text-destructive border-destructive/20" },
+    delayed: { label: "Delayed", variant: "warning", icon: Clock, className: "bg-warning/10 text-warning border-warning/20" },
 };
 
+// --- Main Component ---
+
 export function ExceptionsClient({ initialExceptions, availableShipments = [] }: Readonly<ExceptionsClientProps>) {
-    const [exceptions, setExceptions] = useState(initialExceptions);
-    const [selectedId, setSelectedId] = useState<string | null>(initialExceptions[0]?.id || null);
-    const [isPending, startTransition] = useTransition();
+    const [exceptions, setExceptions] = useState<Exception[]>(initialExceptions);
     const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [createForm, setCreateForm] = useState({
         shipmentId: "",
         exceptionType: "failed" as ExceptionType,
         reason: "",
     });
-    const [searchQuery, setSearchQuery] = useState("");
+    const [isPending, startTransition] = useTransition();
 
-    const filteredShipments = availableShipments.filter(s => 
-        s.reference.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        s.consignee_name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const failedCount = exceptions.filter(e => e.exception_type === "failed").length;
+    const delayedCount = exceptions.filter(e => e.exception_type === "delayed").length;
+
+    // -- Actions --
 
     const handleCreateException = async () => {
         if (!createForm.shipmentId) {
@@ -92,7 +111,7 @@ export function ExceptionsClient({ initialExceptions, availableShipments = [] }:
         startTransition(async () => {
             const newStatus: ShipmentStatus = createForm.exceptionType === "failed" ? "exception" : "in_transit";
             const result = await updateShipmentStatus(createForm.shipmentId, newStatus, createForm.reason);
-            
+
             if (result.success) {
                 const shipment = availableShipments.find(s => s.id === createForm.shipmentId);
                 if (shipment) {
@@ -108,11 +127,9 @@ export function ExceptionsClient({ initialExceptions, availableShipments = [] }:
                         exception_type: createForm.exceptionType,
                     };
                     setExceptions(prev => [newException, ...prev]);
-                    setSelectedId(newException.id);
                 }
                 setIsCreateOpen(false);
                 setCreateForm({ shipmentId: "", exceptionType: "failed", reason: "" });
-                setSearchQuery("");
                 toast.success("Exception created successfully");
             } else {
                 toast.error(result.error || "Failed to create exception");
@@ -120,326 +137,287 @@ export function ExceptionsClient({ initialExceptions, availableShipments = [] }:
         });
     };
 
-    const selected = exceptions.find(e => e.id === selectedId);
-    const failedCount = exceptions.filter(e => e.exception_type === "failed").length;
-    const delayedCount = exceptions.filter(e => e.exception_type === "delayed").length;
-
     const handleResolve = async (shipmentId: string) => {
-        startTransition(async () => {
-            const result = await updateShipmentStatus(shipmentId, "booked");
-            if (result.success) {
-                setExceptions(prev => prev.filter(e => e.id !== shipmentId));
-                setSelectedId(exceptions.find(e => e.id !== shipmentId)?.id || null);
-                toast.success("Exception resolved - shipment reset to pending");
-            } else {
-                toast.error(result.error);
-            }
-        });
+        const result = await updateShipmentStatus(shipmentId, "booked");
+        if (result.success) {
+            setExceptions(prev => prev.filter(e => e.id !== shipmentId));
+            toast.success("Exception resolved successfully");
+        } else {
+            toast.error(result.error);
+        }
     };
 
     const handleRetry = async (shipmentId: string) => {
-        startTransition(async () => {
-            const result = await updateShipmentStatus(shipmentId, "out_for_delivery");
-            if (result.success) {
-                setExceptions(prev => prev.filter(e => e.id !== shipmentId));
-                setSelectedId(exceptions.find(e => e.id !== shipmentId)?.id || null);
-                toast.success("Shipment marked for re-delivery");
-            } else {
-                toast.error(result.error);
-            }
-        });
+        const result = await updateShipmentStatus(shipmentId, "out_for_delivery");
+        if (result.success) {
+            setExceptions(prev => prev.filter(e => e.id !== shipmentId));
+            toast.success("Shipment scheduled for retry");
+        } else {
+            toast.error(result.error);
+        }
     };
 
+    // -- Columns --
+
+    const columns: ColumnDef<Exception>[] = [
+        {
+            accessorKey: "reference",
+            header: "Reference",
+            cell: ({ row }) => (
+                <div className="flex flex-col">
+                    <span className="font-semibold text-foreground">{row.getValue("reference")}</span>
+                    <div className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
+                        {row.original.origin_warehouse?.code || "—"}
+                        <ArrowRight className="w-3 h-3" />
+                        {row.original.destination_warehouse?.code || "—"}
+                    </div>
+                </div>
+            ),
+        },
+        {
+            header: "Type",
+            cell: ({ row }) => {
+                const config = exceptionConfig[row.original.exception_type];
+                const Icon = config.icon;
+                return (
+                    <Badge variant="outline" className={cn("rounded-md", config.className)}>
+                        <Icon className="w-3 h-3 mr-1.5" />
+                        {config.label}
+                    </Badge>
+                );
+            },
+        },
+        {
+            header: "Consignee",
+            cell: ({ row }) => (
+                <div className="flex flex-col text-sm max-w-[150px]">
+                    <span className="truncate text-foreground font-medium">{row.original.consignee_name || "—"}</span>
+                    <span className="truncate text-xs text-muted-foreground">{row.original.consignee_city}</span>
+                </div>
+            )
+        },
+        {
+            header: "Last Update",
+            cell: ({ row }) => (
+                <span className="text-xs text-muted-foreground">{getTimeAgo(row.original.updated_at)}</span>
+            )
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="ghost" size="icon" className="h-8 w-8 text-muted-foreground hover:text-foreground">
+                                <span className="sr-only">Open menu</span>
+                                <MoreHorizontal className="h-4 w-4" />
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            {row.original.exception_type === "failed" && (
+                                <DropdownMenuItem onClick={() => handleRetry(row.original.id)}>
+                                    <Repeat className="w-4 h-4 mr-2" /> Retry Delivery
+                                </DropdownMenuItem>
+                            )}
+                            <DropdownMenuItem onClick={() => handleResolve(row.original.id)}>
+                                <CheckCircle className="w-4 h-4 mr-2" /> Mark Resolved
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            ),
+        }
+    ];
+
+    // -- Render --
+
     return (
-        <div className="space-y-6">
-            {/* Header with Create Button */}
-            <div className="flex justify-between items-center">
-                <h2 className="text-lg font-semibold">Exceptions</h2>
-                <Button onClick={() => setIsCreateOpen(true)} className="gap-1">
-                    <Plus className="w-4 h-4" />
-                    Report Exception
-                </Button>
+        <PageShell
+            title="Exceptions"
+            description="Manage shipment irregularities, failures, and delays."
+            breadcrumb={["Dashboard", "Operations", "Exceptions"]}
+            action={
+                <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
+                    <DialogTrigger asChild>
+                        <Button className="rounded-full shadow-lg shadow-destructive/20 bg-destructive hover:bg-destructive/90 text-white">
+                            <Plus className="w-4 h-4 mr-2" />
+                            Report Exception
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <DialogHeader>
+                            <DialogTitle>Report Exception</DialogTitle>
+                            <DialogDescription>
+                                Manually flag a shipment as failed or delayed.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <CreateExceptionForm
+                            createForm={createForm}
+                            setCreateForm={setCreateForm}
+                            availableShipments={availableShipments}
+                            onConfirm={handleCreateException}
+                            isPending={isPending}
+                            onCancel={() => setIsCreateOpen(false)}
+                        />
+                    </DialogContent>
+                </Dialog>
+            }
+        >
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                <div className="bg-card rounded-xl p-4 border border-border shadow-sm flex flex-col">
+                    <span className="text-muted-foreground text-xs font-medium uppercase tracking-wider mb-1">Total Issues</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-foreground">{exceptions.length}</span>
+                        <AlertTriangle className="w-5 h-5 text-muted-foreground" />
+                    </div>
+                </div>
+                <div className="bg-destructive/5 rounded-xl p-4 border border-destructive/10 shadow-sm flex flex-col">
+                    <span className="text-destructive text-xs font-medium uppercase tracking-wider mb-1">Failed Deliveries</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-destructive">{failedCount}</span>
+                        <AlertOctagon className="w-5 h-5 text-destructive" />
+                    </div>
+                </div>
+                <div className="bg-warning/5 rounded-xl p-4 border border-warning/10 shadow-sm flex flex-col">
+                    <span className="text-warning text-xs font-medium uppercase tracking-wider mb-1">Delayed</span>
+                    <div className="flex items-end justify-between">
+                        <span className="text-2xl font-bold text-warning">{delayedCount}</span>
+                        <Clock className="w-5 h-5 text-warning" />
+                    </div>
+                </div>
             </div>
 
-            {/* Create Exception Dialog */}
-            <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-                <DialogContent className="max-w-md">
-                    <DialogHeader>
-                        <DialogTitle>Report Exception</DialogTitle>
-                        <DialogDescription>
-                            Mark a shipment as failed or delayed
-                        </DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4 py-4">
-                        <div className="space-y-2">
-                            <Label>Exception Type</Label>
-                            <Select
-                                value={createForm.exceptionType}
-                                onValueChange={(value) => setCreateForm(prev => ({ ...prev, exceptionType: value as ExceptionType }))}
+            <DataTable
+                columns={columns}
+                data={exceptions}
+                filterColumn="reference"
+                filterPlaceholder="Search exceptions..."
+            />
+        </PageShell>
+    );
+}
+
+interface ExceptionFormState {
+    exceptionType: ExceptionType;
+    shipmentId: string;
+    reason: string;
+}
+
+// --- Subcomponents ---
+
+function CreateExceptionForm({
+    createForm,
+    setCreateForm,
+    availableShipments,
+    onConfirm,
+    isPending,
+    onCancel
+}: {
+    createForm: ExceptionFormState,
+    setCreateForm: React.Dispatch<React.SetStateAction<ExceptionFormState>>,
+    availableShipments: Shipment[],
+    onConfirm: () => void,
+    isPending: boolean,
+    onCancel: () => void
+}) {
+    const [searchQuery, setSearchQuery] = useState("");
+
+    const filteredShipments = availableShipments.filter(s =>
+        s.reference.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        s.consignee_name?.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return (
+        <div className="space-y-4 py-4">
+            <div className="space-y-2">
+                <Label>Exception Type</Label>
+                <Select
+                    value={createForm.exceptionType}
+                    onValueChange={(value) => setCreateForm(prev => ({ ...prev, exceptionType: value as ExceptionType }))}
+                >
+                    <SelectTrigger>
+                        <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectItem value="failed">
+                            <div className="flex items-center gap-2">
+                                <AlertOctagon className="w-4 h-4 text-destructive" />
+                                Failed Delivery
+                            </div>
+                        </SelectItem>
+                        <SelectItem value="delayed">
+                            <div className="flex items-center gap-2">
+                                <Clock className="w-4 h-4 text-warning" />
+                                Delayed Shipment
+                            </div>
+                        </SelectItem>
+                    </SelectContent>
+                </Select>
+            </div>
+
+            <div className="space-y-2">
+                <Label>Select Shipment</Label>
+                <div className="relative mb-2">
+                    <Search className="absolute left-2.5 top-2.5 w-4 h-4 text-muted-foreground" />
+                    <Input
+                        placeholder="Search shipments..."
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        className="pl-9"
+                    />
+                </div>
+                <div className="max-h-48 overflow-y-auto border rounded-md">
+                    {filteredShipments.length === 0 ? (
+                        <div className="p-4 text-center text-sm text-muted-foreground">
+                            No shipments found
+                        </div>
+                    ) : (
+                        filteredShipments.map((shipment) => (
+                            <div
+                                key={shipment.id}
+                                onClick={() => setCreateForm(prev => ({ ...prev, shipmentId: shipment.id }))}
+                                className={cn(
+                                    "p-3 cursor-pointer border-b last:border-b-0 transition-colors",
+                                    createForm.shipmentId === shipment.id
+                                        ? "bg-primary/10 border-primary/20"
+                                        : "hover:bg-muted/50"
+                                )}
                             >
-                                <SelectTrigger>
-                                    <SelectValue />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    <SelectItem value="failed">
-                                        <div className="flex items-center gap-2">
-                                            <AlertOctagon className="w-4 h-4 text-destructive" />
-                                            Failed Delivery
-                                        </div>
-                                    </SelectItem>
-                                    <SelectItem value="delayed">
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-4 h-4 text-warning" />
-                                            Delayed Shipment
-                                        </div>
-                                    </SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label>Select Shipment</Label>
-                            <div className="relative mb-2">
-                                <Search className="absolute left-2.5 top-2.5 w-4 h-4 text-muted-foreground" />
-                                <Input
-                                    placeholder="Search shipments..."
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    className="pl-9"
-                                />
-                            </div>
-                            <div className="max-h-48 overflow-y-auto border rounded-md">
-                                {filteredShipments.length === 0 ? (
-                                    <div className="p-4 text-center text-sm text-muted-foreground">
-                                        No shipments found
-                                    </div>
-                                ) : (
-                                    filteredShipments.map((shipment) => (
-                                        <div
-                                            key={shipment.id}
-                                            onClick={() => setCreateForm(prev => ({ ...prev, shipmentId: shipment.id }))}
-                                            className={cn(
-                                                "p-3 cursor-pointer border-b last:border-b-0 transition-colors",
-                                                createForm.shipmentId === shipment.id
-                                                    ? "bg-primary/10 border-primary/20"
-                                                    : "hover:bg-muted/50"
-                                            )}
-                                        >
-                                            <div className="font-mono text-xs font-medium">{shipment.reference}</div>
-                                            <div className="text-xs text-muted-foreground">
-                                                {shipment.consignee_name || "Unknown"} • {shipment.consignee_city || "—"}
-                                            </div>
-                                        </div>
-                                    ))
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="space-y-2">
-                            <Label>Reason (Optional)</Label>
-                            <Textarea
-                                placeholder="Describe the reason for this exception..."
-                                value={createForm.reason}
-                                onChange={(e) => setCreateForm(prev => ({ ...prev, reason: e.target.value }))}
-                                rows={3}
-                            />
-                        </div>
-                    </div>
-                    <div className="flex justify-end gap-2">
-                        <Button variant="outline" onClick={() => setIsCreateOpen(false)} data-testid="cancel-exception-button">
-                            Cancel
-                        </Button>
-                        <Button 
-                            onClick={handleCreateException} 
-                            disabled={isPending || !createForm.shipmentId}
-                            data-testid="create-exception-button"
-                            title={!createForm.shipmentId ? "Please select a shipment first" : "Create exception"}
-                        >
-                            {isPending ? "Creating..." : "Create Exception"}
-                        </Button>
-                    </div>
-                </DialogContent>
-            </Dialog>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                <GlassPanel className="p-4">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-destructive/10">
-                            <AlertOctagon className="w-5 h-5 text-destructive" />
-                        </div>
-                        <div>
-                            <div className="text-xl font-bold text-destructive">{failedCount}</div>
-                            <div className="text-[10px] text-muted-foreground uppercase">Failed Deliveries</div>
-                        </div>
-                    </div>
-                </GlassPanel>
-                <GlassPanel className="p-4">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-warning/10">
-                            <Clock className="w-5 h-5 text-warning" />
-                        </div>
-                        <div>
-                            <div className="text-xl font-bold text-warning">{delayedCount}</div>
-                            <div className="text-[10px] text-muted-foreground uppercase">Delayed Shipments</div>
-                        </div>
-                    </div>
-                </GlassPanel>
-                <GlassPanel className="p-4">
-                    <div className="flex items-center gap-3">
-                        <div className="p-2 rounded-lg bg-muted">
-                            <AlertTriangle className="w-5 h-5 text-muted-foreground" />
-                        </div>
-                        <div>
-                            <div className="text-xl font-bold text-foreground">{exceptions.length}</div>
-                            <div className="text-[10px] text-muted-foreground uppercase">Total Exceptions</div>
-                        </div>
-                    </div>
-                </GlassPanel>
-            </div>
-
-            {exceptions.length === 0 ? (
-                <GlassPanel className="p-6">
-                    <IllustratedEmptyState type="exceptions" />
-                </GlassPanel>
-            ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {/* List */}
-                    <div className="md:col-span-1 space-y-3 max-h-[60vh] overflow-y-auto pr-2">
-                        {exceptions.map((exception) => {
-                            const config = exceptionConfig[exception.exception_type];
-                            const isSelected = selectedId === exception.id;
-
-                            return (
-                                <div
-                                    key={exception.id}
-                                    onClick={() => setSelectedId(exception.id)}
-                                    className={cn(
-                                        "p-4 rounded-lg cursor-pointer transition-all relative overflow-hidden",
-                                        isSelected
-                                            ? `${config.bgColor} border ${exception.exception_type === "failed" ? "border-destructive/30" : "border-warning/30"}`
-                                            : "border border-border hover:bg-muted/50"
-                                    )}
-                                >
-                                    {isSelected && (
-                                        <div className={cn(
-                                            "absolute left-0 top-0 bottom-0 w-1",
-                                            exception.exception_type === "failed" ? "bg-destructive" : "bg-warning"
-                                        )} />
-                                    )}
-                                    <div className="flex justify-between mb-2">
-                                        <span className={cn(
-                                            "text-[10px] font-mono px-1 rounded",
-                                            isSelected ? config.color : "text-muted-foreground",
-                                            isSelected ? config.bgColor : "bg-muted"
-                                        )}>
-                                            {exception.reference}
-                                        </span>
-                                        <span className={cn(
-                                            "text-[10px]",
-                                            isSelected ? config.color : "text-muted-foreground"
-                                        )}>
-                                            {getTimeAgo(exception.updated_at)}
-                                        </span>
-                                    </div>
-                                    <h4 className={cn(
-                                        "text-sm font-semibold transition-colors",
-                                        isSelected ? "text-foreground" : "text-muted-foreground"
-                                    )}>
-                                        {config.label}
-                                    </h4>
-                                    <p className={cn(
-                                        "text-xs mt-1 truncate",
-                                        isSelected ? config.color : "text-muted-foreground"
-                                    )}>
-                                        {exception.consignee_name || "Unknown"} • {exception.consignee_city || "—"}
-                                    </p>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Detail */}
-                    {selected && (
-                        <GlassPanel className="md:col-span-2 p-6">
-                            <div className="flex items-center gap-4 mb-6">
-                                <div className={cn(
-                                    "p-3 rounded-xl",
-                                    exceptionConfig[selected.exception_type].bgColor
-                                )}>
-                                    {React.createElement(exceptionConfig[selected.exception_type].icon, {
-                                        className: cn("w-6 h-6", exceptionConfig[selected.exception_type].color)
-                                    })}
-                                </div>
-                                <div>
-                                    <h2 className="text-xl font-bold text-foreground">
-                                        {exceptionConfig[selected.exception_type].label}
-                                    </h2>
-                                    <div className={cn(
-                                        "text-xs mt-1 font-mono",
-                                        exceptionConfig[selected.exception_type].color
-                                    )}>
-                                        {selected.reference} • {selected.status.toUpperCase()}
-                                    </div>
+                                <div className="font-mono text-xs font-medium">{shipment.reference}</div>
+                                <div className="text-xs text-muted-foreground">
+                                    {shipment.consignee_name || "Unknown"} • {shipment.consignee_city || "—"}
                                 </div>
                             </div>
-
-                            <div className="grid grid-cols-2 gap-4 mb-6">
-                                <div className="p-4 rounded-lg bg-card border border-border">
-                                    <div className="text-[10px] uppercase text-muted-foreground font-bold tracking-wider mb-1">
-                                        Consignee
-                                    </div>
-                                    <div className="text-sm text-foreground">{selected.consignee_name || "Unknown"}</div>
-                                    <div className="text-xs text-muted-foreground">{selected.consignee_city || "—"}</div>
-                                </div>
-                                <div className="p-4 rounded-lg bg-card border border-border">
-                                    <div className="text-[10px] uppercase text-muted-foreground font-bold tracking-wider mb-1">
-                                        Route
-                                    </div>
-                                    <div className="flex items-center gap-2 text-sm text-foreground">
-                                        <span>{selected.origin_warehouse?.code || "—"}</span>
-                                        <ArrowRight className="w-3 h-3 text-muted-foreground" />
-                                        <span>{selected.destination_warehouse?.code || "—"}</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="p-4 rounded-lg bg-card border border-border mb-6">
-                                <div className="text-[10px] uppercase text-muted-foreground font-bold tracking-wider mb-2">
-                                    Last Updated
-                                </div>
-                                <div className="text-sm text-foreground">
-                                    {new Date(selected.updated_at).toLocaleString("en-IN")}
-                                </div>
-                                <div className="text-xs text-muted-foreground mt-1">
-                                    {selected.exception_type === "failed"
-                                        ? "Delivery attempt failed. Consignee unavailable or address issue."
-                                        : "Shipment has been in transit longer than expected."
-                                    }
-                                </div>
-                            </div>
-
-                            <div className="flex gap-3 pt-4 border-t border-border">
-                                {selected.exception_type === "failed" && (
-                                    <Button
-                                        onClick={() => handleRetry(selected.id)}
-                                        disabled={isPending}
-                                    >
-                                        Retry Delivery
-                                    </Button>
-                                )}
-                                <Button
-                                    variant="outline"
-                                    onClick={() => handleResolve(selected.id)}
-                                    disabled={isPending}
-                                >
-                                    Mark Resolved
-                                </Button>
-                            </div>
-                        </GlassPanel>
+                        ))
                     )}
                 </div>
-            )}
+            </div>
+
+            <div className="space-y-2">
+                <Label>Reason (Optional)</Label>
+                <Textarea
+                    placeholder="Describe the reason for this exception..."
+                    value={createForm.reason}
+                    onChange={(e) => setCreateForm(prev => ({ ...prev, reason: e.target.value }))}
+                    rows={3}
+                />
+            </div>
+
+            <div className="flex justify-end gap-2 pt-2">
+                <Button variant="outline" onClick={onCancel}>
+                    Cancel
+                </Button>
+                <Button
+                    onClick={onConfirm}
+                    disabled={isPending || !createForm.shipmentId}
+                    variant="destructive"
+                >
+                    {isPending ? "Creating..." : "Confirm Exception"}
+                </Button>
+            </div>
         </div>
     );
 }

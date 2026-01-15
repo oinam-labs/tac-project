@@ -2,26 +2,32 @@
 
 import React, { useState, useTransition } from "react";
 import {
-    CreditCard,
-    AlertCircle,
-    CheckCircle,
-    ArrowDownLeft,
-    ArrowUpRight
+    Calendar,
+    Wallet,
+    AlertCircle
 } from "lucide-react";
-import { cn } from "@/lib/utils";
-import { GlassPanel } from "../../_components/glass-panel";
+import { ColumnDef } from "@tanstack/react-table";
+import { cn, formatCurrency } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { recordPayment } from "@/app/actions/payments";
+
+import { PageShell } from "@/components/dashboard/page-shell";
+import { DataTable } from "@/components/dashboard/data-table-premium";
 import type { PaymentStatus } from "@/types/database";
+
+// --- Types ---
 
 interface Payment {
     id: string;
@@ -56,6 +62,8 @@ interface PaymentsClientProps {
     stats: PaymentStats;
 }
 
+// --- Configuration ---
+
 const paymentMethodLabels: Record<string, string> = {
     cash: "Cash",
     upi: "UPI",
@@ -74,176 +82,190 @@ export function PaymentsClient({
     const [selectedInvoice, setSelectedInvoice] = useState<OutstandingInvoice | null>(null);
     const [isRecordOpen, setIsRecordOpen] = useState(false);
 
+    // --- Columns: Outstanding Invoices ---
+    const outstandingColumns: ColumnDef<OutstandingInvoice>[] = [
+        {
+            accessorKey: "invoice_no",
+            header: "Invoice",
+            cell: ({ row }) => <span className="font-semibold text-foreground">{row.getValue("invoice_no")}</span>,
+        },
+        {
+            header: "Customer",
+            cell: ({ row }) => (
+                <div className="flex flex-col">
+                    <span className="font-medium text-foreground">{row.original.customers?.name || "—"}</span>
+                    <span className="text-xs text-muted-foreground">{row.original.customers?.phone}</span>
+                </div>
+            )
+        },
+        {
+            accessorKey: "due_date",
+            header: "Due Date",
+            cell: ({ row }) => {
+                const date = row.getValue("due_date") as string;
+                if (!date) return <span className="text-muted-foreground">—</span>;
+                const isOverdue = new Date(date) < new Date();
+                return (
+                    <div className={cn("flex items-center gap-2", isOverdue ? "text-destructive" : "text-muted-foreground")}>
+                        <Calendar className="w-3 h-3" />
+                        <span>{new Date(date).toLocaleDateString()}</span>
+                    </div>
+                )
+            }
+        },
+        {
+            accessorKey: "balance_due",
+            header: "Balance Due",
+            cell: ({ row }) => (
+                <span className="font-bold text-foreground">
+                    {formatCurrency(row.getValue("balance_due"))}
+                </span>
+            )
+        },
+        {
+            id: "actions",
+            cell: ({ row }) => (
+                <div className="text-right">
+                    <Button
+                        size="sm"
+                        onClick={() => {
+                            setSelectedInvoice(row.original);
+                            setIsRecordOpen(true);
+                        }}
+                        className="h-8 shadow-sm"
+                    >
+                        Record Payment
+                    </Button>
+                </div>
+            ),
+        }
+    ];
+
+    // --- Columns: Payment History ---
+    const historyColumns: ColumnDef<Payment>[] = [
+        {
+            accessorKey: "created_at",
+            header: "Date",
+            cell: ({ row }) => <span className="text-muted-foreground">{new Date(row.getValue("created_at")).toLocaleDateString()}</span>,
+        },
+        {
+            header: "Invoice",
+            cell: ({ row }) => <span className="font-mono text-xs">{row.original.invoices?.invoice_no}</span>,
+        },
+        {
+            header: "Customer",
+            cell: ({ row }) => <span className="text-sm font-medium text-foreground">{row.original.invoices?.customers?.name}</span>,
+        },
+        {
+            accessorKey: "amount",
+            header: "Amount",
+            cell: ({ row }) => (
+                <span className="font-bold text-primary">
+                    +{formatCurrency(row.getValue("amount"))}
+                </span>
+            )
+        },
+        {
+            accessorKey: "payment_method",
+            header: "Method",
+            cell: ({ row }) => (
+                <Badge variant="secondary" className="font-normal capitalize">
+                    {paymentMethodLabels[row.getValue("payment_method") as string] || row.getValue("payment_method")}
+                </Badge>
+            )
+        },
+        {
+            accessorKey: "payment_reference",
+            header: "Reference",
+            cell: ({ row }) => {
+                const ref = row.getValue("payment_reference") as string;
+                return ref ? <span className="font-mono text-xs text-muted-foreground bg-muted px-1.5 py-0.5 rounded">{ref}</span> : <span className="text-muted-foreground">—</span>;
+            }
+        },
+    ];
+
+
     return (
-        <div className="space-y-6">
-            {/* Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <GlassPanel className="p-6">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-xl bg-success/10">
-                            <ArrowDownLeft className="w-6 h-6 text-success" />
-                        </div>
+        <PageShell
+            title="Payments"
+            description="Track incoming payments and manage outstanding balances."
+            breadcrumb={["Dashboard", "Finance", "Payments"]}
+            action={
+                <div className="hidden"></div> // Action is handled via table rows for now
+            }
+        >
+            {/* Stats Overview */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
                         <div>
-                            <div className="text-2xl font-bold text-success">
-                                ₹{stats.totalReceived.toLocaleString("en-IN")}
-                            </div>
-                            <div className="text-xs text-muted-foreground uppercase tracking-wider">Total Received</div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Total Received</p>
+                            <h3 className="text-3xl font-bold text-primary">
+                                {formatCurrency(stats.totalReceived)}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-2">Life-time collections</p>
+                        </div>
+                        <div className="p-3 bg-primary/10 rounded-xl text-primary">
+                            <Wallet className="w-6 h-6" />
                         </div>
                     </div>
-                </GlassPanel>
+                </div>
 
-                <GlassPanel className="p-6">
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-xl bg-warning/10">
-                            <ArrowUpRight className="w-6 h-6 text-warning" />
-                        </div>
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
                         <div>
-                            <div className="text-2xl font-bold text-warning">
-                                ₹{stats.totalOutstanding.toLocaleString("en-IN")}
-                            </div>
-                            <div className="text-xs text-muted-foreground uppercase tracking-wider">Outstanding</div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Outstanding</p>
+                            <h3 className="text-3xl font-bold text-warning">
+                                {formatCurrency(stats.totalOutstanding)}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-2">Pending to be collected</p>
+                        </div>
+                        <div className="p-3 bg-warning/10 rounded-xl text-warning">
+                            <AlertCircle className="w-6 h-6" />
                         </div>
                     </div>
-                </GlassPanel>
+                </div>
 
-                <GlassPanel className={cn(
-                    "p-6",
-                    stats.overdueCount > 0 && "border-destructive/30 bg-destructive/5"
-                )}>
-                    <div className="flex items-center gap-4">
-                        <div className="p-3 rounded-xl bg-destructive/10">
-                            <AlertCircle className="w-6 h-6 text-destructive" />
-                        </div>
+                <div className="bg-card rounded-2xl p-6 border border-border shadow-sm relative overflow-hidden group">
+                    <div className="flex justify-between items-start z-10 relative">
                         <div>
-                            <div className="text-2xl font-bold text-destructive">{stats.overdueCount}</div>
-                            <div className="text-xs text-muted-foreground uppercase tracking-wider">Overdue Invoices</div>
+                            <p className="text-muted-foreground text-sm font-medium mb-1">Overdue Count</p>
+                            <h3 className="text-3xl font-bold text-destructive">
+                                {stats.overdueCount}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-2">Invoices past due date</p>
+                        </div>
+                        <div className="p-3 bg-destructive/10 rounded-xl text-destructive">
+                            <Calendar className="w-6 h-6" />
                         </div>
                     </div>
-                </GlassPanel>
+                </div>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Outstanding Invoices */}
-                <GlassPanel className="p-0">
-                    <div className="p-4 border-b border-border flex justify-between items-center">
-                        <h3 className="text-sm font-medium text-foreground">Outstanding Invoices</h3>
-                        <span className="text-xs text-muted-foreground">{outstanding.length} pending</span>
-                    </div>
-                    <div className="divide-y divide-border max-h-[50vh] overflow-y-auto">
-                        {outstanding.length === 0 ? (
-                            <div className="p-8 text-center text-muted-foreground">
-                                <CheckCircle className="w-8 h-8 mx-auto mb-2 text-success" />
-                                <div>All invoices paid!</div>
-                            </div>
-                        ) : (
-                            outstanding.map((invoice) => {
-                                const isOverdue = invoice.status === "overdue";
-                                return (
-                                    <div
-                                        key={invoice.id}
-                                        className={cn(
-                                            "p-4 hover:bg-muted/50 transition-colors cursor-pointer",
-                                            isOverdue && "bg-destructive/5"
-                                        )}
-                                        onClick={() => {
-                                            setSelectedInvoice(invoice);
-                                            setIsRecordOpen(true);
-                                        }}
-                                    >
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div>
-                                                <div className="font-mono text-sm text-foreground">{invoice.invoice_no}</div>
-                                                <div className="text-xs text-muted-foreground">{invoice.customers?.name || "—"}</div>
-                                            </div>
-                                            <div className="text-right">
-                                                <div className="text-sm font-medium text-foreground">
-                                                    ₹{invoice.balance_due.toLocaleString("en-IN")}
-                                                </div>
-                                                <div className="text-[10px] text-muted-foreground">
-                                                    of ₹{invoice.total_amount.toLocaleString("en-IN")}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="flex items-center justify-between text-xs">
-                                            {invoice.due_date && (
-                                                <span className={cn(
-                                                    isOverdue ? "text-destructive" : "text-muted-foreground"
-                                                )}>
-                                                    Due: {new Date(invoice.due_date).toLocaleDateString("en-IN")}
-                                                </span>
-                                            )}
-                                            <Button size="sm" variant="outline" className="h-6 text-xs">
-                                                Record Payment
-                                            </Button>
-                                        </div>
-                                    </div>
-                                );
-                            })
-                        )}
-                    </div>
-                </GlassPanel>
+            <Tabs defaultValue="outstanding" className="space-y-4">
+                <TabsList className="bg-muted/50 p-1 rounded-xl">
+                    <TabsTrigger value="outstanding" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">Outstanding Invoices</TabsTrigger>
+                    <TabsTrigger value="history" className="rounded-lg data-[state=active]:bg-card data-[state=active]:shadow-sm">Payment History</TabsTrigger>
+                </TabsList>
 
-                {/* Recent Payments */}
-                <GlassPanel className="p-0">
-                    <div className="p-4 border-b border-border">
-                        <h3 className="text-sm font-medium text-foreground">Recent Payments</h3>
-                    </div>
-                    <div className="divide-y divide-border max-h-[50vh] overflow-y-auto">
-                        {payments.length === 0 ? (
-                            <div className="p-8 text-center text-muted-foreground">
-                                <CreditCard className="w-8 h-8 mx-auto mb-2 opacity-50" />
-                                <div>No payments recorded</div>
-                            </div>
-                        ) : (
-                            payments.map((payment) => {
-                                const isRefund = payment.status === "refunded";
-                                return (
-                                    <div key={payment.id} className="p-4 hover:bg-muted/50 transition-colors">
-                                        <div className="flex justify-between items-start mb-2">
-                                            <div className="flex items-center gap-3">
-                                                <div className={cn(
-                                                    "p-2 rounded-lg",
-                                                    isRefund ? "bg-destructive/10" : "bg-success/10"
-                                                )}>
-                                                    {isRefund ? (
-                                                        <ArrowUpRight className="w-4 h-4 text-destructive" />
-                                                    ) : (
-                                                        <ArrowDownLeft className="w-4 h-4 text-success" />
-                                                    )}
-                                                </div>
-                                                <div>
-                                                    <div className="text-sm text-foreground">
-                                                        {payment.invoices?.customers?.name || "Payment"}
-                                                    </div>
-                                                    <div className="text-xs text-muted-foreground">
-                                                        {payment.invoices?.invoice_no} • {paymentMethodLabels[payment.payment_method] || payment.payment_method}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="text-right">
-                                                <div className={cn(
-                                                    "text-sm font-mono",
-                                                    isRefund ? "text-destructive" : "text-success"
-                                                )}>
-                                                    {isRefund ? "-" : "+"}₹{payment.amount.toLocaleString("en-IN")}
-                                                </div>
-                                                <div className="text-[10px] text-muted-foreground">
-                                                    {new Date(payment.created_at).toLocaleDateString("en-IN")}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {payment.payment_reference && (
-                                            <div className="text-xs text-muted-foreground ml-11">
-                                                Ref: {payment.payment_reference}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            })
-                        )}
-                    </div>
-                </GlassPanel>
-            </div>
+                <TabsContent value="outstanding" className="space-y-4">
+                    <DataTable
+                        columns={outstandingColumns}
+                        data={outstanding}
+                        filterColumn="invoice_no"
+                        filterPlaceholder="Search outstanding..."
+                    />
+                </TabsContent>
+
+                <TabsContent value="history" className="space-y-4">
+                    <DataTable
+                        columns={historyColumns}
+                        data={payments}
+                        filterColumn="invoices.invoice_no" // Note: This might need flatter structure or custom filter fn for nested props, but for now strict key
+                        filterPlaceholder="Search payments..."
+                    />
+                </TabsContent>
+            </Tabs>
 
             {/* Record Payment Dialog */}
             <Dialog open={isRecordOpen} onOpenChange={setIsRecordOpen}>
@@ -270,7 +292,7 @@ export function PaymentsClient({
                     )}
                 </DialogContent>
             </Dialog>
-        </div>
+        </PageShell>
     );
 }
 
@@ -279,7 +301,7 @@ function RecordPaymentForm({
     onSuccess
 }: {
     invoice: OutstandingInvoice;
-    onSuccess: (payment: unknown) => void;
+    onSuccess: (payment: Payment) => void;
 }) {
     const [isPending, startTransition] = useTransition();
     const [formData, setFormData] = useState({
@@ -301,7 +323,16 @@ function RecordPaymentForm({
                 notes: formData.notes || undefined,
             });
             if (result.success) {
-                onSuccess(result.data);
+                // Construct the full payment object with invoice details for the local state
+                const newPayment = {
+                    ...result.data,
+                    invoices: {
+                        invoice_no: invoice.invoice_no,
+                        total_amount: invoice.total_amount,
+                        customers: invoice.customers
+                    }
+                };
+                onSuccess(newPayment as unknown as Payment);
             } else {
                 toast.error(result.error);
             }
@@ -310,18 +341,18 @@ function RecordPaymentForm({
 
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="p-3 rounded-lg bg-card/50 border border-border">
-                <div className="flex justify-between text-sm">
+            <div className="p-4 rounded-lg bg-muted/50 border border-border">
+                <div className="flex justify-between text-sm mb-2">
                     <span className="text-muted-foreground">Invoice</span>
-                    <span className="text-foreground font-mono">{invoice.invoice_no}</span>
+                    <span className="text-foreground font-mono font-medium">{invoice.invoice_no}</span>
                 </div>
-                <div className="flex justify-between text-sm mt-1">
+                <div className="flex justify-between text-sm mb-2">
                     <span className="text-muted-foreground">Customer</span>
-                    <span className="text-foreground">{invoice.customers?.name}</span>
+                    <span className="text-foreground font-medium">{invoice.customers?.name}</span>
                 </div>
-                <div className="flex justify-between text-sm mt-1">
+                <div className="flex justify-between text-sm pt-2 border-t border-border">
                     <span className="text-muted-foreground">Balance Due</span>
-                    <span className="text-warning font-mono">₹{invoice.balance_due.toLocaleString("en-IN")}</span>
+                    <span className="text-warning font-mono font-bold">{formatCurrency(invoice.balance_due)}</span>
                 </div>
             </div>
 
@@ -342,7 +373,7 @@ function RecordPaymentForm({
                     <select
                         value={formData.paymentMethod}
                         onChange={(e) => setFormData(prev => ({ ...prev, paymentMethod: e.target.value as typeof formData.paymentMethod }))}
-                        className="w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground"
+                        className="w-full bg-background border border-input rounded-md px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
                     >
                         <option value="cash">Cash</option>
                         <option value="upi">UPI</option>
@@ -372,8 +403,8 @@ function RecordPaymentForm({
             </div>
 
             <div className="flex justify-end pt-4">
-                <Button type="submit" disabled={isPending}>
-                    {isPending ? "Recording..." : "Record Payment"}
+                <Button type="submit" disabled={isPending} className="w-full">
+                    {isPending ? "Recording Payment..." : "Confirm Payment"}
                 </Button>
             </div>
         </form>
