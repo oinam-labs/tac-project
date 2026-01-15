@@ -8,11 +8,7 @@
  */
 
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
-import {
-  type AnyMock,
-  mockFn,
-  createMockSupabaseClient,
-} from "../utils/mock-helpers";
+import { mockFn, createMockSupabaseClient } from "../utils/mock-helpers";
 
 const mockSupabaseClient = createMockSupabaseClient();
 
