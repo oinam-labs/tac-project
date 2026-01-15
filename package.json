@@ -8,16 +8,9 @@
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "eslint",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --watch",
-    "test:coverage": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage",
-    "test:e2e": "playwright test",
-    "test:e2e:ui": "playwright test --ui",
-    "test:e2e:headed": "playwright test --headed",
     "mcp:server": "tsx lib/mcp/shipment-server.ts",
     "mcp:build": "tsc lib/mcp/shipment-server.ts --outDir dist --module commonjs --target es2020",
-    "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore",
-    "test:tokens": "node scripts/check-tokens.js"
+    "lint:css": "stylelint \"**/*.css\" --ignore-path .gitignore"
   },
   "dependencies": {
     "@crayonai/react-ui": "^0.9.11",
@@ -86,15 +79,12 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
-    "@jest/globals": "^30.2.0",
     "@next/bundle-analyzer": "^16.1.1",
-    "@playwright/test": "^1.57.0",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-label": "^2.1.8",
     "@radix-ui/react-switch": "^1.2.6",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4",
-    "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -102,14 +92,12 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
     "eslint-plugin-tailwindcss": "^3.18.2",
-    "jest": "^30.2.0",
     "postcss": "^8.5.6",
     "prettier": "^3.7.4",
     "prettier-plugin-tailwindcss": "^0.7.2",
     "stylelint": "^16.26.1",
     "stylelint-config-standard": "^39.0.1",
     "tailwindcss": "^4",
-    "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
     "tsx": "^4.21.0",
     "typescript": "^5"
