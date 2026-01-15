@@ -3,9 +3,9 @@
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 const data = [
-  { name: "On Route", value: 62, color: "oklch(var(--primary))" }, // Violet
-  { name: "Loading", value: 28, color: "oklch(var(--warning))" }, // Yellow
-  { name: "Maintenance", value: 10, color: "oklch(var(--muted-foreground))" }, // Zinc
+  { name: "On Route", value: 62, color: "var(--primary)" },
+  { name: "Loading", value: 28, color: "var(--warning)" },
+  { name: "Maintenance", value: 10, color: "var(--muted-foreground)" },
 ];
 
 export function VehicleAllocation() {
