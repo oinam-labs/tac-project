@@ -16,7 +16,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
-PROJECT_DIR="/mnt/c/tac-saas/tac-cargo"
+# Allow PROJECT_DIR to be overridden via environment variable
+PROJECT_DIR="${PROJECT_DIR:-/mnt/c/tac-saas/tac-cargo}"
 CODERABBIT_BIN="$HOME/.local/bin/coderabbit"
 
 echo -e "${BLUE}╔══════════════════════════════════════════════════════════════╗${NC}"
@@ -33,8 +34,9 @@ fi
 
 # Step 2: Initialize gnome-keyring for credential access
 echo -e "${BLUE}[*] Initializing keyring...${NC}"
-export GNOME_KEYRING_CONTROL=/run/user/$(id -u)/keyring
-mkdir -p /run/user/$(id -u) 2>/dev/null || true
+USER_ID=$(id -u)
+export GNOME_KEYRING_CONTROL="/run/user/${USER_ID}/keyring"
+mkdir -p "/run/user/${USER_ID}" 2>/dev/null || true
 echo -n '' | gnome-keyring-daemon --unlock --replace --components=secrets 2>/dev/null || true
 
 # Step 3: Navigate to project directory
@@ -71,7 +73,7 @@ echo -e "    Uncommitted changes: ${YELLOW}$UNCOMMITTED files${NC}"
 # Step 7: Run CodeRabbit review
 echo ""
 echo -e "${BLUE}[*] Starting CodeRabbit review...${NC}"
-echo -e "    Arguments: ${YELLOW}$@${NC}"
+echo -e "    Arguments: ${YELLOW}$*${NC}"
 echo ""
 
 # Default to --prompt-only if no flags provided

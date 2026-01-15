@@ -13,7 +13,7 @@ This plan implements CodeRabbit CLI for AI-powered code review integrated direct
 
 ## Architecture Overview
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────────┐
 │                    Developer Workflow                           │
 ├─────────────────────────────────────────────────────────────────┤
@@ -164,7 +164,7 @@ CodeRabbit is installed in the terminal (via WSL on Windows). Use it to review c
 
 ### Autonomous Development Loop
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │                                                              │
 │   User Prompt: "Implement feature X"                         │
@@ -248,6 +248,7 @@ chat:
 CodeRabbit should enforce these project-specific standards:
 
 ### Architecture Rules
+
 | Rule | Enforcement |
 |------|-------------|
 | RSC-first | Flag unnecessary Client Components |
@@ -255,6 +256,7 @@ CodeRabbit should enforce these project-specific standards:
 | TanStack Query for client data | Flag other client fetch patterns |
 
 ### Design System Rules
+
 | Rule | Enforcement |
 |------|-------------|
 | Semantic tokens only | Flag hex/rgb/Tailwind colors |
@@ -263,6 +265,7 @@ CodeRabbit should enforce these project-specific standards:
 | Chart tokens | Flag non-chart-* colors in charts |
 
 ### Quality Gates
+
 | Rule | Enforcement |
 |------|-------------|
 | WCAG AA | Flag accessibility violations |

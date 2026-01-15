@@ -8,26 +8,13 @@
  */
 
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
-import type { Mock } from "jest-mock";
+import {
+  type AnyMock,
+  mockFn,
+  createMockSupabaseClient,
+} from "../utils/mock-helpers";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type AnyMock = Mock<(...args: any[]) => any>;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const mockFn = () => jest.fn() as any;
-
-interface MockSupabaseClient {
-  auth: {
-    getUser: AnyMock;
-  };
-  from: AnyMock;
-}
-
-const mockSupabaseClient: MockSupabaseClient = {
-  auth: {
-    getUser: jest.fn() as AnyMock,
-  },
-  from: jest.fn() as AnyMock,
-};
+const mockSupabaseClient = createMockSupabaseClient();
 
 jest.unstable_mockModule("@/lib/supabase/server", () => ({
   createClient: jest.fn(() => Promise.resolve(mockSupabaseClient)),
