@@ -1,0 +1,134 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+# CodeRabbit Configuration for TAC Cargo
+# Enterprise-grade logistics and freight management platform
+
+language: "en-US"
+early_access: false
+
+reviews:
+  profile: "assertive"
+  request_changes_workflow: false
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_instructions:
+    # React Server Components & App Router
+    - path: "src/app/**"
+      instructions: |
+        TAC Cargo Architecture Rules:
+        - Default to React Server Components (RSC-first)
+        - Client Components only for interaction, real-time updates, or browser APIs
+        - All mutations MUST use Server Actions
+        - API routes only when Server Actions are insufficient
+        - Initial data loading MUST occur on the server
+        - Client fetching MUST use TanStack Query
+        - No client state may duplicate server state
+        - Cache invalidation must be explicit and minimal
+
+    # UI Components - Design System Enforcement
+    - path: "src/components/**"
+      instructions: |
+        TAC Cargo Design System Rules:
+        - All UI MUST use semantic tokens
+        - Hardcoded colors (hex, rgb, Tailwind palettes) are FORBIDDEN
+        - OKLCH is the ONLY allowed color space
+        - Elevation MUST use elevation tokens only
+        - Charts MUST use chart-* tokens exclusively
+        - WCAG AA accessibility is MANDATORY
+        - Performance is a feature: sub-2s page load
+
+    # All TypeScript/React files
+    - path: "**/*.tsx"
+      instructions: |
+        General Code Quality:
+        - Verify proper TypeScript types (no `any` unless justified)
+        - Check for proper error handling
+        - Ensure accessible markup (aria labels, semantic HTML)
+        - No console.log statements in production code
+        - Proper use of React hooks and dependencies
+
+    - path: "**/*.ts"
+      instructions: |
+        TypeScript Quality:
+        - Strong typing required (avoid `any`)
+        - Proper error handling with typed errors
+        - Server Actions must validate inputs
+        - Database queries must be parameterized
+
+    # Styling
+    - path: "**/*.css"
+      instructions: |
+        CSS Rules:
+        - Use CSS custom properties (semantic tokens)
+        - No hardcoded color values
+        - OKLCH color space only
+        - Responsive design patterns required
+
+    # Configuration files
+    - path: "*.config.*"
+      instructions: |
+        Configuration Review:
+        - Check for security implications
+        - Verify environment variable usage
+        - No secrets in configuration files
+
+  auto_review:
+    enabled: true
+    drafts: false
+    ignore_usernames:
+      - "dependabot[bot]"
+      - "renovate[bot]"
+      - "github-actions[bot]"
+
+  tools:
+    eslint:
+      enabled: true
+    biome:
+      enabled: true
+
+  custom_checks:
+    - name: "RSC Compliance"
+      mode: "warning"
+      instructions: |
+        Check that components default to Server Components.
+        Client Components ('use client') should only be used for:
+        - Interactive elements (onClick, onChange, etc.)
+        - Real-time updates (WebSocket, polling)
+        - Browser APIs (localStorage, navigator, etc.)
+        Flag any Client Component that could be a Server Component.
+
+    - name: "Design Token Compliance"
+      mode: "error"
+      instructions: |
+        STRICT: No hardcoded colors allowed.
+        Flag any: hex (#fff), rgb(), rgba(), hsl(), Tailwind color classes (bg-blue-500).
+        Only semantic tokens from the design system are permitted.
+        OKLCH is the only allowed color space.
+
+    - name: "Accessibility Compliance"
+      mode: "warning"
+      instructions: |
+        WCAG AA is mandatory. Check for:
+        - Missing alt text on images
+        - Missing aria-labels on interactive elements
+        - Poor color contrast (if detectable)
+        - Missing focus indicators
+        - Non-semantic HTML structure
+
+    - name: "Server Action Usage"
+      mode: "warning"
+      instructions: |
+        All data mutations must use Server Actions.
+        Flag any API route that performs mutations.
+        API routes should only be used when Server Actions are insufficient
+        (e.g., webhooks, external API callbacks).
+
+chat:
+  auto_reply: true
+  integrations:
+    jira:
+      usage: disabled
+    linear:
+      usage: disabled

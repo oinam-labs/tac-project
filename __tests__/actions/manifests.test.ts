@@ -8,12 +8,25 @@
  */
 
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
+import type { Mock } from "jest-mock";
 
-const mockSupabaseClient = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyMock = Mock<(...args: any[]) => any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockFn = () => jest.fn() as any;
+
+interface MockSupabaseClient {
   auth: {
-    getUser: jest.fn(),
+    getUser: AnyMock;
+  };
+  from: AnyMock;
+}
+
+const mockSupabaseClient: MockSupabaseClient = {
+  auth: {
+    getUser: jest.fn() as AnyMock,
   },
-  from: jest.fn(),
+  from: jest.fn() as AnyMock,
 };
 
 jest.unstable_mockModule("@/lib/supabase/server", () => ({
@@ -67,16 +80,16 @@ describe("Manifest Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "profiles") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ data: mockProfile }),
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ data: mockProfile }),
           };
         }
         if (table === "manifests") {
           return {
-            insert: jest.fn().mockReturnThis(),
-            select: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ data: mockManifest, error: null }),
+            insert: mockFn().mockReturnThis(),
+            select: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ data: mockManifest, error: null }),
           };
         }
         return {};
@@ -107,8 +120,8 @@ describe("Manifest Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "shipments") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockResolvedValue({ count: 0 }),
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockResolvedValue({ count: 0 }),
           };
         }
         return {};
@@ -132,9 +145,9 @@ describe("Manifest Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "manifests") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ 
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ 
               data: { status: "draft" }, 
               error: null 
             }),
@@ -161,9 +174,9 @@ describe("Manifest Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "manifests") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ 
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ 
               data: { 
                 status: "draft",
                 origin_warehouse_id: "origin-1",
@@ -175,9 +188,9 @@ describe("Manifest Actions", () => {
         }
         if (table === "shipments") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ 
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ 
               data: { 
                 id: "shipment-id",
                 reference: "SHP-123",

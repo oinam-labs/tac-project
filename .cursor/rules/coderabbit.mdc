@@ -1,0 +1,88 @@
+# CodeRabbit CLI Integration for TAC Cargo
+
+CodeRabbit CLI is installed in the terminal (via WSL on Windows). Use it to review code changes before commits and PRs.
+
+## Prerequisites
+
+- CodeRabbit CLI is installed via WSL
+- Run commands in WSL terminal or prefix with `wsl`
+- Authentication is already configured
+
+## Commands
+
+| Command | Purpose |
+|---------|---------|
+| `cr -h` | Show help and available options |
+| `cr --prompt-only -t uncommitted` | Review uncommitted changes (most common) |
+| `cr --prompt-only -t committed` | Review committed changes only |
+| `cr --prompt-only --base main` | Review current branch against main |
+| `cr --prompt-only -t all --base main` | Full branch review |
+
+## Workflow Rules
+
+### When to Run CodeRabbit
+
+1. **After implementing a feature** - Run review before committing
+2. **Before pushing** - Ensure clean code reaches the remote
+3. **When requested** - User explicitly asks for code review
+
+### How to Use Output
+
+1. Always use `--prompt-only` flag for AI-optimized output
+2. Parse the issues returned by CodeRabbit
+3. **Fix critical and major issues** - These block merge
+4. **Consider nitpicks** - Optional but improve quality
+5. **Maximum 3 review cycles** - Avoid infinite loops
+
+### Issue Priority
+
+| Severity | Action |
+|----------|--------|
+| Critical | MUST fix - security, data loss, crashes |
+| Major | MUST fix - functionality, performance |
+| Minor | SHOULD fix - code quality |
+| Trivial/Nitpick | MAY fix - style, minor improvements |
+
+## TAC Cargo Specific Focus Areas
+
+When reviewing CodeRabbit output, prioritize issues related to:
+
+### Architecture Violations
+- Client Components that should be Server Components
+- Mutations not using Server Actions
+- API routes doing what Server Actions should
+- Client state duplicating server state
+
+### Design System Violations
+- Hardcoded colors (hex, rgb, Tailwind palettes)
+- Non-OKLCH color values
+- Missing semantic tokens
+- Hardcoded elevation/shadows
+- Charts not using chart-* tokens
+
+### Quality Gate Violations
+- WCAG AA accessibility failures
+- Performance patterns causing >2s loads
+- Workarounds bypassing system rules
+
+## Example Workflow
+
+```
+User: "Implement the shipment tracking dashboard"
+
+You:
+1. Implement the feature using RSC-first approach
+2. Use semantic tokens for all styling
+3. Ensure Server Actions for mutations
+4. Run: cr --prompt-only -t uncommitted
+5. Review output and fix critical/major issues
+6. If issues found, fix and re-run (max 3 times)
+7. Report completion to user
+```
+
+## Important Notes
+
+- Reviews may take 2-30 minutes depending on change size
+- Use `-t uncommitted` for faster reviews of current work
+- Do not run CodeRabbit more than 3 times per feature implementation
+- Focus on TAC Cargo's quality gates when prioritizing fixes

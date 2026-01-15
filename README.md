@@ -1,5 +1,7 @@
 # TAC Cargo
 
+[![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/oinam-labs/tac-project?utm_source=oss&utm_medium=github&utm_campaign=oinam-labs%2Ftac-project&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)](https://coderabbit.ai)
+
 Enterprise-grade logistics and freight management platform for the Imphal–Delhi corridor.  
 Real-time shipment tracking, fleet operations, and analytics – built on Next.js 16 and Supabase.
 

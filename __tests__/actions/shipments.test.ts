@@ -10,20 +10,25 @@
 import { describe, it, expect, jest, beforeEach } from "@jest/globals";
 import type { Mock } from "jest-mock";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnyMock = Mock<(...args: any[]) => any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const mockFn = () => jest.fn() as any;
+
 // Define mock types
 interface MockSupabaseClient {
   auth: {
-    getUser: Mock<() => Promise<{ data: { user: { id: string } | null } }>>;
+    getUser: AnyMock;
   };
-  from: Mock<(table: string) => Record<string, unknown>>;
+  from: AnyMock;
 }
 
 // Mock Supabase client
 const mockSupabaseClient: MockSupabaseClient = {
   auth: {
-    getUser: jest.fn() as Mock<() => Promise<{ data: { user: { id: string } | null } }>>,
+    getUser: jest.fn() as AnyMock,
   },
-  from: jest.fn() as Mock<(table: string) => Record<string, unknown>>,
+  from: jest.fn() as AnyMock,
 };
 
 // Use unstable_mockModule for ESM compatibility
@@ -101,16 +106,16 @@ describe("Shipment Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "profiles") {
           return {
-            select: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ data: mockProfile }),
+            select: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ data: mockProfile }),
           };
         }
         if (table === "shipments") {
           return {
-            insert: jest.fn().mockReturnThis(),
-            select: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ data: mockShipment, error: null }),
+            insert: mockFn().mockReturnThis(),
+            select: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ data: mockShipment, error: null }),
           };
         }
         return {};
@@ -148,15 +153,15 @@ describe("Shipment Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "shipments") {
           return {
-            update: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockReturnThis(),
-            select: jest.fn().mockReturnThis(),
-            single: jest.fn().mockResolvedValue({ data: mockShipment, error: null }),
+            update: mockFn().mockReturnThis(),
+            eq: mockFn().mockReturnThis(),
+            select: mockFn().mockReturnThis(),
+            single: mockFn().mockResolvedValue({ data: mockShipment, error: null }),
           };
         }
         if (table === "tracking_events") {
           return {
-            insert: jest.fn().mockResolvedValue({ error: null }),
+            insert: mockFn().mockResolvedValue({ error: null }),
           };
         }
         return {};
@@ -181,8 +186,8 @@ describe("Shipment Actions", () => {
       mockSupabaseClient.from.mockImplementation((table: string) => {
         if (table === "shipments") {
           return {
-            update: jest.fn().mockReturnThis(),
-            eq: jest.fn().mockResolvedValue({ error: null }),
+            update: mockFn().mockReturnThis(),
+            eq: mockFn().mockResolvedValue({ error: null }),
           };
         }
         return {};
@@ -203,11 +208,11 @@ describe("Shipment Actions", () => {
       });
 
       mockSupabaseClient.from.mockImplementation(() => ({
-        select: jest.fn().mockReturnThis(),
-        order: jest.fn().mockReturnThis(),
-        limit: jest.fn().mockReturnThis(),
-        or: jest.fn().mockReturnThis(),
-        eq: jest.fn().mockResolvedValue({ data: [], error: null }),
+        select: mockFn().mockReturnThis(),
+        order: mockFn().mockReturnThis(),
+        limit: mockFn().mockReturnThis(),
+        or: mockFn().mockReturnThis(),
+        eq: mockFn().mockResolvedValue({ data: [], error: null }),
       }));
 
       const { searchShipments } = await import("@/app/actions/shipments");
