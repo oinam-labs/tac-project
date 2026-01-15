@@ -46,22 +46,22 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in as admin to access manifest management features.
+        # -> Click on 'Sign In' to log in with provided credentials.
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page
+        # Click on 'Sign In' link to open login form
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input admin email and password, then click 'Sign In' button to log in.
+        # -> Input email and password, then click 'Sign In' button to log in.
         frame = context.pages[-1]
-        # Input admin email address
+        # Input email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
         
 
         frame = context.pages[-1]
-        # Input admin password
+        # Input password
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test@1498')
         
@@ -72,50 +72,50 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click 'Sign In' button again to retry login and wait for navigation.
+        # -> Retry clicking the 'Sign In' button to attempt login or check for any error messages.
         frame = context.pages[-1]
-        # Click 'Sign In' button to retry login
+        # Retry clicking 'Sign In' button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Manifests' in the sidebar to go to the manifests management page.
+        # -> Click on 'Manifests' tab to navigate to manifests management page.
         frame = context.pages[-1]
-        # Click on 'Manifests' link in the sidebar to open manifests management
+        # Click on 'Manifests' tab to open manifests management page
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[4]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click the 'New Manifest' button to start creating a new manifest with valid details.
+        # -> Click on 'New Manifest' button to start creating a new manifest.
         frame = context.pages[-1]
-        # Click 'New Manifest' button to open manifest creation form
+        # Click on 'New Manifest' button to open manifest creation form
         elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Fill in the required fields: Origin Warehouse, Destination Warehouse, and optionally Driver Details, then submit the form to create the manifest.
+        # -> Click 'Create Manifest' button to submit the new manifest form.
         frame = context.pages[-1]
-        # Input 'John Doe' as Driver Name
+        # Click 'Create Manifest' button to submit the manifest creation form
+        elem = frame.locator('xpath=html/body/div[6]/form/div[5]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Fill optional driver details fields to check if that enables form submission.
+        frame = context.pages[-1]
+        # Input Driver Name in optional field
         elem = frame.locator('xpath=html/body/div[6]/form/div[4]/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('John Doe')
         
 
         frame = context.pages[-1]
-        # Input 'DL-1234' as Vehicle Number
+        # Input Vehicle Number in optional field
         elem = frame.locator('xpath=html/body/div[6]/form/div[4]/div/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('DL-1234')
+        await page.wait_for_timeout(3000); await elem.fill('VH-1234')
         
 
         frame = context.pages[-1]
-        # Click 'Create Manifest' button to submit the form
+        # Click 'Create Manifest' button again to submit form with optional fields filled
         elem = frame.locator('xpath=html/body/div[6]/form/div[5]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Check for any visible error messages or alerts on the form, then close the form and refresh the manifests page to verify if the manifest was created but not displayed.
-        frame = context.pages[-1]
-        # Click 'Close' button to close the Create Manifest form
-        elem = frame.locator('xpath=html/body/div[6]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
@@ -124,7 +124,7 @@ async def run_test():
         try:
             await expect(frame.locator('text=Manifest creation successful').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test case failed: The manifest creation, shipment locking, or denial of changes after lock did not succeed as expected according to the test plan.")
+            raise AssertionError("Test case failed: Manifest creation, shipment locking, and denial of changes after lock could not be verified as the expected success message 'Manifest creation successful' was not found on the page.")
         await asyncio.sleep(5)
     
     finally:

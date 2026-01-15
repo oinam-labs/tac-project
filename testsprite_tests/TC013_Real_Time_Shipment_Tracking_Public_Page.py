@@ -48,12 +48,12 @@ async def run_test():
         # Interact with the page elements to simulate user flow
         # -> Click on the 'Tracking' menu or 'Track Shipment' button to navigate to the public tracking page.
         frame = context.pages[-1]
-        # Click on 'Tracking' menu to go to public tracking page
+        # Click on the 'Tracking' menu to navigate to the public tracking page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input a valid shipment reference 'TAC-8291' into the AWB input field and click TRACE to verify shipment status and event timeline.
+        # -> Input a valid shipment reference 'TAC-8291' into the input field and click TRACE to verify shipment status and event timeline.
         frame = context.pages[-1]
         # Input valid shipment reference TAC-8291
         elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
@@ -66,7 +66,7 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click 'Show full tracking' button to verify full event timeline is displayed and updated in real-time.
+        # -> Click 'Show full tracking' button to verify full event timeline display and real-time updates.
         frame = context.pages[-1]
         # Click 'Show full tracking' button to display full event timeline
         elem = frame.locator('xpath=html/body/div[5]/div/div/button').nth(0)
@@ -76,9 +76,9 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Shipment Reference Not Found').first).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Shipment Reference TAC-0000 Not Found').first).to_be_visible(timeout=3000)
         except AssertionError:
-            raise AssertionError("Test case failed: Shipment statuses and event timelines are not accurately displayed as expected. The shipment reference lookup did not show the expected error message for invalid or non-existent shipment references.")
+            raise AssertionError("Test case failed: Shipment statuses and event timelines are not accurately displayed or appropriate error messages are missing when invalid shipment references are used.")
         await asyncio.sleep(5)
     
     finally:

@@ -46,14 +46,14 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in as admin to access invoice and shipment management.
+        # -> Click on 'Sign In' to log in as admin for invoice and shipment management.
         frame = context.pages[-1]
         # Click on 'Sign In' link to open login page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input admin email and password, then click Sign In to log in.
+        # -> Input admin email and password, then click 'Sign In' to log in.
         frame = context.pages[-1]
         # Input admin email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -67,15 +67,46 @@ async def run_test():
         
 
         frame = context.pages[-1]
-        # Click Sign In button to submit login form
+        # Click 'Sign In' button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Navigate to the invoice or shipment management section to create an invoice linked to a shipment or customer order.
+        # -> Click on 'Shipments' in the sidebar to select a shipment for invoice creation.
         frame = context.pages[-1]
-        # Click 'Return to Base' or main dashboard link to access main menu
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/div/a').nth(0)
+        # Click on 'Shipments' in the sidebar menu
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[3]/ul/li/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on 'Shipments' in the sidebar to select a shipment for invoice creation.
+        frame = context.pages[-1]
+        # Click on 'Shipments' in the sidebar menu to navigate to shipments list
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Select a shipment from the list and initiate invoice creation linked to that shipment.
+        frame = context.pages[-1]
+        # Select the checkbox for the shipment with reference TAC1568844 belonging to consignee Domi
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        frame = context.pages[-1]
+        # Click the 'Open menu' button for the selected shipment to find invoice creation option
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td[7]/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Look for and click the option to create an invoice linked to the selected shipment in the action menu.
+        await page.mouse.wheel(0, await page.evaluate('() => window.innerHeight'))
+        
+
+        # -> Navigate to 'Invoices' section to try creating an invoice linked to the shipment or customer order manually.
+        frame = context.pages[-1]
+        # Click on 'Invoices' in the sidebar menu to navigate to invoice management
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 

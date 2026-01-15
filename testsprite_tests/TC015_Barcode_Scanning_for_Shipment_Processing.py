@@ -48,75 +48,42 @@ async def run_test():
         # Interact with the page elements to simulate user flow
         # -> Access scanning module UI
         frame = context.pages[-1]
-        # Click on 'Sign In' to log in as admin for access to scanning module
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
+        # Click on 'Tracking' menu to access tracking and scanning related features
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input email and password, then click Sign In
+        # -> Input a valid barcode linked to a shipment and click TRACE to verify identification and status update
         frame = context.pages[-1]
-        # Input email address
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
+        # Input valid barcode TAC-02531 linked to shipment
+        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('TAC-02531')
         
 
         frame = context.pages[-1]
-        # Input password
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('Test@1498')
-        
-
-        frame = context.pages[-1]
-        # Click Sign In button to log in
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
+        # Click TRACE button to scan and identify shipment
+        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click Sign In button again or check for error messages
+        # -> Clear the current barcode input field and try to input an invalid barcode using the available example barcode buttons or alternative input methods.
         frame = context.pages[-1]
-        # Click Sign In button again to attempt login
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
+        # Close the tracking information popup to clear the UI for next scan attempt
+        elem = frame.locator('xpath=html/body/div[5]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Scanning' in the left sidebar menu to access scanning module UI
+        # -> Click on example invalid or unassigned barcode button DEL-98234 to simulate scanning invalid barcode and then click TRACE to verify error handling.
         frame = context.pages[-1]
-        # Click on 'Scanning' in the sidebar menu
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[3]/ul/li[2]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click on 'Scanning' link in the sidebar menu to access scanning module UI
-        frame = context.pages[-1]
-        # Click on 'Scanning' in the sidebar menu to access scanning module UI
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Input a valid barcode linked to a shipment into the scan input field and trigger scan
-        frame = context.pages[-1]
-        # Input a valid barcode linked to a shipment into the scan input field
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/div/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('VALIDSHIPMENT123456')
-        
-
-        # -> Attempt scanning an invalid or unassigned barcode to verify error handling and message display
-        frame = context.pages[-1]
-        # Input an invalid or unassigned barcode into the scan input field
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/div/form/div/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('INVALIDBARCODE999999')
-        
-
-        frame = context.pages[-1]
-        # Click 'Scan as Warehouse In' button to attempt scanning invalid barcode
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/div/form/div[2]/button').nth(0)
+        # Click example invalid or unassigned barcode button DEL-98234
+        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[3]/div/span[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        await expect(frame.locator('text=VALIDSHIPMENT123456').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=Shipment not found: INVALIDBARCODE999999').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=TAC-02531').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=error message').first).to_be_visible(timeout=30000)
         await asyncio.sleep(5)
     
     finally:

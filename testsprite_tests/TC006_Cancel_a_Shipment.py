@@ -46,22 +46,22 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in as admin user.
+        # -> Click on 'Sign In' to start login process.
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page
+        # Click on 'Sign In' link to open login page or modal
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input admin email and password, then click Sign In.
+        # -> Input email and password, then click Sign In button.
         frame = context.pages[-1]
-        # Input admin email address
+        # Input email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
         
 
         frame = context.pages[-1]
-        # Input admin password
+        # Input password
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test@1498')
         
@@ -72,66 +72,44 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click the 'Sign In' button to attempt login with pre-filled credentials.
+        # -> Navigate to shipment list or dashboard to find a shipment eligible for cancellation.
         frame = context.pages[-1]
-        # Click 'Sign In' button to submit login form with pre-filled admin credentials
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
+        # Click 'Return to Base' or equivalent to go to main dashboard or shipment list
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Shipments' in the sidebar to access shipment list.
+        # -> Click on 'Tracking' or 'Track Shipment' to access shipment tracking and management.
         frame = context.pages[-1]
-        # Click on 'Shipments' link in the sidebar to access shipment list
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
+        # Click 'Track Shipment' button to access shipment tracking and management
+        elem = frame.locator('xpath=html/body/div[2]/main/section/div[2]/div/div/div[2]/button[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Select a shipment with status 'In Transit' to access its details for cancellation.
+        # -> Try alternative navigation to access shipment management or report issue if no alternative found.
         frame = context.pages[-1]
-        # Click 'Open menu' button for the first shipment with status 'In Transit' (TAC2178639) to access shipment options
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr/td[7]/div/button').nth(0)
+        # Click 'Tracking' link in top navigation to try alternative access to shipment tracking or management
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[3]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Cancel Shipment' option to submit cancellation request for the shipment.
+        # -> Input a shipment number eligible for cancellation and submit the trace request.
         frame = context.pages[-1]
-        # Click 'Cancel Shipment' option in the action menu for shipment TAC2178639
-        elem = frame.locator('xpath=html/body/div[5]/div/div[8]').nth(0)
+        # Input shipment number TAC-02531 to check shipment details for cancellation eligibility
+        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('TAC-02531')
+        
+
+        frame = context.pages[-1]
+        # Click TRACE button to submit shipment tracking request
+        elem = frame.locator('xpath=html/body/div[2]/main/section[3]/div[3]/div/div[2]/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click 'Cancel Shipment' option for shipment TAC1568844 to submit cancellation request.
+        # -> Look for and click the cancellation option/button to submit cancellation request for shipment TAC-02531.
         frame = context.pages[-1]
-        # Click 'Open menu' button for shipment TAC1568844
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td[7]/div/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click the 'Actions' button (index 8) for shipment TAC1568844 to open the action menu and access update options.
-        frame = context.pages[-1]
-        # Click 'Actions' button for shipment TAC1568844 to open action menu
-        elem = frame.locator('xpath=html/body/div[5]/div').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click 'Update Status' option in the action menu for shipment TAC1568844 to attempt status update.
-        frame = context.pages[-1]
-        # Click 'Update Status' option in the action menu for shipment TAC1568844
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[3]/ul/li/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click on 'Shipments' link in the sidebar to return to the shipments page.
-        frame = context.pages[-1]
-        # Click on 'Shipments' link in the sidebar to return to shipments page
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click 'Open menu' button (index 40) for shipment TAC1568844 to open action menu.
-        frame = context.pages[-1]
-        # Click 'Open menu' button for shipment TAC1568844
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td[7]/div/button').nth(0)
+        # Click 'Show full tracking' to reveal more shipment details and cancellation options
+        elem = frame.locator('xpath=html/body/div[5]/div/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
@@ -140,7 +118,7 @@ async def run_test():
         try:
             await expect(frame.locator('text=Shipment Successfully Cancelled').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test case failed: Shipment cancellation did not update the shipment status to 'Cancelled' or subsequent updates to the cancelled shipment were not prevented as required by the test plan.")
+            raise AssertionError("Test case failed: Shipment cancellation did not update status to 'Cancelled' or subsequent updates to cancelled shipment were not prevented as per the test plan.")
         await asyncio.sleep(5)
     
     finally:

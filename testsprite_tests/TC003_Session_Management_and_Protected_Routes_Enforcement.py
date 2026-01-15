@@ -46,54 +46,52 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to start authentication
+        # -> Click on Sign In to start authentication
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page
+        # Click on Sign In link to authenticate user
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input email and password, then click Sign In to authenticate user and obtain session token
+        # -> Input email and password, then click Sign In to authenticate user
         frame = context.pages[-1]
-        # Input email address
+        # Input email address for authentication
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
         
 
         frame = context.pages[-1]
-        # Input password
+        # Input password for authentication
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test@1498')
         
 
         frame = context.pages[-1]
-        # Click Sign In button to submit login form
+        # Click Sign In button to submit credentials and authenticate user
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click Sign In button to authenticate user and obtain session token
+        # -> Invalidate session token or simulate expiration to test redirection to login
         frame = context.pages[-1]
-        # Click Sign In button to authenticate user and obtain session token
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
+        # Click Toggle Sidebar button to open sidebar for session management or logout options
+        elem = frame.locator('xpath=html/body/div[2]/main/header/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Simulate session token expiration or invalidation to test redirection to login page
-        await page.goto('http://localhost:3000/logout', timeout=10000)
-        await asyncio.sleep(3)
-        
-
-        await page.goto('http://localhost:3000/dashboard/scanning', timeout=10000)
-        await asyncio.sleep(3)
+        # -> Try to find and click logout or sign out option to invalidate session token
+        frame = context.pages[-1]
+        # Click on user menu or Admin User dropdown to find logout option
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[5]/div/ul/li[2]/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Session Active').first).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Access Granted to Protected Route').first).to_be_visible(timeout=3000)
         except AssertionError:
-            raise AssertionError("Test case failed: The test plan execution has failed because the session token did not grant access to the protected route or the user was not redirected to the login page after session expiration or invalidation.")
+            raise AssertionError("Test case failed: The test plan execution failed because the active session tokens did not grant access to the protected route or the expired/invalid sessions did not redirect to the login page as expected.")
         await asyncio.sleep(5)
     
     finally:

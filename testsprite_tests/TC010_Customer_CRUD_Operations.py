@@ -46,9 +46,9 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in with provided credentials.
+        # -> Click on 'Sign In' to login with provided credentials.
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page or modal.
+        # Click on 'Sign In' link to open login page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
@@ -72,71 +72,85 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Navigate to Customers management page by clicking 'Customers' in the Management menu.
+        # -> Click the Sign In button to submit login form and proceed.
         frame = context.pages[-1]
-        # Click on 'Customers' link in the Management menu to open customer management page
+        # Click Sign In button to submit login form and login
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on 'Customers' link in the Management section to open customer management page.
+        frame = context.pages[-1]
+        # Click on 'Customers' link in Management section to open customer management page
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[4]/ul/li/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Add Customer' button to open the new customer creation form.
+        # -> Click on 'Add Customer' button to open the create customer form.
         frame = context.pages[-1]
-        # Click 'Add Customer' button to open new customer form
+        # Click on 'Add Customer' floating button to open create customer form
+        elem = frame.locator('xpath=html/body/div[3]/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on 'Add Customer' button at index 26 to open the create customer form.
+        frame = context.pages[-1]
+        # Click on 'Add Customer' button to open create customer form
         elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Fill in the new customer form with valid data and submit to create the customer.
+        # -> Fill in the create customer form with valid data and submit.
         frame = context.pages[-1]
-        # Input Company / Customer Name
+        # Input company/customer name
         elem = frame.locator('xpath=html/body/div[6]/form/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test Customer')
         
 
         frame = context.pages[-1]
-        # Input Phone number
+        # Input phone number
         elem = frame.locator('xpath=html/body/div[6]/form/div/div[2]/input').nth(0)
-        await page.wait_for_timeout(3000); await elem.fill('+911234567890')
+        await page.wait_for_timeout(3000); await elem.fill('+919876543215')
         
 
         frame = context.pages[-1]
-        # Input Email address
+        # Input email address
         elem = frame.locator('xpath=html/body/div[6]/form/div/div[3]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('testcustomer@example.com')
         
 
         frame = context.pages[-1]
-        # Input Address
+        # Input address
         elem = frame.locator('xpath=html/body/div[6]/form/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('123 Test Street')
         
 
         frame = context.pages[-1]
-        # Input City
+        # Input city
         elem = frame.locator('xpath=html/body/div[6]/form/div[3]/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test City')
         
 
         frame = context.pages[-1]
-        # Input State
+        # Input state
         elem = frame.locator('xpath=html/body/div[6]/form/div[3]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test State')
         
 
         frame = context.pages[-1]
-        # Input Pincode
+        # Input pincode
         elem = frame.locator('xpath=html/body/div[6]/form/div[3]/div[3]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('123456')
         
 
         frame = context.pages[-1]
-        # Input GST Number
+        # Input GST number
         elem = frame.locator('xpath=html/body/div[6]/form/div[4]/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('GST1234567')
         
 
         frame = context.pages[-1]
-        # Input Credit Limit
+        # Input credit limit
         elem = frame.locator('xpath=html/body/div[6]/form/div[4]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('100000')
         
@@ -147,12 +161,19 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
+        # -> Close the create customer form and verify if the new customer appears in the customer list. If not, report the issue and stop.
+        frame = context.pages[-1]
+        # Click Close button to close the create customer form
+        elem = frame.locator('xpath=html/body/div[6]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Customer Data Updated Successfully').first).to_be_visible(timeout=1000)
+            await expect(frame.locator('text=Customer Data Operation Successful').first).to_be_visible(timeout=3000)
         except AssertionError:
-            raise AssertionError("Test case failed: The test plan execution for create, read, update, and delete operations for customer data including autocomplete search has failed. Expected confirmation message 'Customer Data Updated Successfully' was not found on the page.")
+            raise AssertionError("Test case failed: The test plan execution for create, read, update, and delete operations for customer data including autocomplete search has failed. Immediate failure triggered as per instructions.")
         await asyncio.sleep(5)
     
     finally:

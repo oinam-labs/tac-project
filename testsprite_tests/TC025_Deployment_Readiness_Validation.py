@@ -46,14 +46,19 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Initiate full deployment including applying all database migrations on staging environment.
+        # -> Run full deployment including applying all database migrations on staging environment
+        await page.goto('http://localhost:3000/deployment', timeout=10000)
+        await asyncio.sleep(3)
+        
+
+        # -> Navigate back to home or dashboard to find correct deployment or migration page
         frame = context.pages[-1]
-        # Click on 'Sign In' to access deployment or admin panel for migration and environment validation.
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
+        # Click Dashboard link to navigate to main dashboard page
+        elem = frame.locator('xpath=html/body/div[2]/main/div/div[3]/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input email and password credentials and click Sign In to authenticate.
+        # -> Input login credentials and sign in to regain access
         frame = context.pages[-1]
         # Input email address for login
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -67,35 +72,77 @@ async def run_test():
         
 
         frame = context.pages[-1]
-        # Click Sign In button to authenticate and proceed
+        # Click Sign In button to authenticate
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Navigate to the deployment or admin section to initiate full deployment including applying all database migrations on staging environment.
+        # -> Navigate to Settings page to check for deployment, migration, or environment configuration options
         frame = context.pages[-1]
-        # Click on 'Settings' to access environment configuration and deployment options.
+        # Click on Settings link in the sidebar to access configuration and deployment options
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[4]/ul/li[2]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Try to find deployment or admin panel via other navigation links or report the issue if not found.
+        # -> Check for tabs or sections related to environment configuration, deployment, or migrations
         frame = context.pages[-1]
-        # Click on 'Dashboard' to check if deployment options are available there.
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div/ul/li/a').nth(0)
+        # Click General tab to check for deployment or environment configuration options
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div/div[2]/div/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Check other navigation menu items for deployment or admin panel access, especially under Management or Admin sections.
         frame = context.pages[-1]
-        # Click on 'Customers' under Management to check for deployment or admin options.
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[4]/ul/li/a').nth(0)
+        # Click Preferences tab to check for deployment or environment configuration options
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div/div[2]/div/div/button[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Check the Admin section or other navigation links for deployment or migration options.
+        # -> Scroll down and explore the Settings page further to find deployment, migration, or environment validation controls
+        await page.mouse.wheel(0, 300)
+        
+
         frame = context.pages[-1]
-        # Click on 'Support' to check if deployment or admin options are available there.
+        # Click the plus button at bottom right corner to check for additional options or tools
+        elem = frame.locator('xpath=html/body/div[3]/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Check if any of the new action buttons or the plus button (index 42) provide deployment, migration, or environment validation options
+        frame = context.pages[-1]
+        # Click the plus button to explore additional options or tools related to deployment or migration
+        elem = frame.locator('xpath=html/body/div[3]/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Navigate to Operations section to check for deployment or migration controls
+        frame = context.pages[-1]
+        # Click on Shipments link in Operations section to explore if deployment or migration controls are nested here
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        frame = context.pages[-1]
+        # Click on Manifests link in Operations section to explore if deployment or migration controls are nested here
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[4]/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click the plus button at bottom right corner (index 36) to check for additional options or tools related to deployment or migration
+        frame = context.pages[-1]
+        # Click the plus button at bottom right corner to explore additional options or tools
+        elem = frame.locator('xpath=html/body/div[3]/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Check if any other main navigation sections like Settings or Admin have deployment or migration controls, or if CLI access is needed
+        frame = context.pages[-1]
+        # Click on Settings link in the sidebar to re-check for deployment or migration options
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[4]/ul/li[2]/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        frame = context.pages[-1]
+        # Click on Support link to check for any deployment or migration related help or tools
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[5]/div/ul/li/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
@@ -103,9 +150,9 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Critical Migration Failure Detected').first).to_be_visible(timeout=1000)
+            await expect(frame.locator('text=Critical Lint Warning Detected').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test case failed: Database migrations did not complete successfully, environment configuration validation failed, or critical lint warnings/errors were found as per the test plan.")
+            raise AssertionError("Test case failed: Database migrations, environment configuration validation, or code linting did not succeed as expected. The test plan requires zero critical lint warnings, successful migrations, and valid environment configuration.")
         await asyncio.sleep(5)
     
     finally:

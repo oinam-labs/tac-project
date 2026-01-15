@@ -46,14 +46,14 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Navigate to login page by clicking Sign In link
+        # -> Click on the Sign In link to navigate to the login page
         frame = context.pages[-1]
-        # Click on Sign In link to navigate to login page
+        # Click on the Sign In link to navigate to the login page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input valid username and password
+        # -> Input valid username/email and password
         frame = context.pages[-1]
         # Input valid email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -66,36 +66,27 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.fill('Test@1498')
         
 
-        # -> Submit login form by clicking Sign In button
+        # -> Submit login form by clicking the Sign In button
         frame = context.pages[-1]
-        # Click Sign In button to submit login form
+        # Click the Sign In button to submit the login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Submit login form by clicking Sign In button to authenticate user
+        # -> Verify access is permitted to protected routes by navigating to a protected route like Settings
         frame = context.pages[-1]
-        # Click Sign In button to submit login form and authenticate user
-        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Verify access to protected routes by navigating to a protected page and checking access
-        frame = context.pages[-1]
-        # Click on Shipments link to verify access to a protected route
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
+        # Click on Settings link to verify access to protected route
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[4]/ul/li[2]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         await expect(frame.locator('text=Dashboard').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=Manage your logistics operations, track shipments, and oversee deliveries.').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=Total Shipments').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=9').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=In Transit').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=Delivered').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=Shipments').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Settings').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Manage your personal information, security preferences, and notification settings.').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=admin@tac.app').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Operator').first).to_be_visible(timeout=30000)
         await asyncio.sleep(5)
     
     finally:

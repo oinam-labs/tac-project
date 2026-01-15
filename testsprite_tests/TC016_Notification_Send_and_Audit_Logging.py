@@ -46,73 +46,87 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to start login process.
+        # -> Click on 'Sign In' to log in as admin for testing notification events.
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page or modal
+        # Click on 'Sign In' to open login form
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input email and password, then click Sign In to authenticate.
+        # -> Input admin email and password, then click 'Sign In' to log in.
         frame = context.pages[-1]
-        # Input email address for login
+        # Input admin email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
         
 
         frame = context.pages[-1]
-        # Input password for login
+        # Input admin password
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('Test@1498')
         
 
         frame = context.pages[-1]
-        # Click Sign In button to submit login form
+        # Click 'Sign In' button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # -> Retry login or check for error messages on the login page.
         frame = context.pages[-1]
-        # Click Sign In button again to retry login
+        # Retry clicking 'Sign In' button to submit login form again
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Attempt to access shipment data belonging to a different organization tenant to verify access restrictions.
+        # -> Click the 'Sign In' button to log in as admin and proceed to notification event testing.
         frame = context.pages[-1]
-        # Click on 'Shipments' to view shipment data
+        # Click 'Sign In' button to submit login form and log in as admin
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Navigate to the Shipments page to trigger shipment status change notification events.
+        frame = context.pages[-1]
+        # Click on 'Shipments' in the sidebar to access shipment status and trigger notifications
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Attempt to access shipment data belonging to a different organization tenant and verify access restrictions.
+        # -> Select a shipment with status 'In Transit' to update its status and trigger notification events.
         frame = context.pages[-1]
-        # Select shipment row belonging to IMF-HQ tenant to test access restrictions
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[4]').nth(0)
+        # Select the checkbox for the shipment with reference TAC1568844 and status 'In Transit' to prepare for status update
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Attempt to access shipment data belonging to a different organization tenant and verify that access is denied or no data is returned.
+        # -> Open the action menu for the selected shipment to update its status and trigger notification events.
         frame = context.pages[-1]
-        # Select shipment row belonging to IMF-HQ tenant to test access restrictions
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[4]/td/button').nth(0)
+        # Click 'Open menu' button for shipment TAC1568844 to access status update options
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td[7]/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Attempt to verify Row-Level Security by trying to access shipment data from a different organization tenant and confirm access is denied or no data is returned.
+        # -> Click 'Update Status' option to open status update interface.
         frame = context.pages[-1]
-        # Click on 'Filters' button to apply filters and attempt to isolate shipment data from a different tenant to test access restrictions
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div/div/button').nth(0)
+        # Click 'Update Status' option in the action menu for shipment TAC1568844
+        elem = frame.locator('xpath=html/body/div[5]/div/div[5]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Select the 'Delivered' status option to update the shipment status and trigger notification events.
+        frame = context.pages[-1]
+        # Click 'Delivered' status option to update shipment TAC1568844 status and trigger notifications
+        elem = frame.locator('xpath=html/body/div[5]/div/div[6]/div/div[7]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Unauthorized Cross-Tenant Data Access').first).to_be_visible(timeout=1000)
+            await expect(frame.locator('text=Notification Delivery Successful').first).to_be_visible(timeout=30000)
         except AssertionError:
-            raise AssertionError("Test failed: Row-Level Security policies did not prevent cross-tenant data access as expected. Access to shipment, manifest, customer, invoice, or payment data belonging to different organization tenants was not properly denied.")
+            raise AssertionError("Test case failed: Notification events for shipment status changes, invoice sent, or payment confirmation did not send notifications via email, SMS, or WhatsApp, or audit logs are missing or incomplete.")
         await asyncio.sleep(5)
     
     finally:

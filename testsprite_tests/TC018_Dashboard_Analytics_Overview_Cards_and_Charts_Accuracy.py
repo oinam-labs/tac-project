@@ -46,14 +46,14 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in with provided credentials to access the dashboard analytics page.
+        # -> Click on Sign In to log in with provided credentials to access dashboard analytics.
         frame = context.pages[-1]
-        # Click on 'Sign In' link to open login page
+        # Click on Sign In to access login page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input email and password, then click 'Sign In' button to log in.
+        # -> Input email and password, then click Sign In button to log in.
         frame = context.pages[-1]
         # Input email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -67,50 +67,98 @@ async def run_test():
         
 
         frame = context.pages[-1]
-        # Click 'Sign In' button to submit login form
+        # Click Sign In button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click 'Sign In' button again to attempt login or check for any error messages.
+        # -> Click Sign In button to submit login form and access dashboard analytics.
         frame = context.pages[-1]
-        # Click 'Sign In' button again to attempt login
+        # Click Sign In button to submit login form and access dashboard analytics
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Verify overview cards display correct totals and metrics by comparing extracted data with expected backend values.
+        # -> Click Sign In button to submit login form and proceed to dashboard analytics.
         frame = context.pages[-1]
-        # Click on time range filter dropdown to test chart update on filter change
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[3]/div/div/button').nth(0)
+        # Click Sign In button to submit login form and access dashboard analytics
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[5]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Last 7 days' filter option to verify chart and overview cards update accordingly.
+        # -> Click on the 'Analytics' link in the sidebar to navigate to the dashboard analytics page.
         frame = context.pages[-1]
-        # Click on 'Last 7 days' filter option to update shipment trends chart and overview cards
-        elem = frame.locator('xpath=html/body/div[5]/div/div/div').nth(0)
+        # Click on Analytics link in sidebar to go to dashboard analytics page
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div/ul/li[2]/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Verify charts render data accurately and update on filter changes by interacting with filter dropdowns and extracting updated chart data.
+        frame = context.pages[-1]
+        # Click on 'this week' filter dropdown to change timeframe filter
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div/div/div/div/div/div/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on the 'last week' timeframe filter option to verify chart updates and data accuracy for that timeframe.
+        frame = context.pages[-1]
+        # Click on 'last week' timeframe filter option to update charts
+        elem = frame.locator('xpath=html/body/div[5]/div/div/div[2]').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on the 'Production line 1' filter dropdown to test chart update on production line change.
+        frame = context.pages[-1]
+        # Click on 'Production line 1' filter dropdown to change production line filter
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div/div/div/div/div/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
-        await expect(frame.locator('text=Good morning, Team!').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=You have 142 active shipments and 3 urgent alerts requiring attention.').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=98.5%').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=+12%').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=8').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=0 created today').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=2').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=2 interrupted').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=₹0.0K').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=+8.3%').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=63%').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=-1.5%').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=63% delivery rate • 8 total shipments').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=0').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=5').first).to_be_visible(timeout=30000)
-        await expect(frame.locator('text=New Shipment').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Dashboard').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Analytics').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Overview').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Throughput').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=last week').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Production line 1').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=+4.2%').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Worker capacity').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=J').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=John S.').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Productivity Hours: 34').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=85%').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=M').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Maria J.').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Productivity Hours: 36.8').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=92%').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Quality').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=HIGH').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Low defect rate, %').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=defect rate').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=0.17%').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Jun').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Aug').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Oct').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Total revenue').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=USD, $').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=$2,456,900').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=+2.5%').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=On-time delivery').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=4:00 pm').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Urgent Steel Delivery to New York, USA (depo 1)').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Prioritized to meet critical timelines required by key clients.').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Dispatch').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=120 pcs').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=45 tons').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Depo 1, New York, USA').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Total Orders: 12').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=6:00 pm').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=International Freight Shipment to Paris (depo 2)').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Preparation').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=1,007 pcs').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=213 tons').first).to_be_visible(timeout=30000)
+        await expect(frame.locator('text=Depo 2, Paris, FRA').first).to_be_visible(timeout=30000)
         await asyncio.sleep(5)
     
     finally:

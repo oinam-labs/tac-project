@@ -48,24 +48,57 @@ async def run_test():
         # Interact with the page elements to simulate user flow
         # -> Navigate to shipment management page
         frame = context.pages[-1]
-        # Click on 'Start Shipping' to navigate to shipment management or related page
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
+        # Click on 'Sign In' to login as admin for shipment management access
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Perform searches using different filter criteria (date range, status, consignee, weight)
+        # -> Input admin credentials and click Sign In button
         frame = context.pages[-1]
-        # Click on 'Start Shipping' to access shipment management page
-        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
+        # Input admin email address
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('admin@tac.app')
+        
+
+        frame = context.pages[-1]
+        # Input admin password
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div[2]/div[2]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('Test@1498')
+        
+
+        frame = context.pages[-1]
+        # Click Sign In button to login
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click Sign In button to login and proceed to shipment management page
+        frame = context.pages[-1]
+        # Click Sign In button to login and proceed
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on 'Shipments' tab in sidebar to go to shipment management page
+        frame = context.pages[-1]
+        # Click on 'Shipments' tab in sidebar to navigate to shipment management page
+        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
+        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
+        
+
+        # -> Click on Filters button to open filter options
+        frame = context.pages[-1]
+        # Click on Filters button to open filter options
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Bulk Operation Completed Successfully')).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Bulk Operation Completed Successfully').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test case failed: The test plan execution failed to validate search functionality with multiple filters and bulk operations on selected shipments. Expected confirmation message 'Bulk Operation Completed Successfully' was not found, indicating bulk operations did not apply successfully to all selected shipments.")
+            raise AssertionError("Test plan execution failed: Search functionality with multiple filters and bulk operations on selected shipments did not complete successfully.")
         await asyncio.sleep(5)
     
     finally:

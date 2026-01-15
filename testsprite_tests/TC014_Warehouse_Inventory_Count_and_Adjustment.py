@@ -48,7 +48,7 @@ async def run_test():
         # Interact with the page elements to simulate user flow
         # -> Access inventory management page
         frame = context.pages[-1]
-        # Click on 'Solutions' menu to look for inventory management or related options
+        # Click on 'Solutions' to look for inventory management or related options
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
@@ -56,9 +56,9 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Inventory Count Adjustment Successful')).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Inventory Adjustment Successful')).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError('Test case failed: Inventory management test did not complete successfully. Inventory counts, adjustments, or balance reflections are incorrect or missing.')
+            raise AssertionError('Test case failed: Inventory management test plan execution failed. Inventory counts, adjustments, and balance reflections did not pass as expected.')
         await asyncio.sleep(5)
     
     finally:

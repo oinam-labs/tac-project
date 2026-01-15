@@ -46,16 +46,16 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to navigate to the login page
+        # -> Click on 'Sign In' link to go to login page
         frame = context.pages[-1]
-        # Click on 'Sign In' link to go to login page
+        # Click on 'Sign In' link to navigate to login page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input invalid email and password
+        # -> Input invalid email and password, then submit the login form.
         frame = context.pages[-1]
-        # Input invalid email
+        # Input invalid email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
         await page.wait_for_timeout(3000); await elem.fill('invalid@tac.app')
         
@@ -67,7 +67,7 @@ async def run_test():
         
 
         frame = context.pages[-1]
-        # Click Sign In button to submit invalid credentials
+        # Click on 'Sign In' button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         

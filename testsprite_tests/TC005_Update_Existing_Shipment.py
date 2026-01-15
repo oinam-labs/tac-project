@@ -46,14 +46,14 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in as admin to access shipment list.
+        # -> Sign in to access shipment list for editing shipment details.
         frame = context.pages[-1]
-        # Click on 'Sign In' to log in
+        # Click on Sign In to log in as admin user
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input admin email and password, then click Sign In button.
+        # -> Input admin email and password, then submit login form.
         frame = context.pages[-1]
         # Input admin email address
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -72,54 +72,72 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click Sign In button to submit login form and access shipment list.
+        # -> Click Sign In button to submit login form and proceed to shipment list.
         frame = context.pages[-1]
         # Click Sign In button to submit login form
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div[2]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Shipments' tab in the sidebar to view the shipment list.
+        # -> Click on 'Shipments' tab to access the shipment list.
         frame = context.pages[-1]
-        # Click on 'Shipments' tab in the sidebar to view shipment list
+        # Click on Shipments tab to view shipment list
         elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on the 'Open menu' button for the shipment with consignee 'Domi' to edit shipment details.
+        # -> Open the edit menu for the first shipment in the list to update shipment details.
         frame = context.pages[-1]
-        # Click 'Open menu' button for shipment with consignee 'Domi'
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr[2]/td[7]/div/button').nth(0)
+        # Click 'Open menu' button for the first shipment row (Harry Potter) to access edit options
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[2]/div/table/tbody/tr/td[7]/div/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Update Status' to edit shipment details for the selected shipment.
+        # -> Click 'Full Details' to open the shipment details edit form.
         frame = context.pages[-1]
-        # Click 'Update Status' to edit shipment details
-        elem = frame.locator('xpath=html/body/div[5]/div/div[5]').nth(0)
+        # Click 'Full Details' from the shipment action menu to open shipment details
+        elem = frame.locator('xpath=html/body/div[5]/div/div[3]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Select a new status for the shipment 'Domi' to update it.
+        # -> Click the Edit button to open the shipment details edit form.
         frame = context.pages[-1]
-        # Select 'In Transit' status to update shipment
-        elem = frame.locator('xpath=html/body/div[5]/div/div[6]/div/div[4]').nth(0)
+        # Click Edit button to open shipment details edit form
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Submit the shipment update form to save the new status for shipment 'Domi'.
+        # -> Update shipment details fields such as Pieces, Weight, and Consignee Address, then save changes.
         frame = context.pages[-1]
-        # Click 'Update Status' again to confirm and submit the status update
-        elem = frame.locator('xpath=html/body/div[5]/div/div[5]').nth(0)
+        # Update Pieces field to 2
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/form/div/div[2]/div[3]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('2')
+        
+
+        frame = context.pages[-1]
+        # Update Weight (kg) field to 10
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/form/div/div[2]/div[4]/input').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('10')
+        
+
+        frame = context.pages[-1]
+        # Update Consignee Address field
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/form/div[3]/div[2]/div[4]/textarea').nth(0)
+        await page.wait_for_timeout(3000); await elem.fill('1234 New Address St')
+        
+
+        frame = context.pages[-1]
+        # Click Save Changes button to submit updated shipment details
+        elem = frame.locator('xpath=html/body/div[2]/main/main/div/form/div[5]/button').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Shipment Update Successful').first).to_be_visible(timeout=30000)
+            await expect(frame.locator('text=Shipment Update Successful').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test case failed: Shipment details update did not persist as expected. The shipment status or details were not updated correctly after submission.")
+            raise AssertionError("Test case failed: Shipment details update did not persist as expected according to the test plan.")
         await asyncio.sleep(5)
     
     finally:

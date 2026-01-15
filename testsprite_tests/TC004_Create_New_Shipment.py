@@ -48,14 +48,14 @@ async def run_test():
         # Interact with the page elements to simulate user flow
         # -> Click on 'Start Shipping' to navigate to shipment creation page
         frame = context.pages[-1]
-        # Click on 'Start Shipping' to go to shipment creation page
+        # Click on 'Start Shipping' button to go to shipment creation page
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Locate and click the element to start creating a new shipment (e.g., 'Create Shipment' or similar)
+        # -> Click on 'Start Shipping' link (index 8) again to ensure navigation to shipment creation form or find alternative navigation to shipment creation
         frame = context.pages[-1]
-        # Click on 'Start Shipping' again to ensure navigation or find shipment creation form
+        # Click on 'Start Shipping' link to navigate to shipment creation form
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
@@ -63,7 +63,7 @@ async def run_test():
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Shipment Creation Successful').first).to_be_visible(timeout=3000)
+            await expect(frame.locator('text=Shipment Creation Successful').first).to_be_visible(timeout=1000)
         except AssertionError:
             raise AssertionError("Test case failed: Shipment creation did not complete successfully. The shipment record is not visible in the shipment list, or the shipment status and metadata are not set correctly as per the test plan.")
         await asyncio.sleep(5)

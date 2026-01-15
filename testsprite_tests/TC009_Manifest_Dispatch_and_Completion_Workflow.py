@@ -46,14 +46,14 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Click on 'Sign In' to log in as admin to access locked manifest.
+        # -> Click on 'Sign In' to log in as admin to access manifest management
         frame = context.pages[-1]
         # Click on 'Sign In' to log in
         elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Input admin email and password, then click Sign In.
+        # -> Input admin email and password, then click Sign In button
         frame = context.pages[-1]
         # Input admin email
         elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/form/div/div/div/input').nth(0)
@@ -72,24 +72,17 @@ async def run_test():
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on 'Manifests' in the sidebar to view manifests.
+        # -> Navigate to manifest list or dashboard to find a locked manifest ready for dispatch
         frame = context.pages[-1]
-        # Click on 'Manifests' in the sidebar
-        elem = frame.locator('xpath=html/body/div[2]/div/div[2]/div/div[2]/div[2]/ul/li[4]/a').nth(0)
+        # Click 'Return to Base' to go to main dashboard or manifest list
+        elem = frame.locator('xpath=html/body/div[2]/div[2]/div[3]/div/a').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
-        # -> Click on the 'Unassigned Queue' tab to view the locked manifest ready for dispatch.
+        # -> Click on 'Start Shipping' to access manifest or shipping management section to find a locked manifest ready for dispatch.
         frame = context.pages[-1]
-        # Click on 'Unassigned Queue' tab to view locked manifest
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div/div/button[2]').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click the Actions button for the manifest SHP-IMF-2601-0002 to mark it as dispatched.
-        frame = context.pages[-1]
-        # Click Actions button for manifest SHP-IMF-2601-0002
-        elem = frame.locator('xpath=html/body/div[2]/main/main/div/div/div[2]/div[2]/div[3]/div/div[2]/div/table/tbody/tr/td[5]/button').nth(0)
+        # Click on 'Start Shipping' to access manifest management
+        elem = frame.locator('xpath=html/body/div[2]/nav/div/div[2]/div/a[2]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 

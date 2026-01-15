@@ -46,67 +46,29 @@ async def run_test():
                 pass
         
         # Interact with the page elements to simulate user flow
-        # -> Send requests to application endpoints in production environment to verify security headers and CORS policies
-        await page.goto('http://localhost:3000/api/status', timeout=10000)
+        # -> Send HTTP requests to each identified endpoint to verify security headers and CORS policies
+        await page.goto('http://localhost:3000/login', timeout=10000)
         await asyncio.sleep(3)
         
 
-        # -> Navigate back to home or dashboard to find valid API endpoints for testing security headers and CORS policies
-        frame = context.pages[-1]
-        # Click 'Go Home' to navigate to the home page and find valid endpoints
-        elem = frame.locator('xpath=html/body/div[2]/main/div/div[3]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Navigate to API Reference or Status page to find valid endpoints for testing security headers and CORS policies
-        frame = context.pages[-1]
-        # Click on 'API Reference' link to find valid API endpoints
-        elem = frame.locator('xpath=html/body/div[2]/footer/div/div/div[2]/div/div/div[3]/ul/li[3]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Click 'Go Home' to return to the home page and attempt to find valid endpoints or environment variable validation info.
-        frame = context.pages[-1]
-        # Click 'Go Home' button to return to home page
-        elem = frame.locator('xpath=html/body/div[2]/main/div/div[3]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Send a request to the /api/track endpoint to check security headers and CORS policies
-        await page.goto('http://localhost:3000/api/track', timeout=10000)
+        # -> Use an HTTP client or browser developer tools to capture HTTP response headers for /login and other endpoints to verify security headers and CORS policies
+        await page.goto('http://localhost:3000', timeout=10000)
         await asyncio.sleep(3)
         
 
-        # -> Send a request to /api/track endpoint with a valid AWB number parameter to check security headers and CORS policies
-        await page.goto('http://localhost:3000/api/track?awb=123456789', timeout=10000)
-        await asyncio.sleep(3)
-        
-
-        # -> Send requests to two more application endpoints to verify security headers and CORS policies
-        await page.goto('http://localhost:3000/api/user/profile', timeout=10000)
-        await asyncio.sleep(3)
-        
-
-        # -> Click 'Go Home' button to return to the home page and attempt to find environment variable validation information or other valid endpoints.
+        # -> Check if there is a Security or Status page or link that might provide security headers info or environment validation logs
         frame = context.pages[-1]
-        # Click 'Go Home' button to return to home page
-        elem = frame.locator('xpath=html/body/div[2]/main/div/div[3]/a').nth(0)
-        await page.wait_for_timeout(3000); await elem.click(timeout=5000)
-        
-
-        # -> Check for environment variable validation messages or logs by clicking on 'Status' link in the footer or navigation menu
-        frame = context.pages[-1]
-        # Click 'Status' link to check for environment variable validation or startup messages
-        elem = frame.locator('xpath=html/body/div[2]/footer/div/div/div[2]/div/div[2]/div/a[4]').nth(0)
+        # Click on 'Security' link in footer to check for security headers or environment validation info
+        elem = frame.locator('xpath=html/body/div[2]/footer/div/div/div[2]/div/div[2]/div/a[3]').nth(0)
         await page.wait_for_timeout(3000); await elem.click(timeout=5000)
         
 
         # --> Assertions to verify final state
         frame = context.pages[-1]
         try:
-            await expect(frame.locator('text=Strict Security Headers Enforced').first).to_be_visible(timeout=1000)
+            await expect(frame.locator('text=Strict Security Headers Verified Successfully').first).to_be_visible(timeout=1000)
         except AssertionError:
-            raise AssertionError("Test failed: Production environment does not enforce strict security headers, CORS policies, or environment variable validation as required by the test plan.")
+            raise AssertionError("Test case failed: Production environment does not enforce strict security headers, CORS policies, or environment variable validation as required by the test plan.")
         await asyncio.sleep(5)
     
     finally:
